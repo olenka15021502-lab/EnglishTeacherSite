@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Репетитор по английскому языку - Медведева Ольга Александровна</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #1A535C;
+            --light: #F7FFF7;
+            --purple: #9B5DE5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: var(--secondary);
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 900px;
+            line-height: 1.2;   /* уменьшает расстояние между строками внутри */
+            margin: 5px auto;   /* уменьшает расстояние между абзацами */
+            position: relative;
+            z-index: 2;
+        }
+
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+			margin-top: 25px;
+
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: float-card 5s infinite ease-in-out;
+        }
+        
+        .floating-card:nth-child(2) {
+            top: -30px;
+            right: -30px;
+            background: var(--accent);
+            color: var(--dark);
+            animation-delay: -2.5s;
+        }
+        
+        .floating-card:nth-child(3) {
+            bottom: -30px;
+            left: -30px;
+            background: var(--secondary);
+            color: white;
+            animation-delay: -1.5s;
+        }
+        
+        @keyframes float-card {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Results Section */
+        .results {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-text {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--purple), var(--primary));
+            color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 15px;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+            }
+            
+            nav li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .floating-card {
+                display: none;
+            }
+        }
+	/* Убираем подчёркивание и псевдоэлементы у ссылок в блоке "contact" */
+#contact a,
+#contact a:visited {
+    text-decoration: none !important;
+    outline: none !important;
+    border-bottom: none !important;
+}
+
+/* На всякий случай — отключаем псевдоэлемент */
+#contact a::after,
+#contact a:after {
+    display: none !important;
+}
+
+/* Убедимся, что сам <i> не получает подчёркивание */
+#contact a i {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+	footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>EnglishPro</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#about">Обо мне</a></li>
+                        <li><a href="#services">Услуги</a></li>
+                        <li><a href="#results">Преимущества</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Learn. Practise. Succeed.</h1>
+            <p>Эффективные занятия английским языком онлайн</p>     
+            <p>Комфорт + результат</p>    
+			<p>"Путь в тысячу ли начинается с первого шага"</p>
+            <p>(Китайская пословица)</p>
+            <p>Сделай первый шаг сегодня!</p>
+            
+            <a href="#contact" class="btn">Запишись на занятие</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Медведева Ольга Александровна</h3>
+                    <p>Я преподаю английский язык школьникам и взрослым 17 лет. Моя квалификация:
+МПГУ (Красный диплом), Кембриджский экзамен на уровень языка CAE (Grade A), Кембриджский методический экзамен TKT (три модуля), TEFL/TESOL (международный сертификат, позволяющий преподавать английский по всему миру), МЦКО (ЕГЭ, Экспертный уровень, 99%).
+Мои ученики успешно сдают ОГЭ и ЕГЭ, повышают успеваемость и комфортно чувствуют себя в языке! </p>
+                    <p> </p>
+                    <p> </p>
+					
+					
+                         
+                </div>
+                <div class="about-image">
+                    <img src="images/myphoto.png" alt="Моя фотография">
+                    <div class="floating-card">
+                        <h4>Опытный педагог</h4>
+                    </div>
+                    <div class="floating-card">
+                        <h4>Довольные ученики</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Мои услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Индивидуальные занятия</h3>
+                    <p>Персональный подход к каждому ученику с учетом его уровня и целей.</p>
+                   					
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Занятия в мини-группах</h3>
+                    <p>Эффективное обучение в небольших группах по доступной цене.</p>
+					
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Пробное занятие</h3>
+                    <p>Бесплатный урок-собеседование, на котором я определю уровень ученика и отвечу на все ваши вопросы.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results">
+        <div class="container">
+            <h2 class="section-title">Преимущества </h2>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">Мой подход</div>
+                    <div class="stat-text">Я обеспечиваю полную открытость учебного процесса: каждое занятие записываю на видео, чтобы ученик мог пересмотреть материал в удобное время и повторить сложные моменты.
+Домашние задания выполняются на интерактивных платформах, где автоматически фиксируются результаты, время выполнения и типичные ошибки.
+Родители и ученики получают доступ к статистике и могут в любой момент отслеживать прогресс, динамику и успеваемость.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Материалы</div>
+                    <div class="stat-text">В работе я использую современные материалы ведущих британских издательств — Oxford, Cambridge, Pearson и Macmillan.
+Дополняю занятия авторскими рабочими листами и тщательно подобранными видео-материалами на английском языке.
+Также использую интерактивные онлайн-ресурсы и платформы для отработки грамматики, лексики и аудирования.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Поддержка</div>
+                    <div class="stat-text">Чтобы обучение было максимально удобным, я создаю для каждого ученика или группы отдельный закрытый канал. Это ваш личный учебный кабинет: видео, задания, подсказки и быстрая связь со мной. Можно писать текстом или отправлять аудио — я помогу разобраться в любых вопросах.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">Связаться со мной</h2>
+        <p style="text-align: center; font-size: 1.4rem; max-width: 700px; margin: 0 auto 40px;">
+            Если у вас есть вопросы, вы хотите записаться на занятие или узнать подробнее о программе — 
+            напишите мне в удобной для вас социальной сети:
+        </p>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://vk.com/english_olga_medvedeva" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
+                <i class="fab fa-vk"></i>
+            </a>
+
+            <a href="https://t.me/olga_m_english" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EnglishPro</span>
+            </div>
+            
+            <p>&copy; 2025 EnglishPro. Медведева Ольга Александровна. Репеттитор по английскому языку.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация появления элементов при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Анимируем карточки услуг
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            // Анимируем статистику
+            const stats = document.querySelectorAll('.stat');
+            stats.forEach(stat => {
+                stat.style.opacity = 0;
+                stat.style.transform = 'translateY(20px)';
+                stat.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(stat);
+            });
+            
+            // Анимируем форму
+            const contactForm = document.querySelector('.contact-form');
+            contactForm.style.opacity = 0;
+            contactForm.style.transform = 'translateY(20px)';
+            contactForm.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(contactForm);
+        });
+    </script>
+</body>
+</html>
