@@ -26,33 +26,48 @@
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
+            padding-top: 120px; /* увеличено, чтобы учесть трёхстрочный хедер на мобилках */
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
         
         /* Header */
         header {
             background: linear-gradient(135deg, var(--primary), var(--purple));
             color: white;
-            padding: 20px 0;
-            position: relative;
-            overflow: hidden;
+            padding: 25px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
         
         .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             position: relative;
-            z-index: 2;
+        }
+
+        .header-content nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-content .logo,
+        .header-content .social-icons {
+            flex-shrink: 0;
         }
         
         .logo {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -66,10 +81,12 @@
         nav ul {
             display: flex;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
         
         nav li {
-            margin-left: 30px;
+            margin: 0 15px;
         }
         
         nav a {
@@ -80,6 +97,7 @@
             position: relative;
         }
         
+        nav a.active,
         nav a:hover {
             color: var(--accent);
         }
@@ -95,67 +113,27 @@
             transition: width 0.3s ease;
         }
         
+        nav a.active:after,
         nav a:hover:after {
             width: 100%;
         }
-        
-        .floating-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
         }
-        
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 15s infinite linear;
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
         }
-        
-        .shape:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            background: var(--accent);
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
+
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
         }
-        
-        .shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            background: var(--secondary);
-            top: 60%;
-            left: 80%;
-            animation-delay: -5s;
-        }
-        
-        .shape:nth-child(3) {
-            width: 80px;
-            height: 80px;
-            background: var(--light);
-            top: 80%;
-            left: 20%;
-            animation-delay: -10s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
-            100% {
-                transform: translateY(0) rotate(360deg);
-            }
-        }
-        
-        /* Hero Section */
+
         .hero {
             padding: 100px 0;
             background: linear-gradient(135deg, var(--primary), var(--purple));
@@ -175,13 +153,12 @@
         .hero p {
             font-size: 1.5rem;
             max-width: 900px;
-            line-height: 1.2;   /* уменьшает расстояние между строками внутри */
-            margin: 5px auto;   /* уменьшает расстояние между абзацами */
+            line-height: 1.2;
+            margin: 5px auto;
             position: relative;
             z-index: 2;
         }
 
-        
         .btn {
             display: inline-block;
             background-color: var(--accent);
@@ -195,8 +172,7 @@
             position: relative;
             z-index: 2;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-			margin-top: 25px;
-
+            margin-top: 25px;
         }
         
         .btn:hover {
@@ -204,10 +180,17 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
         
-        /* About Section */
-        .about {
+        .about,
+        .results {
             padding: 100px 0;
             background-color: white;
+        }
+        
+        .services,
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
         }
         
         .section-title {
@@ -229,7 +212,7 @@
             transform: translateX(-50%);
             border-radius: 5px;
         }
-        
+
         .about-content {
             display: flex;
             align-items: center;
@@ -296,13 +279,6 @@
             }
         }
         
-        /* Services Section */
-        .services {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: white;
-        }
-        
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -335,13 +311,7 @@
             margin-bottom: 15px;
         }
         
-        /* Results Section */
-        .results {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .stats {
+        .results .stats {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
@@ -363,13 +333,6 @@
         .stat-text {
             font-size: 1.2rem;
             color: var(--dark);
-        }
-        
-        /* Contact Section */
-        .contact {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--purple), var(--primary));
-            color: white;
         }
         
         .contact-form {
@@ -407,7 +370,6 @@
             resize: vertical;
         }
         
-        /* Footer */
         footer {
             background-color: var(--dark);
             color: white;
@@ -434,24 +396,58 @@
         
         /* Responsive */
         @media (max-width: 768px) {
+            body {
+                padding-top: 140px; /* достаточно для трёхстрочного хедера */
+            }
+
+            header {
+                padding: 10px 0;
+            }
+
             .header-content {
                 flex-direction: column;
+                align-items: center;
+                gap: 8px;
             }
-            
+
+            /* Отключаем абсолютное позиционирование меню */
+            .header-content nav {
+                position: static;
+                transform: none;
+                margin: 0;
+            }
+
             nav ul {
-                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 12px; /* расстояние между пунктами */
+                flex-wrap: nowrap;
+                white-space: nowrap;
             }
-            
+
             nav li {
-                margin: 0 10px;
+                margin: 0;
             }
-            
+
+            nav a {
+                font-size: 0.9rem;
+                padding: 4px 6px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .social-icons {
+                margin-top: 4px;
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .hero p {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             .about-content {
@@ -462,42 +458,34 @@
                 display: none;
             }
         }
-	/* Убираем подчёркивание и псевдоэлементы у ссылок в блоке "contact" */
-#contact a,
-#contact a:visited {
-    text-decoration: none !important;
-    outline: none !important;
-    border-bottom: none !important;
-}
 
-/* На всякий случай — отключаем псевдоэлемент */
-#contact a::after,
-#contact a:after {
-    display: none !important;
-}
+        #contact a,
+        #contact a:visited {
+            text-decoration: none !important;
+            outline: none !important;
+            border-bottom: none !important;
+        }
 
-/* Убедимся, что сам <i> не получает подчёркивание */
-#contact a i {
-    text-decoration: none !important;
-    border-bottom: none !important;
-}
-	footer .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
+        #contact a::after,
+        #contact a:after {
+            display: none !important;
+        }
 
+        #contact a i {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -506,31 +494,36 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#about">Обо мне</a></li>
-                        <li><a href="#services">Услуги</a></li>
-                        <li><a href="#results">Преимущества</a></li>
-                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="#about" class="nav-link">Обо мне</a></li>
+                        <li><a href="#services" class="nav-link">Услуги</a></li>
+                        <li><a href="#results" class="nav-link">Преимущества</a></li>
+                        <li><a href="#contact" class="nav-link">Контакты</a></li>
                     </ul>
                 </nav>
+                <div class="social-icons">
+                    <a href="https://vk.com/english_olga_medvedeva" target="_blank" aria-label="VK">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a href="https://t.me/olga_m_english" target="_blank" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>Learn. Practise. Succeed.</h1>
             <p>Эффективные занятия английским языком онлайн</p>     
             <p>Комфорт + результат</p>    
-			<p>"Путь в тысячу ли начинается с первого шага"</p>
+            <p>"Путь в тысячу ли начинается с первого шага"</p>
             <p>(Китайская пословица)</p>
             <p>Сделай первый шаг сегодня!</p>
-            
             <a href="#contact" class="btn">Запишись на занятие</a>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">Обо мне</h2>
@@ -540,11 +533,6 @@
                     <p>Я преподаю английский язык школьникам и взрослым 17 лет. Моя квалификация:
 МПГУ (Красный диплом), Кембриджский экзамен на уровень языка CAE (Grade A), Кембриджский методический экзамен TKT (три модуля), TEFL/TESOL (международный сертификат, позволяющий преподавать английский по всему миру), МЦКО (ЕГЭ, Экспертный уровень, 99%).
 Мои ученики успешно сдают ОГЭ и ЕГЭ, повышают успеваемость и комфортно чувствуют себя в языке! </p>
-                    <p> </p>
-                    <p> </p>
-					
-					
-                         
                 </div>
                 <div class="about-image">
                     <img src="myphoto.png" alt="Моя фотография">
@@ -559,7 +547,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="services">
         <div class="container">
             <h2 class="section-title">Мои услуги</h2>
@@ -570,7 +557,6 @@
                     </div>
                     <h3>Индивидуальные занятия</h3>
                     <p>Персональный подход к каждому ученику с учетом его уровня и целей.</p>
-                   					
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -578,7 +564,6 @@
                     </div>
                     <h3>Занятия в мини-группах</h3>
                     <p>Эффективное обучение в небольших группах по доступной цене.</p>
-					
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -591,7 +576,6 @@
         </div>
     </section>
 
-    <!-- Results Section -->
     <section id="results" class="results">
         <div class="container">
             <h2 class="section-title">Преимущества </h2>
@@ -617,82 +601,77 @@
     </section>
 
     <section id="contact" class="contact">
-    <div class="container">
-        <h2 class="section-title">Связаться со мной</h2>
-        <p style="text-align: center; font-size: 1.4rem; max-width: 700px; margin: 0 auto 40px;">
-            Если у вас есть вопросы, вы хотите записаться на занятие или узнать подробнее о программе — 
-            напишите мне в удобной для вас социальной сети:
-        </p>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="https://vk.com/english_olga_medvedeva" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
-                <i class="fab fa-vk"></i>
-            </a>
-
-            <a href="https://t.me/olga_m_english" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
-                <i class="fab fa-telegram"></i>
-            </a>
+        <div class="container">
+            <h2 class="section-title">Связаться со мной</h2>
+            <p style="text-align: center; font-size: 1.4rem; max-width: 700px; margin: 0 auto 40px;">
+                Если у вас есть вопросы, вы хотите записаться на занятие или узнать подробнее о программе — 
+                напишите мне в удобной для вас социальной сети:
+            </p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://vk.com/english_olga_medvedeva" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
+                    <i class="fab fa-vk"></i>
+                </a>
+                <a href="https://t.me/olga_m_english" target="_blank" style="font-size: 2rem; margin: 0 20px; color: white;">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <span>EnglishPro</span>
-            </div>
-            
-            <p>&copy; 2025 EnglishPro. Медведева Ольга Александровна. Репетитор по английскому языку.</p>
+            <p>&copy; 2025 EnglishPro.</p>
         </div>
     </footer>
 
     <script>
-        // Анимация появления элементов при скролле
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function activateNavLink() {
+                let currentSectionId = '';
+                const scrollY = window.scrollY + window.innerHeight / 2;
+
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 10) {
+                    currentSectionId = 'contact';
+                } else {
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - 80;
+                        const sectionHeight = section.offsetHeight;
+                        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                            currentSectionId = section.getAttribute('id');
+                        }
+                    });
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSectionId) {
+                        link.classList.add('active');
                     }
                 });
-            }, observerOptions);
-            
-            // Анимируем карточки услуг
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
+            }
+
+            window.addEventListener('scroll', activateNavLink);
+            activateNavLink();
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100, /* чуть больше отступ, т.к. хедер выше */
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-            
-            // Анимируем статистику
-            const stats = document.querySelectorAll('.stat');
-            stats.forEach(stat => {
-                stat.style.opacity = 0;
-                stat.style.transform = 'translateY(20px)';
-                stat.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(stat);
-            });
-            
-            // Анимируем форму
-            const contactForm = document.querySelector('.contact-form');
-            contactForm.style.opacity = 0;
-            contactForm.style.transform = 'translateY(20px)';
-            contactForm.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(contactForm);
         });
     </script>
 </body>
-
 </html>
+
 
