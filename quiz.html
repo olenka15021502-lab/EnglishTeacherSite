@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Quiz</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffeef8 0%, #e8d5f2 100%);
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .slide {
+      background: white;
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(199, 125, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 182, 243, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .title-slide {
+      text-align: center;
+      padding: 60px 48px;
+    }
+
+    .main-title {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 0 0 16px 0;
+      background: linear-gradient(135deg, #ff6ec7 0%, #b794f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 24px;
+      margin: 0 0 40px 0;
+    }
+
+    .decorative-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 40px;
+      margin: 40px 0;
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, #ff6ec7 0%, #b794f6 100%);
+      color: white;
+      border: none;
+      padding: 18px 48px;
+      font-size: 20px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(183, 148, 246, 0.4);
+    }
+
+    .start-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(183, 148, 246, 0.5);
+    }
+
+    .start-button:active {
+      transform: translateY(0);
+    }
+
+    .question-slide {
+      position: relative;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #f0e6f6;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6ec7 0%, #b794f6 100%);
+      border-radius: 8px;
+      transition: width 0.3s ease;
+    }
+
+    .question-number {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 32px 0;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .option-button {
+      background: #fef6fb;
+      border: 3px solid #f0e6f6;
+      padding: 20px 24px;
+      font-size: 18px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .option-button:hover {
+      border-color: #d4b5f0;
+      background: #fcebf8;
+      transform: translateX(4px);
+    }
+
+    .option-button.correct {
+      background: #d4f4dd;
+      border-color: #4caf50;
+      animation: correctPulse 0.5s ease;
+    }
+
+    .option-button.incorrect {
+      background: #ffd6d6;
+      border-color: #f44336;
+      animation: shake 0.5s ease;
+    }
+
+    .option-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    .feedback {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .feedback.correct {
+      background: #d4f4dd;
+      color: #2e7d32;
+    }
+
+    .feedback.incorrect {
+      background: #ffd6d6;
+      color: #c62828;
+    }
+
+    .next-button {
+      background: linear-gradient(135deg, #ff6ec7 0%, #b794f6 100%);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: transform 0.2s;
+      display: none;
+    }
+
+    .next-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .next-button.visible {
+      display: inline-block;
+    }
+
+    .results-slide {
+      text-align: center;
+    }
+
+    .score-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6ec7 0%, #b794f6 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 40px auto;
+      color: white;
+      box-shadow: 0 12px 40px rgba(183, 148, 246, 0.4);
+    }
+
+    .score-number {
+      font-size: 64px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .score-total {
+      font-size: 24px;
+      margin-top: 8px;
+    }
+
+    .level-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffe0f5 0%, #e8d5f2 100%);
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 24px 0;
+    }
+
+    .result-message {
+      font-size: 20px;
+      line-height: 1.6;
+      margin: 24px 0;
+    }
+
+    .restart-button {
+      background: linear-gradient(135deg, #ff6ec7 0%, #b794f6 100%);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 32px;
+      transition: transform 0.2s;
+    }
+
+    .restart-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .sparkle {
+      display: inline-block;
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 32px 24px;
+      }
+
+      .main-title {
+        font-size: 36px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .question-text {
+        font-size: 20px;
+      }
+
+      .option-button {
+        font-size: 16px;
+        padding: 16px 20px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <div id="titleSlide" class="slide title-slide">
+    <div class="decorative-icons"><span class="sparkle">✨</span> <span>📚</span> <span class="sparkle">⭐</span> <span>📖</span> <span class="sparkle">✨</span>
+    </div>
+    <h1 class="main-title" id="quizTitle">Test Your English Knowledge!</h1>
+    <p class="subtitle" id="quizSubtitle">Find out your English level from A1 to C1.</p><button class="start-button" onclick="startQuiz()">Start Quiz</button>
+   </div>
+   <div id="questionSlide" class="slide question-slide" style="display: none;">
+    <div class="progress-bar">
+     <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="question-number" id="questionNumber"></div>
+    <h2 class="question-text" id="questionText"></h2>
+    <div class="options" id="optionsContainer"></div>
+    <div id="feedback" class="feedback" style="display: none;"></div><button class="next-button" id="nextButton" onclick="nextQuestion()">Next Question →</button>
+   </div>
+   <div id="resultsSlide" class="slide results-slide" style="display: none;">
+    <div class="decorative-icons"><span class="sparkle">🎉</span> <span>🏆</span> <span class="sparkle">⭐</span>
+    </div>
+    <h2 style="font-size: 36px; margin: 0 0 24px 0;">Quiz Complete!</h2>
+    <div class="score-circle">
+     <div class="score-number" id="finalScore">
+      0
+     </div>
+     <div class="score-total">
+      / 20
+     </div>
+    </div>
+    <div class="level-badge" id="levelBadge"></div>
+    <p class="result-message" id="resultMessage"></p><button class="restart-button" onclick="restartQuiz()">Take Quiz Again</button>
+	<a href="index.html" class="restart-button" style="margin-top: 20px; display: inline-block;">← Back</a>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      quiz_title: "Test Your English Knowledge!",
+      quiz_subtitle: "Find out your English level from A1 to C1.",
+      primary_color: "#ff6ec7",
+      secondary_color: "#b794f6",
+      background_start: "#ffeef8",
+      background_end: "#e8d5f2",
+      text_color: "#333333",
+      result_a1: "Your English is at A1 level. Keep practising — you're building a great foundation!",
+      result_a2: "You're at an A2 level. Continue learning and improving your vocabulary.",
+      result_b1: "Solid work! Your English is at B1 level. Keep going!",
+      result_b2: "Impressive! Your English is at B2 level. You can communicate confidently.",
+      result_c1: "Excellent! Your English is very strong. Keep refining your advanced skills.",
+      result_perfect: "Perfect score! Your English is outstanding."
+    };
+
+    const questions = [
+      {
+        question: "Every morning, my neighbour's cat ___ strawberries from our garden.",
+        options: ["steal", "steals", "stealing", "stolen"],
+        correct: 1
+      },
+      {
+        question: "She suddenly found ___ unicorn postcard in her mailbox.",
+        options: ["a", "an", "the", "—"],
+        correct: 0
+      },
+      {
+        question: "We ___ a meteor streak across the sky last night.",
+        options: ["see", "saw", "seen", "seeing"],
+        correct: 1
+      },
+      {
+        question: "This riddle is ___ than the one we tried yesterday.",
+        options: ["difficulter", "more difficult", "most difficult", "much difficult"],
+        correct: 1
+      },
+      {
+        question: "I ___ three different languages since I moved to Switzerland.",
+        options: ["have learned", "learn", "learned", "am learning"],
+        correct: 0
+      },
+      {
+        question: "If the museum ___ early, we'll explore the old town instead.",
+        options: ["will close", "closes", "closing", "close"],
+        correct: 1
+      },
+      {
+        question: "The award ___ to her for developing a new eco-friendly battery.",
+        options: ["was given", "gave", "has gave", "is giving"],
+        correct: 0
+      },
+      {
+        question: "He whispered that he ___ on a secret project.",
+        options: ["is working", "was working", "worked", "will work"],
+        correct: 1
+      },
+      {
+        question: "If she had taken the earlier train, she ___ stuck in traffic now.",
+        options: ["isn't", "wouldn't be", "wouldn't have been", "won't be"],
+        correct: 1
+      },
+      {
+        question: "Only after reading his memoirs ___ how extraordinary his life had been.",
+        options: ["I realised", "did I realise", "realised I", "have I realised"],
+        correct: 1
+      },
+      {
+        question: "Could you please ___ the window? The biscuits are starting to smell burnt.",
+        options: ["open", "paint", "drive", "kick"],
+        correct: 0
+      },
+      {
+        question: "We ended up sleeping on the airport ___ because all flights were cancelled.",
+        options: ["platform", "balcony", "meadow", "stage"],
+        correct: 0
+      },
+      {
+        question: "The violinist played so ___ that even people passing by stopped to listen.",
+        options: ["loudly", "well", "badly", "slowly"],
+        correct: 1
+      },
+      {
+        question: "Make sure to ___ your report before submitting it to the editor.",
+        options: ["check", "grow", "give", "do"],
+        correct: 0
+      },
+      {
+        question: "We need to ___ early if we want to watch the sunrise from the mountain.",
+        options: ["set off", "break down", "put away", "stay in"],
+        correct: 0
+      },
+      {
+        question: "The scientist hopes to ___ her research into renewable energy sources.",
+        options: ["expand", "distract", "retreat", "divide"],
+        correct: 0
+      },
+      {
+        question: "The documentary was so ___ that viewers were left speechless.",
+        options: ["captivating", "reasonable", "grateful", "confusing"],
+        correct: 0
+      },
+      {
+        question: "When he finally finished his novel, he was ___ with pride.",
+        options: ["over the moon", "under the weather", "down to earth", "beside himself"],
+        correct: 0
+      },
+      {
+        question: "The committee required a more ___ explanation of the financial risks.",
+        options: ["detailed", "tiny", "careless", "rough"],
+        correct: 0
+      },
+      {
+        question: "The experiment aims to ___ how memory functions under stress.",
+        options: ["investigate", "cancel", "argue", "pretend"],
+        correct: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function startQuiz() {
+      document.getElementById('titleSlide').style.display = 'none';
+      document.getElementById('questionSlide').style.display = 'block';
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      answered = false;
+      const question = questions[currentQuestion];
+      
+      document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of 20`;
+      document.getElementById('questionText').textContent = question.question;
+      document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / 20) * 100}%`;
+      document.getElementById('feedback').style.display = 'none';
+      document.getElementById('nextButton').classList.remove('visible');
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+        button.onclick = () => checkAnswer(index);
+        optionsContainer.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      if (answered) return;
+      
+      answered = true;
+      const question = questions[currentQuestion];
+      const buttons = document.querySelectorAll('.option-button');
+      const feedback = document.getElementById('feedback');
+      
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (selectedIndex === question.correct) {
+        score++;
+        buttons[selectedIndex].classList.add('correct');
+        feedback.className = 'feedback correct';
+        feedback.textContent = '✓ Correct!';
+      } else {
+        buttons[selectedIndex].classList.add('incorrect');
+        buttons[question.correct].classList.add('correct');
+        feedback.className = 'feedback incorrect';
+        feedback.textContent = `✗ Incorrect. The correct answer is: ${String.fromCharCode(65 + question.correct)}) ${question.options[question.correct]}`;
+      }
+      
+      feedback.style.display = 'block';
+      document.getElementById('nextButton').classList.add('visible');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      
+      document.getElementById('questionSlide').style.display = 'none';
+      document.getElementById('resultsSlide').style.display = 'block';
+      document.getElementById('finalScore').textContent = score;
+      
+      let level, message;
+      
+      if (score <= 5) {
+        level = 'Level A1';
+        message = config.result_a1 || defaultConfig.result_a1;
+      } else if (score <= 10) {
+        level = 'Level A2';
+        message = config.result_a2 || defaultConfig.result_a2;
+      } else if (score <= 14) {
+        level = 'Level B1';
+        message = config.result_b1 || defaultConfig.result_b1;
+      } else if (score <= 17) {
+        level = 'Level B2';
+        message = config.result_b2 || defaultConfig.result_b2;
+      } else if (score <= 19) {
+        level = 'Level C1';
+        message = config.result_c1 || defaultConfig.result_c1;
+      } else {
+        level = 'Level C1+ / Near Native';
+        message = config.result_perfect || defaultConfig.result_perfect;
+      }
+      
+      document.getElementById('levelBadge').textContent = level;
+      document.getElementById('resultMessage').textContent = message;
+    }
+
+    function restartQuiz() {
+      document.getElementById('resultsSlide').style.display = 'none';
+      document.getElementById('titleSlide').style.display = 'block';
+    }
+
+    async function onConfigChange(config) {
+      document.getElementById('quizTitle').textContent = config.quiz_title || defaultConfig.quiz_title;
+      document.getElementById('quizSubtitle').textContent = config.quiz_subtitle || defaultConfig.quiz_subtitle;
+      
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const backgroundStart = config.background_start || defaultConfig.background_start;
+      const backgroundEnd = config.background_end || defaultConfig.background_end;
+      const textColor = config.text_color || defaultConfig.text_color;
+      
+      document.body.style.background = `linear-gradient(135deg, ${backgroundStart} 0%, ${backgroundEnd} 100%)`;
+      document.body.style.color = textColor;
+      
+      const titleElement = document.getElementById('quizTitle');
+      if (titleElement) {
+        titleElement.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+        titleElement.style.webkitBackgroundClip = 'text';
+        titleElement.style.webkitTextFillColor = 'transparent';
+        titleElement.style.backgroundClip = 'text';
+      }
+      
+      const buttons = document.querySelectorAll('.start-button, .next-button, .restart-button');
+      buttons.forEach(btn => {
+        btn.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+      });
+      
+      const progressFill = document.getElementById('progressFill');
+      if (progressFill) {
+        progressFill.style.background = `linear-gradient(90deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+      }
+      
+      const scoreCircle = document.querySelector('.score-circle');
+      if (scoreCircle) {
+        scoreCircle.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_start || defaultConfig.background_start,
+              set: (value) => {
+                config.background_start = value;
+                window.elementSdk.setConfig({ background_start: value });
+              }
+            },
+            {
+              get: () => config.background_end || defaultConfig.background_end,
+              set: (value) => {
+                config.background_end = value;
+                window.elementSdk.setConfig({ background_end: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["quiz_title", config.quiz_title || defaultConfig.quiz_title],
+          ["quiz_subtitle", config.quiz_subtitle || defaultConfig.quiz_subtitle],
+          ["result_a1", config.result_a1 || defaultConfig.result_a1],
+          ["result_a2", config.result_a2 || defaultConfig.result_a2],
+          ["result_b1", config.result_b1 || defaultConfig.result_b1],
+          ["result_b2", config.result_b2 || defaultConfig.result_b2],
+          ["result_c1", config.result_c1 || defaultConfig.result_c1],
+          ["result_perfect", config.result_perfect || defaultConfig.result_perfect]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a58beb6340b9a97',t:'MTc2NDMyMTE2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
