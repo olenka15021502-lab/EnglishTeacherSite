@@ -1,1 +1,441 @@
-
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relationships &amp; Inner Feelings Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .quiz-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    .card-glow {
+      box-shadow: 0 0 40px rgba(102, 126, 234, 0.3), 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .option-btn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .option-btn:hover:not(.selected):not(.correct):not(.incorrect) {
+      transform: translateX(8px);
+      background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+      border-color: #f97316;
+    }
+    
+    .option-btn.selected {
+      background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+      border-color: #06b6d4;
+      transform: translateX(8px);
+    }
+    
+    .option-btn.correct {
+      background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+      border-color: #10b981;
+    }
+    
+    .option-btn.incorrect {
+      background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+      border-color: #ef4444;
+    }
+    
+    .timer-pulse {
+      animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #00f260 0%, #0575e6 50%, #f7971e 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    .bounce-in {
+      animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.4s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: fall 3s ease-in-out infinite;
+    }
+    
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto">
+  <div id="app" class="min-h-full quiz-gradient flex items-center justify-center p-4"><!-- Start Screen -->
+   <div id="start-screen" class="text-center bounce-in">
+    <div class="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-12 card-glow max-w-2xl mx-auto border-4 border-purple-300">
+     <h1 id="main-title" class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 mb-4 mt-4">Relationships &amp; Inner Feelings</h1>
+     <p class="text-xl md:text-2xl font-bold text-gray-700 mb-6">— Final Quiz —</p>
+     <div class="bg-gradient-to-r from-cyan-100 to-purple-100 rounded-2xl p-6 mb-8 border-2 border-purple-200">
+      <div class="grid grid-cols-2 gap-4 text-left">
+       <div class="flex items-center gap-2"><span class="text-2xl">📝</span> <span class="font-semibold text-gray-700">40 Questions</span>
+       </div>
+       <div class="flex items-center gap-2"><span class="text-2xl">⏱️</span> <span class="font-semibold text-gray-700">Timed Quiz</span>
+       </div>
+       <div class="flex items-center gap-2"><span class="text-2xl">🎯</span> <span class="font-semibold text-gray-700">1 Point Each</span>
+       </div>
+       <div class="flex items-center gap-2"><span class="text-2xl">✅</span> <span class="font-semibold text-gray-700">Single Answer</span>
+       </div>
+      </div>
+     </div><button id="start-btn" onclick="startQuiz()" class="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 text-white font-bold text-xl py-4 px-12 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"> Start Quiz 🚀 </button>
+    </div>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="hidden w-full max-w-3xl mx-auto"><!-- Header -->
+    <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-4 mb-4 card-glow border-3 border-purple-300">
+     <div class="flex justify-between items-center flex-wrap gap-4">
+      <div class="flex items-center gap-3"><span class="text-3xl">📊</span>
+       <div>
+        <p class="text-sm font-semibold text-gray-500">Progress</p>
+        <p id="progress-text" class="text-xl font-bold text-purple-600">1 / 40</p>
+       </div>
+      </div>
+      <div class="flex items-center gap-3"><span class="text-3xl timer-pulse">⏱️</span>
+       <div>
+        <p class="text-sm font-semibold text-gray-500">Time</p>
+        <p id="timer" class="text-xl font-bold text-pink-600">00:00</p>
+       </div>
+      </div>
+     </div><!-- Progress Bar -->
+     <div class="mt-4 bg-gray-200 rounded-full h-3 overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full rounded-full transition-all duration-500" style="width: 2.5%"></div>
+     </div>
+    </div><!-- Question Card -->
+    <div id="question-card" class="bg-white/95 backdrop-blur-sm rounded-3xl p-6 md:p-8 card-glow border-4 border-cyan-300 slide-up">
+     <div class="flex items-start gap-4 mb-6"><span id="question-number" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg px-4 py-2 rounded-full shrink-0">Q1</span>
+      <p id="question-text" class="text-xl md:text-2xl font-semibold text-gray-800 leading-relaxed"></p>
+     </div><!-- Options -->
+     <div id="options-container" class="space-y-3"><!-- Options will be inserted here -->
+     </div><!-- Navigation -->
+     <div class="flex justify-between items-center mt-8 pt-6 border-t-2 border-purple-100"><button id="prev-btn" onclick="prevQuestion()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> ← Previous </button> <button id="next-btn" onclick="nextQuestion()" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 flex items-center gap-2"> Next → </button> <button id="finish-btn" onclick="finishQuiz()" class="hidden bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2"> Finish ✓ </button>
+     </div>
+    </div>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="hidden text-center bounce-in">
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+    <div class="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-12 card-glow max-w-2xl mx-auto border-4 border-green-300 relative z-10">
+     <div class="text-7xl mb-6">
+      🎉
+     </div>
+     <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-500 via-cyan-500 to-purple-500 mb-2">Quiz Complete!</h2>
+     <p class="text-xl text-gray-600 mb-8">Great job finishing the quiz!</p>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 border-3 border-green-300">
+       <p class="text-lg font-semibold text-gray-600 mb-2">✅ Correct Answers</p>
+       <p id="final-score" class="text-4xl font-extrabold text-green-600">0/40</p>
+      </div>
+      <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-6 border-3 border-purple-300">
+       <p class="text-lg font-semibold text-gray-600 mb-2">   ️ Time Taken</p>
+       <p id="final-time" class="text-4xl font-extrabold text-purple-600">00:00</p>
+      </div>
+     </div>
+     <div id="performance-message" class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 mb-8 border-2 border-orange-300">
+      <p id="performance-text" class="text-xl font-bold text-orange-700"></p>
+     </div><button onclick="restartQuiz()" class="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 text-white font-bold text-xl py-4 px-12 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"> Try Again    </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      quiz_title: "Relationships & Inner Feelings",
+      start_button_text: "Start Quiz 🚀",
+      finish_button_text: "Finish ✓",
+      primary_color: "#8b5cf6",
+      secondary_color: "#ec4899",
+      background_color: "#667eea",
+      text_color: "#1f2937",
+      accent_color: "#06b6d4"
+    };
+    
+    const questions = [
+      { q: "Maria and I have a close ___ that lets us share our secrets without hesitation.", options: ["bond", "bridge", "line", "chain"], correct: 0 },
+      { q: "John and Peter have maintained a lifelong ___.", options: ["routine", "friendship", "contact", "relation"], correct: 1 },
+      { q: "In a successful team, mutual ___ ensures everyone feels confident speaking up.", options: ["balance", "agreement", "trust", "order"], correct: 2 },
+      { q: "She promised to always ___ there for her younger sister during difficult times.", options: ["stay", "stand", "remain", "be"], correct: 3 },
+      { q: "Teenagers often ___ in a teacher they respect rather than their parents.", options: ["confide", "admit", "explain", "complain"], correct: 0 },
+      { q: "Emma and Sophie became inseparable ___ during their first year at university.", options: ["partners", "classmates", "friends", "colleagues"], correct: 2 },
+      { q: "They immediately realised they were kindred ___.", options: ["minds", "spirits", "souls", "characters"], correct: 1 },
+      { q: "We got on like a house on ___ from the very first meeting.", options: ["air", "heat", "fire", "light"], correct: 2 },
+      { q: "True friends support each other through thick and ___.", options: ["dark", "deep", "hard", "thin"], correct: 3 },
+      { q: "He is known for going the extra ___ to help his colleagues succeed.", options: ["step", "way", "point", "mile"], correct: 3 },
+      { q: "During the argument, he tried not to bottle up his ___.", options: ["pressure", "feelings", "voice", "temper"], correct: 1 },
+      { q: "Even strong couples sometimes go through a bad ___.", options: ["stage", "moment", "patch", "phase"], correct: 2 },
+      { q: "Over time, he realised he had taken his partner for ___.", options: ["benefit", "use", "value", "granted"], correct: 3 },
+      { q: "When she cancelled at the last minute, it felt like she had gone back on her ___.", options: ["promise", "plan", "wordplay", "idea"], correct: 0 },
+      { q: "To avoid conflict, both sides agreed to meet each other ___.", options: ["aside", "halfway", "together", "between"], correct: 1 },
+      { q: "After weeks of silence, they finally decided to clear the ___.", options: ["room", "space", "air", "way"], correct: 2 },
+      { q: "A short break helped them rekindle ___.", options: ["contact", "energy", "feelings", "interest"], correct: 2 },
+      { q: "Everyone in the household is expected to pull their ___.", options: ["share", "strength", "duty", "weight"], correct: 3 },
+      { q: "His refusal to apologise gradually drove a ___ between the brothers.", options: ["gap", "wedge", "line", "space"], correct: 1 },
+      { q: "Years of poor communication resulted in a strained ___.", options: ["bond", "link", "relationship", "connection"], correct: 2 },
+      { q: "Despite the breakup, they managed to remain on good ___.", options: ["sides", "terms", "levels", "ways"], correct: 1 },
+      { q: "The discussion was productive because everyone was on the same ___.", options: ["channel", "line", "wavelength", "signal"], correct: 2 },
+      { q: "Most guests at the event were casual ___.", options: ["partners", "visitors", "acquaintances", "members"], correct: 2 },
+      { q: "At industry events, young professionals often rub ___ with senior figures.", options: ["arms", "hands", "shoulders", "sides"], correct: 2 },
+      { q: "He still bears a ___ over how the conflict was handled years ago.", options: ["memory", "regret", "mark", "grudge"], correct: 3 },
+      { q: "After the disagreement, she gave her colleague the cold ___.", options: ["face", "look", "shoulder", "back"], correct: 2 },
+      { q: "His parents gave him very little breathing ___.", options: ["area", "freedom", "place", "room"], correct: 3 },
+      { q: "She began to feel emotionally ___.", options: ["blocked", "limited", "suffocated", "closed"], correct: 2 },
+      { q: "By avoiding boundaries, the parents let the child rule the ___.", options: ["house", "family", "place", "roost"], correct: 3 },
+      { q: "Teachers who play ___ can damage trust in the classroom.", options: ["roles", "games", "favourites", "sides"], correct: 2 },
+      { q: "After months of pressure at work, he felt completely at the end of his ___.", options: ["tether", "limit", "edge", "strength"], correct: 0 },
+      { q: "The constant uncertainty left her permanently on ___.", options: ["watch", "hold", "edge", "guard"], correct: 2 },
+      { q: "He was in ___ after the unexpected decision.", options: ["silence", "balance", "turmoil", "shock"], correct: 2 },
+      { q: "Despite external success, she was plagued by ___.", options: ["fear", "doubt", "worry", "concern"], correct: 1 },
+      { q: "After leaving the company, he felt emotionally ___.", options: ["distant", "lost", "adrift", "empty"], correct: 2 },
+      { q: "Clear communication finally put her ___ at rest.", options: ["mind", "head", "thought", "brain"], correct: 0 },
+      { q: "Receiving the approval felt like a weight off his ___.", options: ["back", "chest", "shoulders", "arms"], correct: 2 },
+      { q: "Daily routines and close friendships helped him feel ___ again.", options: ["steady", "safe", "grounded", "calm"], correct: 2 },
+      { q: "With time, she became at ___ with her past choices.", options: ["ease", "peace", "rest", "balance"], correct: 1 },
+      { q: "Away from the noise of the city, he gradually reached a state of ___.", options: ["quiet", "calm", "stillness", "serenity"], correct: 3 }
+    ];
+    
+    const optionLabels = ['A', 'B', 'C', 'D'];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+    let timerInterval = null;
+    let startTime = null;
+    let elapsedSeconds = 0;
+    
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+    
+    function startTimer() {
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById('timer').textContent = formatTime(elapsedSeconds);
+      }, 1000);
+    }
+    
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+    
+    function startQuiz() {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      currentQuestion = 0;
+      score = 0;
+      userAnswers = new Array(questions.length).fill(null);
+      elapsedSeconds = 0;
+      startTimer();
+      renderQuestion();
+    }
+    
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('question-number').textContent = `Q${currentQuestion + 1}`;
+      document.getElementById('question-text').textContent = q.q;
+      document.getElementById('progress-text').textContent = `${currentQuestion + 1} / ${questions.length}`;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = `option-btn w-full text-left p-4 rounded-xl border-3 border-gray-200 bg-white font-semibold text-lg flex items-center gap-4 transition-all`;
+        btn.innerHTML = `
+          <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center shrink-0">${optionLabels[index]}</span>
+          <span class="text-gray-700">${option}</span>
+        `;
+        
+        if (userAnswers[currentQuestion] === index) {
+          btn.classList.add('selected');
+        }
+        
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+      });
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      document.getElementById('prev-btn').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+      
+      if (currentQuestion === questions.length - 1) {
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('finish-btn').classList.remove('hidden');
+      } else {
+        document.getElementById('next-btn').classList.remove('hidden');
+        document.getElementById('finish-btn').classList.add('hidden');
+      }
+      
+      // Animate card
+      const card = document.getElementById('question-card');
+      card.classList.remove('slide-up');
+      void card.offsetWidth;
+      card.classList.add('slide-up');
+    }
+    
+    function selectAnswer(index) {
+      userAnswers[currentQuestion] = index;
+      
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach((btn, i) => {
+        btn.classList.remove('selected');
+        if (i === index) {
+          btn.classList.add('selected');
+        }
+      });
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+    
+    function calculateScore() {
+      score = 0;
+      questions.forEach((q, i) => {
+        if (userAnswers[i] === q.correct) {
+          score++;
+        }
+      });
+      return score;
+    }
+    
+    function createConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a8e6cf', '#dda0dd', '#98d8c8', '#f7dc6f', '#bb8fce'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = `${Math.random() * 3}s`;
+        confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+        container.appendChild(confetti);
+      }
+    }
+    
+    function getPerformanceMessage(score, total) {
+      const percentage = (score / total) * 100;
+      if (percentage >= 90) return "    Outstanding! You're a relationship expert!";
+      if (percentage >= 80) return "🎯 Excellent work! You really understand feelings!";
+      if (percentage >= 70) return "👏 Great job! You've got solid knowledge!";
+      if (percentage >= 60) return "💪 Good effort! Keep learning!";
+      if (percentage >= 50) return "📚 Not bad! Some room for improvement!";
+      return "🔄 Keep practicing! You'll get better!";
+    }
+    
+    function finishQuiz() {
+      stopTimer();
+      const finalScore = calculateScore();
+      
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = `${finalScore}/${questions.length}`;
+      document.getElementById('final-time').textContent = formatTime(elapsedSeconds);
+      document.getElementById('performance-text').textContent = getPerformanceMessage(finalScore, questions.length);
+      
+      createConfetti();
+    }
+    
+    function restartQuiz() {
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('start-screen').classList.remove('hidden');
+      document.getElementById('confetti-container').innerHTML = '';
+    }
+    
+    async function onConfigChange(config) {
+      const title = config.quiz_title || defaultConfig.quiz_title;
+      const startBtnText = config.start_button_text || defaultConfig.start_button_text;
+      const finishBtnText = config.finish_button_text || defaultConfig.finish_button_text;
+      
+      document.getElementById('main-title').textContent = title;
+      document.getElementById('start-btn').textContent = startBtnText;
+      document.getElementById('finish-btn').innerHTML = finishBtnText;
+    }
+    
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["quiz_title", config.quiz_title || defaultConfig.quiz_title],
+        ["start_button_text", config.start_button_text || defaultConfig.start_button_text],
+        ["finish_button_text", config.finish_button_text || defaultConfig.finish_button_text]
+      ]);
+    }
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bc54d273510ec3e',t:'MTc2ODE0MzgxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
