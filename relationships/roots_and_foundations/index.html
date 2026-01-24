@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discussion Card Flip</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:wght@600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'DM Sans', sans-serif;
+    }
+    
+    .font-display {
+      font-family: 'Fraunces', serif;
+    }
+    
+    .card-container {
+      perspective: 1000px;
+    }
+    
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    
+    .card-container.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    
+    .card-front {
+      cursor: pointer;
+    }
+    
+    .card-back {
+      transform: rotateY(180deg);
+    }
+    
+    .card-container:not(.flipped):hover .card-inner {
+      transform: scale(1.02);
+    }
+    
+    @keyframes subtle-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    
+    .float-animation {
+      animation: subtle-float 3s ease-in-out infinite;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="min-h-full w-full bg-gradient-to-br from-purple-200 via-indigo-300 to-blue-600 overflow-auto">
+   <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12"><!-- Header -->
+    <header class="text-center mb-8 sm:mb-12">
+     <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-100 rounded-full">
+      <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg><span class="text-blue-700 font-medium text-sm">Speaking Activity</span>
+     </div>
+     <h1 id="main-title" class="font-display text-3xl sm:text-4xl font-bold text-slate-800 mb-3">Family &amp; Parenting Discussion</h1>
+     <p id="instructions" class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto">Click any card to reveal a discussion question. Read it aloud and share your thoughts with your partner.</p>
+    </header><!-- Cards Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mb-8"><!-- Card 1 -->
+     <div class="card-container aspect-[3/4]" data-card="1">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">1</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-blue-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">In your opinion, when do parents start to push their children too hard, even if they believe they have the family's best interests at heart?</p>
+       </div>
+      </div>
+     </div><!-- Card 2 -->
+     <div class="card-container aspect-[3/4]" data-card="2">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-blue-400 to-blue-500 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">2</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-blue-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">How can setting unrealistic benchmarks affect a child's confidence and motivation in the long run?</p>
+       </div>
+      </div>
+     </div><!-- Card 3 -->
+     <div class="card-container aspect-[3/4]" data-card="3">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">3</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-indigo-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">Do you think children who are given little or no breathing room are more likely to rebel later in life? Why or why not?</p>
+       </div>
+      </div>
+     </div><!-- Card 4 -->
+     <div class="card-container aspect-[3/4]" data-card="4">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-sky-500 to-sky-600 shadow-lg shadow-sky-200 hover:shadow-xl hover:shadow-sky-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">4</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-sky-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">Can a sheltered upbringing prepare children well for adult life, or does it limit independence?</p>
+       </div>
+      </div>
+     </div><!-- Card 5 -->
+     <div class="card-container aspect-[3/4]" data-card="5">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">5</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-blue-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">In what situations might children begin to feel emotionally suffocated by their parents' involvement?</p>
+       </div>
+      </div>
+     </div><!-- Card 6 -->
+     <div class="card-container aspect-[3/4]" data-card="6">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-cyan-500 to-cyan-600 shadow-lg shadow-cyan-200 hover:shadow-xl hover:shadow-cyan-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">6</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-cyan-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">How important is it for children to grow up in a tight-knit family in today's world?</p>
+       </div>
+      </div>
+     </div><!-- Card 7 -->
+     <div class="card-container aspect-[3/4]" data-card="7">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">7</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-blue-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">What does unwavering support from parents look like in everyday life?</p>
+       </div>
+      </div>
+     </div><!-- Card 8 -->
+     <div class="card-container aspect-[3/4]" data-card="8">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-indigo-400 to-blue-500 shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">8</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-indigo-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">When should parents act as a shoulder to cry on, and when should they encourage independence instead?</p>
+       </div>
+      </div>
+     </div><!-- Card 9 -->
+     <div class="card-container aspect-[3/4]" data-card="9">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-sky-400 to-blue-500 shadow-lg shadow-sky-200 hover:shadow-xl hover:shadow-sky-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">9</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-sky-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">Do you think parents should always give their children a helping hand, or are there times when stepping back is better?</p>
+       </div>
+      </div>
+     </div><!-- Card 10 -->
+     <div class="card-container aspect-[3/4]" data-card="10">
+      <div class="card-inner">
+       <div class="card-front bg-gradient-to-br from-blue-600 to-cyan-600 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow">
+        <div class="text-center"><span class="font-display text-5xl sm:text-6xl font-bold text-white drop-shadow-sm">10</span>
+        </div>
+       </div>
+       <div class="card-back bg-white shadow-lg border border-blue-100">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center font-medium">Can parents truly have the family's best interests at heart and still cause emotional harm? How?</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Progress Indicator -->
+    <div class="text-center">
+     <div class="inline-flex items-center gap-3 px-5 py-3 bg-white rounded-full shadow-sm border border-blue-100">
+      <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg><span class="text-slate-600 font-medium"> <span id="flipped-count" class="text-blue-600 font-bold">0</span> of 10 cards revealed </span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      activity_title: "Family & Parenting Discussion",
+      instructions_text: "Click any card to reveal a discussion question. Read it aloud and share your thoughts with your partner.",
+      font_family: "DM Sans",
+      font_size: 18,
+      background_color: "#e9d5ff",
+      card_color: "#3b82f6",
+      text_color: "#334155",
+      accent_color: "#2563eb",
+      surface_color: "#ffffff"
+    };
+    
+    let flippedCount = 0;
+    
+    function updateFlippedCount() {
+      const countEl = document.getElementById('flipped-count');
+      if (countEl) {
+        countEl.textContent = flippedCount;
+      }
+    }
+    
+    function setupCards() {
+      const cards = document.querySelectorAll('.card-container');
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          if (!this.classList.contains('flipped')) {
+            this.classList.add('flipped');
+            flippedCount++;
+            updateFlippedCount();
+          }
+        });
+      });
+    }
+    
+    async function onConfigChange(config) {
+      const titleEl = document.getElementById('main-title');
+      const instructionsEl = document.getElementById('instructions');
+      
+      if (titleEl) {
+        titleEl.textContent = config.activity_title || defaultConfig.activity_title;
+      }
+      
+      if (instructionsEl) {
+        instructionsEl.textContent = config.instructions_text || defaultConfig.instructions_text;
+      }
+      
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = "'DM Sans', sans-serif";
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.querySelectorAll('.card-back p').forEach(p => {
+        p.style.fontSize = `${baseSize * 1.125}px`;
+      });
+      if (titleEl) {
+        titleEl.style.fontSize = `${baseSize * 2.25}px`;
+      }
+      if (instructionsEl) {
+        instructionsEl.style.fontSize = `${baseSize}px`;
+      }
+      
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      
+      const appEl = document.getElementById('app');
+      if (appEl) {
+        appEl.style.background = `linear-gradient(to bottom right, ${bgColor}, ${adjustColor(bgColor, -5)}, ${adjustColor(accentColor, 40)})`;
+      }
+      
+      document.querySelectorAll('.card-front').forEach(front => {
+        front.style.background = `linear-gradient(to bottom right, ${cardColor}, ${adjustColor(cardColor, -10)})`;
+      });
+      
+      document.querySelectorAll('.card-back').forEach(back => {
+        back.style.backgroundColor = surfaceColor;
+      });
+      
+      document.querySelectorAll('.card-back p').forEach(p => {
+        p.style.color = textColor;
+      });
+      
+      if (titleEl) {
+        titleEl.style.color = textColor;
+      }
+      
+      document.querySelectorAll('#flipped-count').forEach(el => {
+        el.style.color = accentColor;
+      });
+    }
+    
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const G = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amt));
+      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+    }
+    
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.card_color || defaultConfig.card_color,
+            set: (value) => {
+              config.card_color = value;
+              window.elementSdk.setConfig({ card_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+    
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["activity_title", config.activity_title || defaultConfig.activity_title],
+        ["instructions_text", config.instructions_text || defaultConfig.instructions_text]
+      ]);
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    setupCards();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c2eed31c3c70c86',t:'MTc2OTI1MTM3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
