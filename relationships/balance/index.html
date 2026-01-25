@@ -13,10 +13,15 @@
     }
     
     .paragraph-card {
-      transition: all 0.3s ease;
-      cursor: move;
-      touch-action: none;
-    }
+  transition: all 0.3s ease;
+  cursor: grab;
+  touch-action: manipulation;
+}
+
+.paragraph-card.dragging {
+  cursor: grabbing;
+}
+
     
     .paragraph-card.dragging {
       opacity: 0.5;
@@ -175,7 +180,7 @@
       currentOrder.forEach((paragraph, index) => {
         const card = document.createElement('div');
         card.className = 'paragraph-card bg-white rounded-lg shadow-lg p-4 sm:p-6 border-2 border-purple-200';
-        card.draggable = true;
+        card.draggable = window.matchMedia('(hover: hover)').matches;
         card.dataset.id = paragraph.id;
         
         card.innerHTML = `
@@ -259,49 +264,36 @@
     let touchStartTime = 0;
 
     function handleTouchStart(e) {
-      touchElement = e.currentTarget;
-      draggedId = touchElement.dataset.id;
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-      
-      setTimeout(() => {
-        if (touchElement && Date.now() - touchStartTime >= 200) {
-          touchElement.classList.add('dragging');
-        }
-      }, 200);
-    }
+  touchElement = e.currentTarget;
+  draggedId = touchElement.dataset.id;
+  touchElement.classList.add('dragging');
+}
 
-    function handleTouchMove(e) {
-      if (!touchElement || !touchElement.classList.contains('dragging')) return;
-      e.preventDefault();
-      
-      touchCurrentY = e.touches[0].clientY;
-      const deltaY = touchCurrentY - touchStartY;
-      touchElement.style.transform = `translateY(${deltaY}px)`;
-      touchElement.style.zIndex = '1000';
-      
-      const container = document.getElementById('paragraph-container');
-      const afterElement = getDragAfterElement(container, touchCurrentY);
-      
-      if (afterElement == null) {
-        container.appendChild(touchElement);
-      } else {
-        container.insertBefore(touchElement, afterElement);
-      }
-    }
+function handleTouchMove(e) {
+  if (!touchElement) return;
+  e.preventDefault();
 
-    function handleTouchEnd(e) {
-      if (!touchElement) return;
-      
-      touchElement.style.transform = '';
-      touchElement.style.zIndex = '';
-      touchElement.classList.remove('dragging');
-      
-      updateOrderFromDOM();
-      
-      touchElement = null;
-      draggedId = null;
-    }
+  const touchY = e.touches[0].clientY;
+  const container = document.getElementById('paragraph-container');
+  const afterElement = getDragAfterElement(container, touchY);
+
+  if (afterElement == null) {
+    container.appendChild(touchElement);
+  } else {
+    container.insertBefore(touchElement, afterElement);
+  }
+}
+
+function handleTouchEnd() {
+  if (!touchElement) return;
+
+  touchElement.classList.remove('dragging');
+  updateOrderFromDOM();
+
+  touchElement = null;
+  draggedId = null;
+}
+
 
     async function onConfigChange(config) {
       const titleElement = document.getElementById('activity-title');
