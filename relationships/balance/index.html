@@ -1,217 +1,169 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Path to Balance - Story Sequencing</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Path to Balance</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    body {
-      box-sizing: border-box;
-      font-family: 'Georgia', 'Times New Roman', serif;
-    }
+<style>
+body {
+  font-family: Georgia, "Times New Roman", serif;
+}
 
-    .paragraph-card {
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-    }
+.paragraph-card {
+  background: white;
+  border: 2px solid #e9d5ff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+}
 
-    .paragraph-card.dragging {
-      opacity: 0.6;
-      transform: scale(0.98);
-      cursor: grabbing;
-    }
+.paragraph-card.correct {
+  background: linear-gradient(135deg, #d4f1d4, #e8f8e8);
+  border-color: #4ade80;
+}
 
-    .paragraph-card.correct {
-      background: linear-gradient(135deg, #d4f1d4 0%, #e8f8e8 100%);
-      border-color: #4ade80;
-      box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
-    }
-  </style>
+.dragging {
+  opacity: .5;
+}
+
+.mobile-controls button {
+  font-size: 1.2rem;
+}
+</style>
 </head>
 
-<body class="h-full">
-<div class="w-full h-full overflow-auto"
-     style="background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 50%, #fae8ff 100%);">
+<body class="min-h-screen bg-gradient-to-br from-purple-200 via-purple-100 to-pink-100">
 
-  <div class="max-w-4xl mx-auto px-4 py-10">
+<div class="max-w-4xl mx-auto p-6">
 
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-4" style="color:#6b21a8;">
-        The Path to Balance
-      </h1>
-      <p class="text-lg" style="color:#7c3aed;">
-        Drag the paragraphs to arrange them in the correct order.
-      </p>
+<h1 class="text-3xl font-bold text-center text-purple-800 mb-4">
+The Path to Balance
+</h1>
 
-      <button id="check-button"
-              class="mt-6 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg"
-              style="background:#6b21a8;color:white;">
-        Check My Answer
-      </button>
+<p class="text-center text-purple-700 mb-6">
+Arrange the paragraphs in the correct order.
+</p>
 
-      <button id="reset-button"
-              class="mt-6 ml-4 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hidden"
-              style="background:#7c3aed;color:white;">
-        Try Again
-      </button>
+<div class="text-center mb-6">
+<button id="checkBtn" class="px-6 py-3 bg-purple-800 text-white rounded-lg shadow">
+Check My Answer
+</button>
+<button id="resetBtn" class="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hidden">
+Try Again
+</button>
+<div id="result" class="mt-4 text-xl font-bold hidden"></div>
+</div>
 
-      <div id="result-message" class="mt-4 text-xl font-bold hidden"></div>
-    </div>
+<div id="container" class="space-y-4"></div>
 
-    <div id="paragraph-container" class="space-y-4"></div>
-
-  </div>
 </div>
 
 <script>
-const paragraphs = [
-  {
-    id: 'A',
-    correctPosition: 0,
-    text: `Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.`
-  },
-  {
-    id: 'B',
-    correctPosition: 1,
-    text: `Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.`
-  },
-  {
-    id: 'C',
-    correctPosition: 2,
-    text: `Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.`
-  },
-  {
-    id: 'D',
-    correctPosition: 3,
-    text: `After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.
+const isMobile = window.matchMedia('(hover: none)').matches;
 
-When they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.`
-  },
-  {
-    id: 'E',
-    correctPosition: 4,
-    text: `With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.`
-  }
+const paragraphs = [
+{ id:'A', correct:0, text:`Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.`},
+{ id:'B', correct:1, text:`Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.`},
+{ id:'C', correct:2, text:`Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.`},
+{ id:'D', correct:3, text:`After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.
+
+When they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.`},
+{ id:'E', correct:4, text:`With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.`}
 ];
 
-let currentOrder = [];
-let draggedEl = null;
+let order = [];
 
-/* ---------- INIT ---------- */
-function shuffle(array) {
-  return [...array].sort(() => Math.random() - 0.5);
+function shuffle() {
+  do {
+    order = [...paragraphs].sort(()=>Math.random()-0.5);
+  } while(order.some((p,i)=>p.correct===i));
 }
 
-function init() {
-  do {
-    currentOrder = shuffle(paragraphs);
-  } while (currentOrder.some((p, i) => p.correctPosition === i));
+function render() {
+  const c = document.getElementById('container');
+  c.innerHTML = '';
 
+  order.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'paragraph-card';
+    card.dataset.id = p.id;
+
+    card.innerHTML = `
+      <p class="mb-4 leading-relaxed text-gray-800 whitespace-pre-line">${p.text}</p>
+      ${isMobile ? `
+      <div class="mobile-controls flex gap-3 justify-end">
+        <button onclick="moveUp(${i})">⬆️</button>
+        <button onclick="moveDown(${i})">⬇️</button>
+      </div>` : ``}
+    `;
+
+    if (!isMobile) {
+      card.draggable = true;
+
+      card.ondragstart = () => {
+        card.classList.add('dragging');
+      };
+      card.ondragend = () => {
+        card.classList.remove('dragging');
+        syncOrder();
+      };
+      card.ondragover = e => {
+        e.preventDefault();
+        const dragging = document.querySelector('.dragging');
+        if (!dragging || dragging === card) return;
+        c.insertBefore(dragging, card);
+      };
+    }
+
+    c.appendChild(card);
+  });
+}
+
+function syncOrder() {
+  order = [...document.querySelectorAll('.paragraph-card')]
+    .map(c => paragraphs.find(p => p.id === c.dataset.id));
+}
+
+function moveUp(i) {
+  if (i === 0) return;
+  [order[i-1], order[i]] = [order[i], order[i-1]];
   render();
 }
 
-/* ---------- RENDER ---------- */
-function render() {
-  const container = document.getElementById('paragraph-container');
-  container.innerHTML = '';
-
-  currentOrder.forEach(p => {
-    const card = document.createElement('div');
-    card.className =
-      'paragraph-card bg-white rounded-lg shadow-lg p-6 border-2 border-purple-200';
-    card.dataset.id = p.id;
-    card.innerText = p.text;
-
-    // DESKTOP
-    card.draggable = true;
-    card.addEventListener('dragstart', e => {
-      draggedEl = card;
-      card.classList.add('dragging');
-    });
-    card.addEventListener('dragend', () => {
-      card.classList.remove('dragging');
-      updateOrder();
-    });
-    card.addEventListener('dragover', e => {
-      e.preventDefault();
-      const after = getAfter(container, e.clientY);
-      after ? container.insertBefore(draggedEl, after)
-            : container.appendChild(draggedEl);
-    });
-
-    // MOBILE
-    card.addEventListener('touchstart', () => {
-      draggedEl = card;
-      card.classList.add('dragging');
-    });
-    card.addEventListener('touchmove', e => {
-      e.preventDefault();
-      const y = e.touches[0].clientY;
-      const after = getAfter(container, y);
-      after ? container.insertBefore(card, after)
-            : container.appendChild(card);
-    }, { passive: false });
-    card.addEventListener('touchend', () => {
-      card.classList.remove('dragging');
-      draggedEl = null;
-      updateOrder();
-    });
-
-    container.appendChild(card);
-  });
+function moveDown(i) {
+  if (i === order.length-1) return;
+  [order[i+1], order[i]] = [order[i], order[i+1]];
+  render();
 }
 
-/* ---------- HELPERS ---------- */
-function getAfter(container, y) {
-  const els = [...container.querySelectorAll('.paragraph-card:not(.dragging)')];
-  return els.reduce((closest, el) => {
-    const box = el.getBoundingClientRect();
-    const offset = y - box.top - box.height / 2;
-    return offset < 0 && offset > closest.offset
-      ? { offset, el }
-      : closest;
-  }, { offset: -Infinity }).el;
-}
-
-function updateOrder() {
-  currentOrder = [...document.querySelectorAll('.paragraph-card')]
-    .map(card => paragraphs.find(p => p.id === card.dataset.id));
-}
-
-/* ---------- CHECK ---------- */
-document.getElementById('check-button').onclick = () => {
-  const cards = document.querySelectorAll('.paragraph-card');
+document.getElementById('checkBtn').onclick = () => {
   let ok = true;
-
-  cards.forEach((card, i) => {
-    const p = paragraphs.find(p => p.id === card.dataset.id);
-    if (p.correctPosition === i) card.classList.add('correct');
-    else { card.classList.remove('correct'); ok = false; }
+  document.querySelectorAll('.paragraph-card').forEach((c,i)=>{
+    const p = paragraphs.find(p=>p.id===c.dataset.id);
+    if (p.correct===i) c.classList.add('correct');
+    else { c.classList.remove('correct'); ok=false; }
   });
-
-  const msg = document.getElementById('result-message');
-  msg.classList.remove('hidden');
-  msg.textContent = ok
-    ? '🎉 Perfect! Correct order.'
-    : '❌ Some paragraphs are still misplaced.';
-  msg.style.color = ok ? '#16a34a' : '#dc2626';
-
-  document.getElementById('check-button').classList.add('hidden');
-  document.getElementById('reset-button').classList.remove('hidden');
+  const r = document.getElementById('result');
+  r.classList.remove('hidden');
+  r.textContent = ok ? '🎉 Perfect!' : '❌ Some paragraphs are incorrect.';
+  r.style.color = ok ? '#16a34a' : '#dc2626';
+  checkBtn.classList.add('hidden');
+  resetBtn.classList.remove('hidden');
 };
 
-document.getElementById('reset-button').onclick = () => {
-  document.getElementById('result-message').classList.add('hidden');
-  document.getElementById('reset-button').classList.add('hidden');
-  document.getElementById('check-button').classList.remove('hidden');
-  init();
+document.getElementById('resetBtn').onclick = () => {
+  shuffle();
+  render();
+  result.classList.add('hidden');
+  resetBtn.classList.add('hidden');
+  checkBtn.classList.remove('hidden');
 };
 
-init();
+shuffle();
+render();
 </script>
+
 </body>
 </html>
