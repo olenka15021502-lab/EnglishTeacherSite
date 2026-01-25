@@ -1,169 +1,148 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Path to Balance</title>
+<title>The Path to Balance - Story Sequencing</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-body {
-  font-family: Georgia, "Times New Roman", serif;
-}
+body { box-sizing: border-box; font-family: 'Georgia', 'Times New Roman', serif; }
 
 .paragraph-card {
+  transition: all 0.3s ease;
   background: white;
-  border: 2px solid #e9d5ff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+  border: 2px solid #d8b4fe;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
 }
 
 .paragraph-card.correct {
-  background: linear-gradient(135deg, #d4f1d4, #e8f8e8);
+  background: linear-gradient(135deg, #d4f1d4 0%, #e8f8e8 100%);
   border-color: #4ade80;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
 }
 
-.dragging {
-  opacity: .5;
+.arrow-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.mobile-controls button {
-  font-size: 1.2rem;
+.arrow-buttons button {
+  background: #6b21a8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.arrow-buttons button:hover {
+  background: #7c3aed;
 }
 </style>
 </head>
-
-<body class="min-h-screen bg-gradient-to-br from-purple-200 via-purple-100 to-pink-100">
-
-<div class="max-w-4xl mx-auto p-6">
-
-<h1 class="text-3xl font-bold text-center text-purple-800 mb-4">
-The Path to Balance
-</h1>
-
-<p class="text-center text-purple-700 mb-6">
-Arrange the paragraphs in the correct order.
-</p>
-
-<div class="text-center mb-6">
-<button id="checkBtn" class="px-6 py-3 bg-purple-800 text-white rounded-lg shadow">
-Check My Answer
-</button>
-<button id="resetBtn" class="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hidden">
-Try Again
-</button>
-<div id="result" class="mt-4 text-xl font-bold hidden"></div>
-</div>
-
-<div id="container" class="space-y-4"></div>
-
+<body class="h-full">
+<div class="w-full h-full overflow-auto" style="background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 50%, #fae8ff 100%);">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <div class="text-center mb-6 sm:mb-8">
+      <h1 id="activity-title" class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style="color: #6b21a8;">The Path to Balance</h1>
+      <p id="instruction-text" class="text-base sm:text-lg px-2" style="color: #7c3aed;">Use the arrows to arrange the paragraphs in the correct order and reconstruct the story.</p>
+      <button id="check-button" class="mt-6 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105" style="background: #6b21a8; color: white;">Check My Answer</button>
+      <button id="reset-button" class="mt-6 ml-4 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 hidden" style="background: #7c3aed; color: white;">Try Again</button>
+      <div id="result-message" class="mt-4 text-xl font-bold hidden"></div>
+    </div>
+    <div id="paragraph-container" class="space-y-3 sm:space-y-4"></div>
+  </div>
 </div>
 
 <script>
-const isMobile = window.matchMedia('(hover: none)').matches;
-
 const paragraphs = [
-{ id:'A', correct:0, text:`Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.`},
-{ id:'B', correct:1, text:`Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.`},
-{ id:'C', correct:2, text:`Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.`},
-{ id:'D', correct:3, text:`After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.
-
-When they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.`},
-{ id:'E', correct:4, text:`With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.`}
+  {id:'A', text:"Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.", correctPosition:0 },
+  {id:'B', text:"Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.", correctPosition:1 },
+  {id:'C', text:"Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.", correctPosition:2 },
+  {id:'D', text:"After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.\n\nWhen they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.", correctPosition:3 },
+  {id:'E', text:"With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.", correctPosition:4 }
 ];
 
-let order = [];
+let currentOrder = [];
 
-function shuffle() {
-  do {
-    order = [...paragraphs].sort(()=>Math.random()-0.5);
-  } while(order.some((p,i)=>p.correct===i));
+function shuffleArray(array){
+  const shuffled=[...array];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  return shuffled;
 }
 
-function render() {
-  const c = document.getElementById('container');
-  c.innerHTML = '';
+function initializeParagraphs(){
+  do { currentOrder = shuffleArray(paragraphs); } 
+  while(currentOrder.some((p,i)=>p.correctPosition===i));
+  renderParagraphs();
+}
 
-  order.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'paragraph-card';
-    card.dataset.id = p.id;
+function renderParagraphs(){
+  const container = document.getElementById('paragraph-container');
+  container.innerHTML='';
+  currentOrder.forEach((p,i)=>{
+    const card=document.createElement('div');
+    card.className='paragraph-card';
+    card.dataset.id=p.id;
 
-    card.innerHTML = `
-      <p class="mb-4 leading-relaxed text-gray-800 whitespace-pre-line">${p.text}</p>
-      ${isMobile ? `
-      <div class="mobile-controls flex gap-3 justify-end">
-        <button onclick="moveUp(${i})">⬆️</button>
-        <button onclick="moveDown(${i})">⬇️</button>
-      </div>` : ``}
+    card.innerHTML=`
+      <p class="flex-1 text-sm sm:text-base leading-relaxed" style="color: #374151;">${p.text}</p>
+      <div class="arrow-buttons">
+        <button class="up-btn">↑</button>
+        <button class="down-btn">↓</button>
+      </div>
     `;
 
-    if (!isMobile) {
-      card.draggable = true;
+    card.querySelector('.up-btn').addEventListener('click',()=>{
+      const index=currentOrder.findIndex(x=>x.id===p.id);
+      if(index>0){ [currentOrder[index-1],currentOrder[index]]=[currentOrder[index],currentOrder[index-1]]; renderParagraphs(); }
+    });
 
-      card.ondragstart = () => {
-        card.classList.add('dragging');
-      };
-      card.ondragend = () => {
-        card.classList.remove('dragging');
-        syncOrder();
-      };
-      card.ondragover = e => {
-        e.preventDefault();
-        const dragging = document.querySelector('.dragging');
-        if (!dragging || dragging === card) return;
-        c.insertBefore(dragging, card);
-      };
-    }
+    card.querySelector('.down-btn').addEventListener('click',()=>{
+      const index=currentOrder.findIndex(x=>x.id===p.id);
+      if(index<currentOrder.length-1){ [currentOrder[index+1],currentOrder[index]]=[currentOrder[index],currentOrder[index+1]]; renderParagraphs(); }
+    });
 
-    c.appendChild(card);
+    container.appendChild(card);
   });
 }
 
-function syncOrder() {
-  order = [...document.querySelectorAll('.paragraph-card')]
-    .map(c => paragraphs.find(p => p.id === c.dataset.id));
-}
-
-function moveUp(i) {
-  if (i === 0) return;
-  [order[i-1], order[i]] = [order[i], order[i-1]];
-  render();
-}
-
-function moveDown(i) {
-  if (i === order.length-1) return;
-  [order[i+1], order[i]] = [order[i], order[i+1]];
-  render();
-}
-
-document.getElementById('checkBtn').onclick = () => {
-  let ok = true;
-  document.querySelectorAll('.paragraph-card').forEach((c,i)=>{
-    const p = paragraphs.find(p=>p.id===c.dataset.id);
-    if (p.correct===i) c.classList.add('correct');
-    else { c.classList.remove('correct'); ok=false; }
+function checkAnswer(){
+  let allCorrect=true;
+  const cards=document.querySelectorAll('.paragraph-card');
+  cards.forEach((card,index)=>{
+    const p=paragraphs.find(x=>x.id===card.dataset.id);
+    if(p.correctPosition===index) card.classList.add('correct');
+    else { card.classList.remove('correct'); allCorrect=false; }
   });
-  const r = document.getElementById('result');
-  r.classList.remove('hidden');
-  r.textContent = ok ? '🎉 Perfect!' : '❌ Some paragraphs are incorrect.';
-  r.style.color = ok ? '#16a34a' : '#dc2626';
-  checkBtn.classList.add('hidden');
-  resetBtn.classList.remove('hidden');
-};
+  const result=document.getElementById('result-message');
+  result.classList.remove('hidden');
+  result.textContent=allCorrect?'🎉 Perfect! You got the story in the correct order!':'❌ Not quite right. The green paragraphs are in the correct position.';
+  result.style.color=allCorrect?'#16a34a':'#dc2626';
+  document.getElementById('check-button').classList.add('hidden');
+  document.getElementById('reset-button').classList.remove('hidden');
+}
 
-document.getElementById('resetBtn').onclick = () => {
-  shuffle();
-  render();
-  result.classList.add('hidden');
-  resetBtn.classList.add('hidden');
-  checkBtn.classList.remove('hidden');
-};
+function resetActivity(){
+  document.getElementById('result-message').classList.add('hidden');
+  document.getElementById('reset-button').classList.add('hidden');
+  document.getElementById('check-button').classList.remove('hidden');
+  initializeParagraphs();
+}
 
-shuffle();
-render();
+initializeParagraphs();
+document.getElementById('check-button').addEventListener('click',checkAnswer);
+document.getElementById('reset-button').addEventListener('click',resetActivity);
 </script>
-
 </body>
 </html>
