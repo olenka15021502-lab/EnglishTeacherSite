@@ -1,388 +1,217 @@
-<!doctype doctype>
+<!doctype html>
 <html lang="en" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Path to Balance - Story Sequencing</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/_sdk/element_sdk.js"></script>
+
   <style>
     body {
       box-sizing: border-box;
       font-family: 'Georgia', 'Times New Roman', serif;
     }
-    
+
     .paragraph-card {
-  transition: all 0.3s ease;
-  cursor: grab;
-  touch-action: manipulation;
-}
-
-.paragraph-card.dragging {
-  cursor: grabbing;
-}
-
-    
-    .paragraph-card.dragging {
-      opacity: 0.5;
-      transform: scale(0.98);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
     }
-    
+
+    .paragraph-card.dragging {
+      opacity: 0.6;
+      transform: scale(0.98);
+      cursor: grabbing;
+    }
+
     .paragraph-card.correct {
       background: linear-gradient(135deg, #d4f1d4 0%, #e8f8e8 100%);
       border-color: #4ade80;
       box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
     }
-    
-    .drop-zone {
-      min-height: 8px;
-      transition: all 0.2s ease;
-    }
-    
-    .drop-zone.active {
-      min-height: 40px;
-      background: rgba(167, 139, 250, 0.2);
-      border: 2px dashed #a78bfa;
-      border-radius: 8px;
-    }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div class="w-full h-full overflow-auto" style="background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 50%, #fae8ff 100%);">
-   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-    <div class="text-center mb-6 sm:mb-8">
-     <h1 id="activity-title" class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" style="color: #6b21a8;">The Path to Balance</h1>
-     <p id="instruction-text" class="text-base sm:text-lg px-2" style="color: #7c3aed;">Drag the paragraphs to arrange them in the correct order and reconstruct the story.</p><button id="check-button" class="mt-6 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105" style="background: #6b21a8; color: white;"> Check My Answer </button> <button id="reset-button" class="mt-6 ml-4 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 hidden" style="background: #7c3aed; color: white;"> Try Again </button>
-     <div id="result-message" class="mt-4 text-xl font-bold hidden"></div>
+</head>
+
+<body class="h-full">
+<div class="w-full h-full overflow-auto"
+     style="background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 50%, #fae8ff 100%);">
+
+  <div class="max-w-4xl mx-auto px-4 py-10">
+
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold mb-4" style="color:#6b21a8;">
+        The Path to Balance
+      </h1>
+      <p class="text-lg" style="color:#7c3aed;">
+        Drag the paragraphs to arrange them in the correct order.
+      </p>
+
+      <button id="check-button"
+              class="mt-6 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg"
+              style="background:#6b21a8;color:white;">
+        Check My Answer
+      </button>
+
+      <button id="reset-button"
+              class="mt-6 ml-4 px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hidden"
+              style="background:#7c3aed;color:white;">
+        Try Again
+      </button>
+
+      <div id="result-message" class="mt-4 text-xl font-bold hidden"></div>
     </div>
-    <div id="drop-zone-top" class="min-h-[60px] mb-3 sm:mb-4"></div>
-    <div id="paragraph-container" class="space-y-3 sm:space-y-4"><!-- Paragraphs will be inserted here -->
-    </div>
-   </div>
+
+    <div id="paragraph-container" class="space-y-4"></div>
+
   </div>
-  <script>
-    const defaultConfig = {
-      activity_title: "The Path to Balance",
-      instruction_text: "Drag the paragraphs to arrange them in the correct order and reconstruct the story.",
-      primary_color: "#6b21a8",
-      secondary_color: "#7c3aed",
-      background_start: "#e9d5ff",
-      background_mid: "#f3e8ff",
-      background_end: "#fae8ff",
-      font_family: "Georgia"
-    };
+</div>
 
-    const paragraphs = [
-      {
-        id: 'A',
-        text: "Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.",
-        correctPosition: 0
-      },
-      {
-        id: 'B',
-        text: "Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.",
-        correctPosition: 1
-      },
-      {
-        id: 'C',
-        text: "Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.",
-        correctPosition: 2
-      },
-      {
-        id: 'D',
-        text: "After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.\n\nWhen they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.",
-        correctPosition: 3
-      },
-      {
-        id: 'E',
-        text: "With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.",
-        correctPosition: 4
-      }
-    ];
+<script>
+const paragraphs = [
+  {
+    id: 'A',
+    correctPosition: 0,
+    text: `Within the first year of their marriage, the dynamics of Anna and Robert's relationship began to change. Influenced by her difficult family background, Anna gradually started to take her husband for granted. She became emotionally distant, and despite Robert's consistent efforts, a sense of coldness crept into their relationship. Although Robert continued to pull his weight in the family and often tried to go the extra mile, Anna grew increasingly absorbed in her career. Early in their marriage, she had promised to think about starting a family, but as time passed, she quietly went back on her promise. This growing imbalance slowly drove a wedge between them.`
+  },
+  {
+    id: 'B',
+    correctPosition: 1,
+    text: `Robert found himself on the end of his tether. Feeling that his efforts were no longer noticed or appreciated, he began to bottle up his feelings, hoping the situation would somehow resolve itself. Instead, the emotional distance only deepened. At the same time, Robert was in turmoil, feeling misunderstood and emotionally drained. Realising that the situation was no longer sustainable, he suggested they take time apart.`
+  },
+  {
+    id: 'C',
+    correctPosition: 2,
+    text: `Anna reacted strongly. She seethed with resentment, convinced that Robert was being unfair and failing to see how much she had been working for their future — for financial security, a home, and stability. From her perspective, his decision felt sudden and deeply hurtful.`
+  },
+  {
+    id: 'D',
+    correctPosition: 3,
+    text: `After several weeks of separation, Anna began to reflect on her behaviour. She gradually recognised how emotionally distant she had become and how little she had communicated her fears and doubts. Determined to make things right, she reached out, ready to meet Robert halfway.
 
-    let currentOrder = [];
-    let draggedId = null;
-
-    function shuffleArray(array) {
-      const shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
-
-    function initializeParagraphs() {
-      // Keep shuffling until no paragraph is in its correct position
-      do {
-        currentOrder = shuffleArray(paragraphs);
-      } while (currentOrder.some((p, index) => p.correctPosition === index));
-      
-      renderParagraphs();
-    }
-    
-    function checkAnswer() {
-      const cards = document.querySelectorAll('.paragraph-card');
-      let allCorrect = true;
-      
-      cards.forEach((card, index) => {
-        const paragraphId = card.dataset.id;
-        const paragraph = paragraphs.find(p => p.id === paragraphId);
-        
-        if (paragraph.correctPosition === index) {
-          card.classList.add('correct');
-        } else {
-          card.classList.remove('correct');
-          allCorrect = false;
-        }
-      });
-      
-      const resultMessage = document.getElementById('result-message');
-      const checkButton = document.getElementById('check-button');
-      const resetButton = document.getElementById('reset-button');
-      
-      resultMessage.classList.remove('hidden');
-      
-      if (allCorrect) {
-        resultMessage.textContent = '🎉 Perfect! You got the story in the correct order!';
-        resultMessage.style.color = '#16a34a';
-      } else {
-        resultMessage.textContent = '❌ Not quite right. The green paragraphs are in the correct position.';
-        resultMessage.style.color = '#dc2626';
-      }
-      
-      checkButton.classList.add('hidden');
-      resetButton.classList.remove('hidden');
-    }
-    
-    function resetActivity() {
-      // Remove all correct highlighting
-      const cards = document.querySelectorAll('.paragraph-card');
-      cards.forEach(card => {
-        card.classList.remove('correct');
-      });
-      
-      // Hide result message and reset button
-      document.getElementById('result-message').classList.add('hidden');
-      document.getElementById('reset-button').classList.add('hidden');
-      document.getElementById('check-button').classList.remove('hidden');
-      
-      // Re-shuffle paragraphs
-      initializeParagraphs();
-    }
-
-    function renderParagraphs() {
-      const container = document.getElementById('paragraph-container');
-      container.innerHTML = '';
-      
-      currentOrder.forEach((paragraph, index) => {
-        const card = document.createElement('div');
-        card.className = 'paragraph-card bg-white rounded-lg shadow-lg p-4 sm:p-6 border-2 border-purple-200';
-        card.draggable = window.matchMedia('(hover: hover)').matches;
-        card.dataset.id = paragraph.id;
-        
-        card.innerHTML = `
-          <div class="flex items-start">
-            <p class="flex-1 text-sm sm:text-base leading-relaxed" style="color: #374151;">${paragraph.text}</p>
-          </div>
-        `;
-        
-        card.addEventListener('dragstart', (e) => {
-          draggedId = paragraph.id;
-          e.currentTarget.classList.add('dragging');
-        });
-        
-        card.addEventListener('dragend', (e) => {
-          e.currentTarget.classList.remove('dragging');
-        });
-        
-        card.addEventListener('dragover', (e) => {
-          e.preventDefault();
-          if (!draggedId) return;
-          
-          const afterElement = getDragAfterElement(container, e.clientY);
-          const draggedElement = document.querySelector(`[data-id="${draggedId}"]`);
-          
-          if (afterElement == null) {
-            container.appendChild(draggedElement);
-          } else {
-            container.insertBefore(draggedElement, afterElement);
-          }
-          
-          updateOrderFromDOM();
-        });
-        
-        card.addEventListener('drop', (e) => {
-          e.preventDefault();
-          updateOrderFromDOM();
-        });
-        
-        card.addEventListener('touchstart', handleTouchStart, { passive: false });
-        card.addEventListener('touchmove', handleTouchMove, { passive: false });
-        card.addEventListener('touchend', handleTouchEnd);
-        
-        container.appendChild(card);
-      });
-    }
-
-    function getDragAfterElement(container, y) {
-      const draggableElements = [...container.querySelectorAll('.paragraph-card:not(.dragging)')];
-      
-      return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-
-    function updateOrderFromDOM() {
-      const container = document.getElementById('paragraph-container');
-      const cards = container.querySelectorAll('.paragraph-card');
-      const newOrder = [];
-      
-      cards.forEach(card => {
-        const id = card.dataset.id;
-        const paragraph = paragraphs.find(p => p.id === id);
-        if (paragraph) {
-          newOrder.push(paragraph);
-        }
-      });
-      
-      currentOrder = newOrder;
-    }
-
-    let touchStartY = 0;
-    let touchCurrentY = 0;
-    let touchElement = null;
-    let touchStartTime = 0;
-
-    function handleTouchStart(e) {
-  touchElement = e.currentTarget;
-  draggedId = touchElement.dataset.id;
-  touchElement.classList.add('dragging');
-}
-
-function handleTouchMove(e) {
-  if (!touchElement) return;
-  e.preventDefault();
-
-  const touchY = e.touches[0].clientY;
-  const container = document.getElementById('paragraph-container');
-  const afterElement = getDragAfterElement(container, touchY);
-
-  if (afterElement == null) {
-    container.appendChild(touchElement);
-  } else {
-    container.insertBefore(touchElement, afterElement);
+When they finally spoke, they managed to clear the air. Anna admitted that her fear of starting a family was rooted in her childhood, shaped by the emotional tensions she had witnessed between her parents and the instability she associated with family life at that time. This conversation marked a turning point.`
+  },
+  {
+    id: 'E',
+    correctPosition: 4,
+    text: `With renewed trust and emotional clarity, Anna and Robert reached a place of mutual understanding and a sense of calm. They felt more grounded, more secure, and at peace with each other. Now, they are expecting a baby — not as a result of pressure or fear, but as a shared and conscious decision.`
   }
+];
+
+let currentOrder = [];
+let draggedEl = null;
+
+/* ---------- INIT ---------- */
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
-function handleTouchEnd() {
-  if (!touchElement) return;
+function init() {
+  do {
+    currentOrder = shuffle(paragraphs);
+  } while (currentOrder.some((p, i) => p.correctPosition === i));
 
-  touchElement.classList.remove('dragging');
-  updateOrderFromDOM();
-
-  touchElement = null;
-  draggedId = null;
+  render();
 }
 
+/* ---------- RENDER ---------- */
+function render() {
+  const container = document.getElementById('paragraph-container');
+  container.innerHTML = '';
 
-    async function onConfigChange(config) {
-      const titleElement = document.getElementById('activity-title');
-      const instructionElement = document.getElementById('instruction-text');
-      const bodyElement = document.querySelector('body > div');
-      
-      if (titleElement) {
-        titleElement.textContent = config.activity_title || defaultConfig.activity_title;
-        titleElement.style.color = config.primary_color || defaultConfig.primary_color;
-        titleElement.style.fontFamily = `${config.font_family || defaultConfig.font_family}, 'Times New Roman', serif`;
-      }
-      
-      if (instructionElement) {
-        instructionElement.textContent = config.instruction_text || defaultConfig.instruction_text;
-        instructionElement.style.color = config.secondary_color || defaultConfig.secondary_color;
-        instructionElement.style.fontFamily = `${config.font_family || defaultConfig.font_family}, 'Times New Roman', serif`;
-      }
-      
-      if (bodyElement) {
-        bodyElement.style.background = `linear-gradient(135deg, ${config.background_start || defaultConfig.background_start} 0%, ${config.background_mid || defaultConfig.background_mid} 50%, ${config.background_end || defaultConfig.background_end} 100%)`;
-      }
-      
-      document.body.style.fontFamily = `${config.font_family || defaultConfig.font_family}, 'Times New Roman', serif`;
-    }
+  currentOrder.forEach(p => {
+    const card = document.createElement('div');
+    card.className =
+      'paragraph-card bg-white rounded-lg shadow-lg p-6 border-2 border-purple-200';
+    card.dataset.id = p.id;
+    card.innerText = p.text;
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.primary_color || defaultConfig.primary_color,
-              set: (value) => {
-                window.elementSdk.config.primary_color = value;
-                window.elementSdk.setConfig({ primary_color: value });
-              }
-            },
-            {
-              get: () => config.secondary_color || defaultConfig.secondary_color,
-              set: (value) => {
-                window.elementSdk.config.secondary_color = value;
-                window.elementSdk.setConfig({ secondary_color: value });
-              }
-            },
-            {
-              get: () => config.background_start || defaultConfig.background_start,
-              set: (value) => {
-                window.elementSdk.config.background_start = value;
-                window.elementSdk.setConfig({ background_start: value });
-              }
-            },
-            {
-              get: () => config.background_mid || defaultConfig.background_mid,
-              set: (value) => {
-                window.elementSdk.config.background_mid = value;
-                window.elementSdk.setConfig({ background_mid: value });
-              }
-            },
-            {
-              get: () => config.background_end || defaultConfig.background_end,
-              set: (value) => {
-                window.elementSdk.config.background_end = value;
-                window.elementSdk.setConfig({ background_end: value });
-              }
-            }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => config.font_family || defaultConfig.font_family,
-            set: (value) => {
-              window.elementSdk.config.font_family = value;
-              window.elementSdk.setConfig({ font_family: value });
-            }
-          },
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ["activity_title", config.activity_title || defaultConfig.activity_title],
-          ["instruction_text", config.instruction_text || defaultConfig.instruction_text]
-        ])
-      });
-    }
+    // DESKTOP
+    card.draggable = true;
+    card.addEventListener('dragstart', e => {
+      draggedEl = card;
+      card.classList.add('dragging');
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('dragging');
+      updateOrder();
+    });
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      const after = getAfter(container, e.clientY);
+      after ? container.insertBefore(draggedEl, after)
+            : container.appendChild(draggedEl);
+    });
 
-    initializeParagraphs();
-    
-    // Add button event listeners
-    document.getElementById('check-button').addEventListener('click', checkAnswer);
-    document.getElementById('reset-button').addEventListener('click', resetActivity);
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3289b347ca440c',t:'MTc2OTI4OTIzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    // MOBILE
+    card.addEventListener('touchstart', () => {
+      draggedEl = card;
+      card.classList.add('dragging');
+    });
+    card.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const y = e.touches[0].clientY;
+      const after = getAfter(container, y);
+      after ? container.insertBefore(card, after)
+            : container.appendChild(card);
+    }, { passive: false });
+    card.addEventListener('touchend', () => {
+      card.classList.remove('dragging');
+      draggedEl = null;
+      updateOrder();
+    });
+
+    container.appendChild(card);
+  });
+}
+
+/* ---------- HELPERS ---------- */
+function getAfter(container, y) {
+  const els = [...container.querySelectorAll('.paragraph-card:not(.dragging)')];
+  return els.reduce((closest, el) => {
+    const box = el.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    return offset < 0 && offset > closest.offset
+      ? { offset, el }
+      : closest;
+  }, { offset: -Infinity }).el;
+}
+
+function updateOrder() {
+  currentOrder = [...document.querySelectorAll('.paragraph-card')]
+    .map(card => paragraphs.find(p => p.id === card.dataset.id));
+}
+
+/* ---------- CHECK ---------- */
+document.getElementById('check-button').onclick = () => {
+  const cards = document.querySelectorAll('.paragraph-card');
+  let ok = true;
+
+  cards.forEach((card, i) => {
+    const p = paragraphs.find(p => p.id === card.dataset.id);
+    if (p.correctPosition === i) card.classList.add('correct');
+    else { card.classList.remove('correct'); ok = false; }
+  });
+
+  const msg = document.getElementById('result-message');
+  msg.classList.remove('hidden');
+  msg.textContent = ok
+    ? '🎉 Perfect! Correct order.'
+    : '❌ Some paragraphs are still misplaced.';
+  msg.style.color = ok ? '#16a34a' : '#dc2626';
+
+  document.getElementById('check-button').classList.add('hidden');
+  document.getElementById('reset-button').classList.remove('hidden');
+};
+
+document.getElementById('reset-button').onclick = () => {
+  document.getElementById('result-message').classList.add('hidden');
+  document.getElementById('reset-button').classList.add('hidden');
+  document.getElementById('check-button').classList.remove('hidden');
+  init();
+};
+
+init();
+</script>
+</body>
 </html>
