@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>English Worksheet B2</title>
+  <title>encounter</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,11 +60,23 @@
  <body class="h-full font-body bg-gradient-to-br from-green-100 via-emerald-100 to-teal-100 text-black">
   <div class="h-full w-full overflow-auto">
    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><!-- Header -->
+   <!-- Верхняя плашка -->
+<div class="mx-auto mt-0 w-max flex items-center gap-3 px-6 py-3 bg-white/60 backdrop-blur-sm rounded-full border border-green-100 shadow-sm">
+  <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+  </svg>
+  <a id="brand-link" href="https://t.me/english_exams_with_olga" target="_blank" rel="noopener noreferrer"
+     class="font-heading font-medium text-green-700 hover:text-green-800 transition-colors">
+    <span id="brand-name">English with Olga</span>
+  </a>
+</div>
+
     <header class="text-center mb-8 sm:mb-10">
      <h1 id="page-title" class="font-heading text-2xl sm:text-3xl lg:text-4xl font-semibold text-black mb-3 px-4">First Encounters and Early Feelings</h1>
      <p class="text-gray-600 text-base sm:text-lg italic px-4">What words are missing? Say them aloud and check yourself by clicking the buttons.</p>
      <div class="mt-4 w-24 h-1 bg-gradient-to-r from-green-300 via-emerald-400 to-teal-300 mx-auto rounded-full"></div>
     </header><!-- Worksheet Content -->
+	
     <main class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg shadow-green-100/50 border border-green-100 p-6 sm:p-10">
      <div class="prose prose-lg max-w-none text-black leading-relaxed space-y-6" id="worksheet-content"><!-- Paragraph 1 -->
       <p class="text-base sm:text-lg lg:text-xl leading-relaxed">After a long period of <span class="gap-text px-1">u__________</span> <button class="reveal-btn ml-1 sm:ml-2 px-2 sm:px-3 py-1 text-xs sm:text-sm font-heading font-medium bg-green-100 hover:bg-green-200 text-green-700 rounded-full border border-green-200" data-answer="unrequited" onclick="revealAnswer(this)">?</button> love, Anna was heartbroken and emotionally drained. For months, doubt <span class="gap-text px-1">p________</span> <button class="reveal-btn ml-1 sm:ml-2 px-2 sm:px-3 py-1 text-xs sm:text-sm font-heading font-medium bg-green-100 hover:bg-green-200 text-green-700 rounded-full border border-green-200" data-answer="plagued" onclick="revealAnswer(this)">?</button> her, leaving her uncertain whether she could trust her own emotions again. At times, she seemed <span class="gap-text px-1">a________</span> <button class="reveal-btn ml-1 sm:ml-2 px-2 sm:px-3 py-1 text-xs sm:text-sm font-heading font-medium bg-green-100 hover:bg-green-200 text-green-700 rounded-full border border-green-200" data-answer="adrift" onclick="revealAnswer(this)">?</button>, as if her emotional life had lost all direction.</p><!-- Paragraph 2 -->
@@ -82,12 +94,7 @@
      <div class="mt-6 text-center"><button onclick="resetWorksheet()" class="font-heading text-sm font-medium text-green-600 hover:text-green-700 underline underline-offset-4 decoration-green-300 hover:decoration-green-500 transition-colors"> Reset all answers </button>
      </div>
     </main><!-- Footer / Brand Link -->
-    <footer class="mt-8 sm:mt-10 text-center pb-8">
-     <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/60 backdrop-blur-sm rounded-full border border-green-100 shadow-sm">
-      <svg class="w-5 h-5 text-green-500" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-      </svg><a id="brand-link" href="https://englishwitholga.com" target="_blank" rel="noopener noreferrer" class="font-heading font-medium text-green-700 hover:text-green-800 transition-colors"> <span id="brand-name">English with Olga</span> </a>
-     </div>
-    </footer>
+  
    </div>
   </div>
   <script>
