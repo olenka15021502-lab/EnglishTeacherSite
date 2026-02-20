@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Russian Superstitions Quiz</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .quiz-container {
+      height: 100%;
+      overflow-y: auto;
+    }
+    
+    .glow-card {
+      box-shadow: 0 0 30px rgba(255, 204, 0, 0.3), 0 0 60px rgba(255, 204, 0, 0.1);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px rgba(255, 204, 0, 0.3), 0 0 60px rgba(255, 204, 0, 0.1); }
+      50% { box-shadow: 0 0 40px rgba(255, 204, 0, 0.4), 0 0 80px rgba(255, 204, 0, 0.2); }
+    }
+    
+    .option-btn {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(8px);
+      border-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      border-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.2);
+    }
+    
+    .option-btn.correct {
+      border-color: #4ade80;
+      background: rgba(74, 222, 128, 0.2);
+    }
+    
+    .option-btn.incorrect {
+      border-color: #f87171;
+      background: rgba(248, 113, 113, 0.2);
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+    
+    .matryoshka {
+      animation: wobble 2s ease-in-out infinite;
+    }
+    
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full" style="background: linear-gradient(135deg, #1a1a2e 0%, #222233 50%, #1a1a2e 100%); font-family: 'Inter', sans-serif;">
+  <div class="quiz-container w-full h-full relative flex flex-col"><!-- Stars background -->
+   <div id="stars" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Header Panel -->
+   <div class="flex justify-center p-4 relative z-20">
+    <a href="https://t.me/english_exams_with_olga" target="_blank">
+  <div class="px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 cursor-pointer" style="background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a1a2e;">
+    <span class="matryoshka inline-block mr-2">🪆</span> 
+    <span class="font-semibold">English with Olga</span>
+  </div>
+</a>
+   </div><!-- Screen Container -->
+   <div class="flex-1 overflow-hidden relative z-10">
+    <!-- Start Screen -->
+    <div id="start-screen" class="flex flex-col items-center justify-center min-h-full p-6 relative z-10">
+     <div class="text-center fade-in">
+      <div class="matryoshka text-8xl mb-6">
+       🪆
+      </div>
+      <h1 id="quiz-title" class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: #ffcc00;">Russian Superstitions Quiz</h1>
+      <p class="text-lg md:text-xl mb-8 max-w-md mx-auto" style="color: #e8d5b7;">Test your knowledge of Russian traditions and phrasal verbs!</p><button id="start-btn" onclick="startQuiz()" class="px-8 py-4 text-xl font-semibold rounded-xl transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a1a2e;"> 🎯 Start Quiz </button>
+      <p class="mt-6 text-sm" style="color: #888;">20 questions about fascinating traditions</p>
+     </div>
+    </div><!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden min-h-full p-4 md:p-6 relative z-10">
+     <div class="max-w-2xl mx-auto"><!-- Progress Bar -->
+      <div class="mb-6">
+       <div class="flex justify-between text-sm mb-2" style="color: #e8d5b7;"><span>Question <span id="current-num">1</span> of 20</span> <span id="score-display">Score: 0</span>
+       </div>
+       <div class="h-3 rounded-full overflow-hidden" style="background: rgba(255, 204, 0, 0.2);">
+        <div id="progress-bar" class="progress-fill h-full rounded-full" style="width: 0%; background: linear-gradient(90deg, #ffcc00, #ff9900);"></div>
+       </div>
+      </div><!-- Question Card -->
+      <div class="glow-card rounded-2xl p-6 md:p-8 fade-in" style="background: linear-gradient(145deg, #2a2a3e, #1f1f30); border: 1px solid rgba(255, 204, 0, 0.3);">
+       <div class="flex items-start gap-3 mb-6"><span class="text-2xl">🔮</span>
+        <p id="question-text" class="text-lg md:text-xl leading-relaxed" style="color: #fff; font-family: 'Playfair Display', serif;"></p>
+       </div><!-- Options -->
+       <div id="options-container" class="space-y-3 mb-6"></div><!-- Feedback -->
+       <div id="feedback" class="hidden rounded-xl p-4 mb-6 fade-in" style="background: rgba(0,0,0,0.3);">
+        <p id="feedback-text" class="text-base md:text-lg" style="color: #e8d5b7;"></p>
+       </div><!-- Next Button --> <button id="next-btn" onclick="nextQuestion()" class="hidden w-full py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-102" style="background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a1a2e;"> Next Question → </button>
+      </div>
+     </div>
+    </div><!-- Results Screen -->
+    <div id="results-screen" class="hidden min-h-full p-6 relative z-10">
+     <div class="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-full">
+      <div class="glow-card rounded-2xl p-8 text-center fade-in w-full" style="background: linear-gradient(145deg, #2a2a3e, #1f1f30); border: 1px solid rgba(255, 204, 0, 0.3);">
+       <div class="text-6xl mb-4" id="result-emoji">
+        🎉
+       </div>
+       <h2 class="text-3xl md:text-4xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: #ffcc00;">Quiz Complete!</h2>
+       <div class="text-5xl font-bold mb-2" style="color: #fff;" id="final-score">
+        0/14
+       </div>
+       <p class="text-xl mb-6" style="color: #e8d5b7;" id="result-message">Great job!</p>
+       <div class="rounded-xl p-4 mb-6" style="background: rgba(255, 204, 0, 0.1);">
+        <p class="text-lg" style="color: #e8d5b7;">You've learned about Russian traditions and <span id="verbs-learned">0</span> phrasal verbs!</p>
+       </div><!-- Summary -->
+       <div id="summary" class="text-left mb-6 max-h-64 overflow-y-auto rounded-xl p-4" style="background: rgba(0,0,0,0.3);"></div><button onclick="restartQuiz()" class="px-8 py-3 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a1a2e;"> 🔄 Try Again </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      quiz_title: "Russian Superstitions Quiz",
+      start_button_text: "🎯 Start Quiz"
+    };
+
+    const questions = [
+      {
+        text: "Before a long journey, families usually ______ a short ritual of silence.",
+        options: ["carry out", "bring in", "turn down", "set off"],
+        correct: 0,
+        verb: "carry out",
+        definition: "to perform or complete something planned"
+      },
+      {
+        text: "In many households, the cat is the first to be ______ a new apartment.",
+        options: ["taken over", "let into", "brought up", "put off"],
+        correct: 1,
+        verb: "let into",
+        definition: "to allow to enter"
+      },
+      {
+        text: "Giving sharp objects as presents is believed to ______ conflict unless a coin is exchanged.",
+        options: ["make up", "take over", "bring about", "come across"],
+        correct: 2,
+        verb: "bring about",
+        definition: "to cause something to happen"
+      },
+      {
+        text: "Returning home for a forgotten item is thought to ______ bad luck.",
+        options: ["take on", "look after", "put aside", "bring back"],
+        correct: 3,
+        verb: "bring back",
+        definition: "to cause something to return"
+      },
+      {
+        text: "If someone accidentally steps on your foot, they immediately step on yours in return to ______ a quarrel.",
+        options: ["break down", "ward off", "show up", "turn over"],
+        correct: 1,
+        verb: "ward off",
+        definition: "to prevent something unpleasant"
+      },
+      {
+        text: "Taking rubbish outside after sunset is said to ______ financial problems.",
+        options: ["lead to", "give in", "take off", "hold back"],
+        correct: 0,
+        verb: "lead to",
+        definition: "to cause a result"
+      },
+      {
+        text: "It is difficult to ______ why whistling indoors is considered taboo.",
+        options: ["put off", "run into", "figure out", "take over"],
+        correct: 2,
+        verb: "figure out",
+        definition: "to understand"
+      },
+      {
+        text: "When giving flowers, people always ______ that the number must be odd.",
+        options: ["bring up", "point out", "carry on", "turn into"],
+        correct: 1,
+        verb: "point out",
+        definition: "to draw attention to something"
+      },
+      {
+        text: "To recover from the bad omen of spilling salt, some people try to ______ it by throwing a pinch over their left shoulder.",
+        options: ["take after", "make out", "get over", "look into"],
+        correct: 2,
+        verb: "get over",
+        definition: "to recover from something unpleasant"
+      },
+      {
+        text: "The newlyweds ______ a piece of bread to see who will lead the family.",
+        options: ["cut down", "break off", "give away", "put out"],
+        correct: 1,
+        verb: "break off",
+        definition: "to separate by breaking"
+      },
+      {
+        text: "Many of these pagan rituals ______ to ancient Slavic times.",
+        options: ["take up", "bring in", "date back", "show off"],
+        correct: 2,
+        verb: "date back",
+        definition: "to have existed since a past time"
+      },
+      {
+        text: "Some people believe their life may ______ if a mirror breaks in the house.",
+        options: ["fall apart", "go over", "turn up", "put in"],
+        correct: 0,
+        verb: "fall apart",
+        definition: "to collapse or become ruined"
+      },
+      {
+        text: "During Maslenitsa, locals ______ pancakes to celebrate the end of winter.",
+        options: ["give out", "take over", "set up", "hold on"],
+        correct: 0,
+        verb: "give out",
+        definition: "to distribute"
+      },
+      {
+        text: "Sitting at the corner of the table is said to ______ a delayed marriage.",
+        options: ["come across", "result in", "turn down", "look through"],
+        correct: 1,
+        verb: "result in",
+        definition: "to cause an outcome"
+      },
+      {
+        text: "New superstitions often ______ around major life events like childbirth or weddings.",
+        options: ["bring up", "go off", "crop up", "take in"],
+        correct: 2,
+        verb: "crop up",
+        definition: "to appear unexpectedly"
+      },
+      {
+        text: "On the eve of an exam, some learners sleep with their textbook under their pillow to help the information ______.",
+        options: ["give in", "sink in", "take over", "run out"],
+        correct: 1,
+        verb: "sink in",
+        definition: "to be fully understood or remembered"
+      },
+      {
+        text: "Many students try to ______ washing their hair before a test, fearing they might wash away their knowledge.",
+        options: ["come across", "turn into", "hold back from", "put up with"],
+        correct: 2,
+        verb: "hold back from",
+        definition: "to restrain oneself from doing something"
+      },
+      {
+        text: "Before an exam, friends say \"No feather, no fur,\" and the student replies \"To hell with it\" to ______ the tradition.",
+        options: ["take over", "bring in", "show off", "keep up"],
+        correct: 3,
+        verb: "keep up",
+        definition: "to continue something"
+      },
+      {
+        text: "Many Russians avoid shaking hands across a doorway because they believe it may ______ an argument.",
+        options: ["make up", "bring on", "turn off", "take down"],
+        correct: 1,
+        verb: "bring on",
+        definition: "to cause something negative"
+      },
+      {
+        text: "When moving into a new home, some families ______ a priest to bless the apartment.",
+        options: ["set up", "run into", "call in", "break down"],
+        correct: 2,
+        verb: "call in",
+        definition: "to request someone's services officially"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = [];
+    let selectedOption = null;
+    let answered = false;
+
+    // Create stars
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = Math.random() * 3 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    function startQuiz() {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('current-num').textContent = currentQuestion + 1;
+      document.getElementById('progress-bar').style.width = ((currentQuestion) / questions.length * 100) + '%';
+      document.getElementById('question-text').textContent = q.text;
+      document.getElementById('score-display').textContent = `Score: ${score}`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      const letters = ['A', 'B', 'C', 'D'];
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn w-full text-left p-4 rounded-xl flex items-center gap-3';
+        btn.style.background = 'rgba(255, 255, 255, 0.05)';
+        btn.style.color = '#fff';
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: rgba(255, 204, 0, 0.2); color: #ffcc00;">${letters[index]}</span>
+          <span>${option}</span>
+        `;
+        btn.onclick = () => selectOption(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      selectedOption = null;
+      answered = false;
+    }
+
+    function selectOption(index, btn) {
+      if (answered) return;
+      answered = true;
+      selectedOption = index;
+      
+      const q = questions[currentQuestion];
+      const buttons = document.querySelectorAll('.option-btn');
+      
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (i === q.correct) {
+          b.classList.add('correct');
+        } else if (i === index && index !== q.correct) {
+          b.classList.add('incorrect');
+        }
+      });
+      
+      const isCorrect = index === q.correct;
+      if (isCorrect) score++;
+      
+      answers.push({
+        question: q.text,
+        selected: q.options[index],
+        correct: q.options[q.correct],
+        isCorrect,
+        verb: q.verb,
+        definition: q.definition
+      });
+      
+      const feedback = document.getElementById('feedback');
+      const feedbackText = document.getElementById('feedback-text');
+      
+      if (isCorrect) {
+        feedbackText.innerHTML = `<span style="color: #4ade80;">✓ Correct!</span> <strong style="color: #ffcc00;">${q.verb}</strong> — ${q.definition}`;
+      } else {
+        feedbackText.innerHTML = `<span style="color: #f87171;">✗ Incorrect.</span> The correct answer is <strong style="color: #ffcc00;">${q.verb}</strong> — ${q.definition}`;
+      }
+      
+      feedback.classList.remove('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+      document.getElementById('next-btn').textContent = currentQuestion < questions.length - 1 ? 'Next Question →' : 'See Results →';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+      document.getElementById('progress-bar').style.width = '100%';
+      
+      document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+      document.getElementById('verbs-learned').textContent = questions.length;
+      
+      const percentage = (score / questions.length) * 100;
+      let emoji, message;
+      
+      if (percentage === 100) {
+        emoji = '🏆';
+        message = 'Perfect! You\'re a master of Russian traditions!';
+      } else if (percentage >= 80) {
+        emoji = '🎉';
+        message = 'Excellent! You know your superstitions well!';
+      } else if (percentage >= 60) {
+        emoji = '👏';
+        message = 'Good job! Keep learning about Russian culture!';
+      } else if (percentage >= 40) {
+        emoji = '📚';
+        message = 'Not bad! There\'s more to discover!';
+      } else {
+        emoji = '🍀';
+        message = 'Keep practicing! Russian traditions are fascinating!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+      
+      const summary = document.getElementById('summary');
+      summary.innerHTML = '<h3 class="font-bold mb-3" style="color: #ffcc00;">Answer Summary:</h3>';
+      
+      answers.forEach((a, i) => {
+        const icon = a.isCorrect ? '✓' : '✗';
+        const color = a.isCorrect ? '#4ade80' : '#f87171';
+        summary.innerHTML += `
+          <div class="mb-3 pb-3 border-b border-gray-700 last:border-0">
+            <p class="text-sm" style="color: #888;">Q${i + 1}: ${a.question}</p>
+            <p style="color: ${color};">${icon} <strong>${a.verb}</strong> — ${a.definition}</p>
+          </div>
+        `;
+      });
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = [];
+      selectedOption = null;
+      answered = false;
+      
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('start-screen').classList.remove('hidden');
+    }
+
+    async function onConfigChange(config) {
+      const title = config.quiz_title || defaultConfig.quiz_title;
+      const startBtnText = config.start_button_text || defaultConfig.start_button_text;
+      
+      document.getElementById('quiz-title').textContent = title;
+      document.getElementById('start-btn').textContent = startBtnText;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["quiz_title", config.quiz_title || defaultConfig.quiz_title],
+        ["start_button_text", config.start_button_text || defaultConfig.start_button_text]
+      ]);
+    }
+
+    // Initialize
+    createStars();
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d0b146e34bbe1bb',t:'MTc3MTU1OTg0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
