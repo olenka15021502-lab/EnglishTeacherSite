@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Exercise: Past Tenses</title>
+    <style>
+        /* Стили для контейнера упражнения */
+        .exercise-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            color: #333;
+        }
+
+        /* Стили для заголовка */
+        h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 2em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .author {
+            text-align: center;
+            color: #f0e6ff;
+            font-size: 1.1em;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .instruction {
+            text-align: center;
+            font-size: 0.95em;
+            color: #fff;
+            margin-bottom: 25px;
+            font-style: italic;
+            background-color: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Стили для текста */
+        .exercise-text {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .exercise-text p {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Стили для интерактивного элемента (вопросительный знак) */
+        .interactive-gap {
+            display: inline-block;
+            margin: 0 5px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Сам вопросительный знак */
+        .q-mark {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(245, 87, 108, 0.4);
+        }
+
+        .q-mark:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.6);
+        }
+
+        /* Блок с ответом (изначально скрыт) */
+        .answer-reveal {
+            display: none; /* Скрыто по умолчанию */
+            margin-left: 8px;
+            color: #2d3748;
+            font-weight: 700;
+            font-style: italic;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 3px 10px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease;
+            box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+        }
+
+        /* Класс, который добавляется JS при клике */
+        .interactive-gap.revealed .answer-reveal {
+            display: inline;
+        }
+        
+        .interactive-gap.revealed .q-mark {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            box-shadow: 0 2px 8px rgba(67, 233, 123, 0.4);
+        }
+
+        /* Анимация появления */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .exercise-container {
+                margin: 10px;
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .author {
+                font-size: 1em;
+            }
+
+            .instruction {
+                font-size: 0.85em;
+                padding: 8px 12px;
+            }
+
+            .exercise-text {
+                padding: 15px;
+                font-size: 0.95em;
+            }
+
+            .q-mark {
+                min-width: 26px;
+                height: 26px;
+                font-size: 14px;
+            }
+
+            .answer-reveal {
+                font-size: 0.9em;
+                padding: 2px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .exercise-container {
+                margin: 5px;
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .exercise-text {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+
+            .interactive-gap {
+                margin: 0 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="exercise-container">
+    <h2>A Life-Changing Trip</h2>
+    <p class="author">by Mary</p>
+    <p class="instruction">Read the story aloud. Put the verbs in brackets into the correct past tense. Click on <b>?</b> to check.</p>
+    
+    <div class="exercise-text">
+        <!-- Начало текста упражнения -->
+        <p>
+            A few years ago, I went to Italy after a very difficult period in my life. 
+            I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had broken</span></span> (break) up with my boyfriend, 
+            I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had left</span></span> (leave) my job, 
+            and I didn't really know what to do next. I felt emotionally exhausted, so I decided to visit some friends in Milan and try to cheer myself up.
+        </p>
+        <p>
+            While I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">was staying</span></span> (stay) with them, 
+            they suggested that I should take a day trip to Verona before flying back home. They explained which train I needed to take and what time it left Milan Central Station. 
+            However, on the morning of the trip, I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">was thinking</span></span> (think) about my problems 
+            instead of paying attention to the platform numbers, and somehow I got on the wrong train without realising it.
+        </p>
+        <p>
+            At first, everything seemed normal. The train <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">was moving</span></span> (move) through the countryside, 
+            and after a while I fell asleep. When I woke up, the train <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had already arrived</span></span> (already arrive) in Bologna. 
+            I felt confused because I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had never visited</span></span> (never visit) the city before 
+            and I had no idea what to do. Still, I decided to walk around for a few hours before going back to Milan.
+        </p>
+        <p>
+            As I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">was walking</span></span> (walk) through the narrow streets 
+            and looking at the old buildings, I suddenly realised how different I felt there. For months before that, I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had been feeling</span></span> (feel) lost and unhappy, 
+            but in Bologna, for the first time in a long while, everything seemed peaceful and strangely familiar. By the end of the day, I <span class="interactive-gap"><span class="q-mark">?</span><span class="answer-reveal">had fallen</span></span> (fall) in love with the city.
+        </p>
+        <p>
+            When I returned home, I couldn't stop thinking about Bologna, so a few weeks later I moved there, found a job, and rented a room in a beautiful old house in the city centre. Later, I met the man who became the love of my life, and we lived there together for six wonderful years. Although we have moved away now, we still return to Bologna from time to time. Whenever I go back, I remember how one wrong train journey completely changed my life.
+        </p>
+        <!-- Конец текста упражнения -->
+    </div>
+</div>
+
+<script>
+    // Скрипт для обработки кликов
+    document.addEventListener('DOMContentLoaded', function() {
+        const gaps = document.querySelectorAll('.interactive-gap');
+
+        gaps.forEach(gap => {
+            gap.addEventListener('click', function() {
+                // Переключаем класс 'revealed' при клике
+                this.classList.toggle('revealed');
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
