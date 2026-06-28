@@ -3,11 +3,6 @@
  <head><script src="/_sdk/telemetry_sdk.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Famil<!doctype html>
-<html lang="en">
- <head><script src="/_sdk/telemetry_sdk.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Family Idioms in Context</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
@@ -44,79 +39,6 @@
 <p style="text-align:center; font-style:italic; color:#555; margin-top:0;">
     Read the text and say the missing word aloud.<br> Then click on the question mark to check your answer.
 </p>
-    <p data-template-id="instruction" class="canva-text text-center mb-8 font-semibold italic"></p>
-    <div id="passage" class="leading-8 text-lg"></div>
-    <div class="text-center mt-8"><button data-template-id="reset-btn" class="canva-button px-6 py-2 rounded-lg font-semibold" onclick="resetAll()">Reset</button>
-    </div>
-   </div>
-  </main>
-  <script src="/_sdk/editing_sdk.js"></script>
-  <script>
-        const answers = ["twinkle","spitting","chip","run","nest","pockets","flesh","shoulder","hand","nearest"];
-        const paragraphs = [
-            `Three generations of the Brown family gathered to celebrate Grandma Anne's seventieth birthday. Before dessert, she brought out an old photo album and began showing everyone pictures from many years ago.`,
-            `Looking at one of the oldest photographs, she smiled at her eldest son, David, and said, "When this picture was taken, you were still a <GAP> in your father's eye." Everyone laughed, while the younger members of the family tried to imagine a time before their parents had even been born.`,
-            `Grandma then picked up a recent photo of David standing next to his sixteen-year-old son, Ben. The resemblance was impossible to miss. Ben was the <GAP> image of his father. "He's a <GAP> off the old block," Grandpa said proudly. Ben had inherited not only David's looks but also his patience and love of repairing things. It was a skill that clearly seemed to <GAP> in the family.`,
-            `The conversation soon turned to David's older daughter, Emily, who had recently flown the <GAP> to start her first job in another city. Ben admitted that he missed her because, while they were growing up, they had practically lived in each other's <GAP>. The house felt much quieter without her.`,
-            `Just as everyone was about to cut the birthday cake, the doorbell rang. To everyone's surprise, Emily walked in carrying a bouquet of flowers. She had kept her visit a secret because she wanted to surprise her grandmother. Grandma hugged her tightly and said, "No matter where you live, you'll always be our own <GAP> and blood."`,
-            `As the celebration came to an end, Grandma thanked everyone for coming. She reminded them that no family was perfect and that disagreements were a normal part of life. What mattered most was knowing that there would always be a <GAP> to cry on and someone ready to give a helping <GAP>. Everyone smiled because they knew it was true. Their <GAP> and dearest would always be there when they needed them most.`
-        ];
-
-        let gapIndex = 0;
-        const container = document.getElementById('passage');
-
-        paragraphs.forEach(p => {
-            const div = document.createElement('p');
-            div.className = 'mb-4';
-            const parts = p.split('<GAP>');
-            parts.forEach((part, i) => {
-                div.insertAdjacentHTML('beforeend', part);
-                if (i < parts.length - 1) {
-                    const idx = gapIndex++;
-                    const span = document.createElement('span');
-                    span.dataset.gap = idx;
-                    span.innerHTML = `<button class="gap-btn" onclick="reveal(${idx})">?</button>`;
-                    div.appendChild(span);
-                }
-            });
-            container.appendChild(div);
-        });
-
-        function reveal(idx) {
-            const span = document.querySelector(`[data-gap="${idx}"]`);
-            span.innerHTML = `<span class="revealed">${answers[idx]}</span>`;
-        }
-
-        function resetAll() {
-            document.querySelectorAll('[data-gap]').forEach(span => {
-                const idx = span.dataset.gap;
-                span.innerHTML = `<button class="gap-btn" onclick="reveal(${idx})">?</button>`;
-            });
-        }
-    </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a12eb87627a803bf',t:'MTc4MjY3MDk4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>0; font-size: 14px; cursor: pointer;
-            border: none; vertical-align: middle; margin: 0 2px;
-            transition: transform 0.15s, box-shadow 0.15s;
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
-        }
-        .gap-btn:hover { transform: scale(1.15); box-shadow: 0 6px 16px rgba(124, 58, 237, 0.6); }
-        .revealed {
-            display: inline-block; background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white; padding: 2px 10px; border-radius: 12px; font-weight: 600;
-            font-size: 0.95em; vertical-align: middle; margin: 0 2px;
-            animation: fadeIn 0.4s ease; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-    </style>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
- </head>
- <body data-template-id="__page-root" class="min-h-screen flex items-center justify-center p-4" style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);">
-  <main class="w-full max-w-3xl">
-   <div data-template-id="card" class="canva-card bg-slate-50 rounded-2xl shadow-lg p-6 sm:p-10">
-    <h1 data-template-id="title" class="canva-text text-center font-bold mb-8">Family Idioms in Context</h1>
     <p data-template-id="instruction" class="canva-text text-center mb-8 font-semibold italic"></p>
     <div id="passage" class="leading-8 text-lg"></div>
     <div class="text-center mt-8"><button data-template-id="reset-btn" class="canva-button px-6 py-2 rounded-lg font-semibold" onclick="resetAll()">Reset</button>
