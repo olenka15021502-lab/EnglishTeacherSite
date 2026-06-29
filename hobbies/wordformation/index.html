@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Exploration Gap Fill</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .gap-input {
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 1rem;
+            width: 140px;
+            text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+            font-family: inherit;
+        }
+        .gap-input:focus { outline: none; border-color: #6366f1; }
+        .gap-input.correct { background: #dcfce7; border-color: #22c55e; }
+        .gap-input.wrong { background: #fee2e2; border-color: #ef4444; }
+        .word-hint { font-weight: 700; color: #6366f1; }
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen p-4 md:p-8">
+  <main class="max-w-3xl mx-auto">
+   <header class="mb-8 text-center">
+    <h1 data-template-id="page-title" class="canva-text text-3xl font-bold mb-2"></h1>
+    <p data-template-id="subtitle" class="canva-text text-lg"></p>
+   </header>
+   <article id="exercise" class="leading-8 text-lg space-y-4">
+    <p>Urban exploration is an <input class="gap-input" data-index="0"> <span class="word-hint">(ENJOY)</span> but risky hobby that has gained popularity in recent years. <input class="gap-input" data-index="1"> <span class="word-hint">(COMPETE)</span> don't really exist in this field, but there's definitely a sense of <input class="gap-input" data-index="2"> <span class="word-hint">(COMPETE)</span> among explorers to discover the most abandoned places.</p>
+    <p>The <input class="gap-input" data-index="3"> <span class="word-hint">(EQUIP)</span> needed is quite specific: sturdy boots, flashlights, and protective gear. Unfortunately, many people <input class="gap-input" data-index="4"> <span class="word-hint">(ASSOCIATE)</span> themselves from this hobby because they consider it dangerous or even illegal. However, experienced explorers argue that with proper <input class="gap-input" data-index="5"> <span class="word-hint">(KNOW)</span> and preparation, the risks can be minimized.</p>
+    <p>An <input class="gap-input" data-index="6"> <span class="word-hint">(ASSOCIATE)</span> of urban explorers was recently formed to promote safe practices. They organize <input class="gap-input" data-index="7"> <span class="word-hint">(TRAIN)</span> sessions where beginners can learn from an experienced <input class="gap-input" data-index="8"> <span class="word-hint">(TRAIN)</span>. The <input class="gap-input" data-index="9"> <span class="word-hint">(MAINTAIN)</span> of abandoned buildings is often neglected, which makes exploration both fascinating and hazardous.</p>
+    <p>Some explorers are <input class="gap-input" data-index="10"> <span class="word-hint">(FORTUNE)</span> injured each year, but enthusiasts claim the <input class="gap-input" data-index="11"> <span class="word-hint">(ENJOY)</span> of discovering forgotten places is worth the risk. It's <input class="gap-input" data-index="12"> <span class="word-hint">(PRACTICE)</span> impossible to visit all the abandoned sites in a single city.</p>
+    <p>Opponents of this hobby express strong <input class="gap-input" data-index="13"> <span class="word-hint">(OPPOSE)</span>, calling it trespassing. The <input class="gap-input" data-index="14"> <span class="word-hint">(OPPOSE)</span> view is that explorers help preserve historical memory by documenting these places before they disappear.</p>
+    <p>Would you like to <input class="gap-input" data-index="15"> <span class="word-hint">(TRAIN)</span> as an urban explorer? It's certainly an <input class="gap-input" data-index="16"> <span class="word-hint">(INTEREST)</span> way to spend your weekends!</p>
+   </article>
+   <div class="mt-8 text-center space-y-4"><button data-template-id="check-button" class="canva-button px-8 py-3 rounded-lg font-semibold text-lg cursor-pointer hover:opacity-90 transition" onclick="checkAnswers()"></button>
+    <div id="score" class="text-xl font-bold hidden"></div>
+   </div>
+  </main>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+        const answers = [
+            "enjoyable","competitors","competition","equipment","disassociate",
+            "knowledge","association","training","trainer","maintenance",
+            "unfortunately","enjoyment","practically","opposition","opposite",
+            "retrain","interesting"
+        ];
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.gap-input');
+            let correct = 0;
+            inputs.forEach((input, i) => {
+                const val = input.value.trim().toLowerCase();
+                input.classList.remove('correct', 'wrong');
+                if (val === answers[i]) {
+                    input.classList.add('correct');
+                    correct++;
+                } else {
+                    input.classList.add('wrong');
+                }
+            });
+            const scoreEl = document.getElementById('score');
+            scoreEl.textContent = `Score: ${correct} / ${answers.length}`;
+            scoreEl.className = 'text-xl font-bold';
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a136e94f0327d93d',t:'MTc4Mjc1Njg3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
