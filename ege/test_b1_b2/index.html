@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishPro - Level Check Test</title>
+    <style>
+        :root {
+            --primary: #FF6F61;
+            --primary-hover: #E55A50;
+            --accent: #FFD700;
+            --accent2: #FF9A9E;
+            --accent3: #FEC260;
+            --bg-gradient: linear-gradient(135deg, #FFE5E5 0%, #FFF5E1 50%, #E5F9E0 100%);
+            --card-bg: #FFFFFF;
+            --card-bg-alt: #FFF9F9;
+            --text-main: #2D3748;
+            --text-light: #718096;
+            --success: #48BB78;
+            --error: #F56565;
+            --shadow: 0 10px 30px -5px rgba(255, 111, 97, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+            --radius: 20px;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen {
+            padding: 40px 30px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            flex-grow: 1;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .brand-logo span {
+            background: linear-gradient(135deg, var(--text-main) 0%, #4A5568 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #FFE5E5 0%, #FFF5E1 100%);
+            padding: 15px 10px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 4px 10px rgba(255, 111, 97, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent3) 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 111, 97, 0.5);
+        }
+
+        .quiz-header {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: #EDF2F7;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent3) 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: left;
+            width: 100%;
+            color: var(--text-main);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F9 100%);
+            border: 2px solid #E2E8F0;
+            padding: 15px 20px;
+            border-radius: 14px;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF9F9 100%);
+            transform: translateX(5px);
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, #C6F6D5 0%, #9AE6B4 100%) !important;
+            border-color: var(--success) !important;
+            color: #22543D !important;
+        }
+
+        .option-btn.wrong {
+            background: linear-gradient(135deg, #FED7D7 0%, #FEB2B2 100%) !important;
+            border-color: var(--error) !important;
+            color: #742A2A !important;
+        }
+
+        .option-btn:disabled { cursor: default; opacity: 0.9; }
+
+        .status-icon { float: right; font-weight: bold; }
+
+        .extra-word-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .word-chip {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F9 100%);
+            border: 2px solid #E2E8F0;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .word-chip:hover:not(:disabled) {
+            border-color: var(--primary);
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(255, 111, 97, 0.2);
+        }
+
+        .word-chip.correct {
+            background: linear-gradient(135deg, var(--success) 0%, #38A169 100%);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .word-chip.wrong {
+            background: linear-gradient(135deg, var(--error) 0%, #E53E3E 100%);
+            color: white;
+            border-color: var(--error);
+            opacity: 0.7;
+        }
+
+        .reading-collapsible {
+            width: 100%;
+            margin-bottom: 25px;
+            border: 2px solid #FEC260;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF5E1 100%);
+            box-shadow: 0 4px 15px rgba(254, 194, 96, 0.2);
+        }
+
+        .reading-header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #FFE5B4 0%, #FEC260 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-main);
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .reading-header:hover {
+            background: linear-gradient(135deg, #FEC260 0%, #FF9A9E 100%);
+        }
+
+        .reading-header-icon {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .reading-header-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .reading-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 20px;
+            font-size: 0.95rem;
+            color: #4A5568;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .reading-content.expanded {
+            max-height: 1000px;
+            padding: 20px;
+        }
+
+        .reading-content h3 {
+            margin-bottom: 15px;
+            color: var(--text-main);
+            font-size: 1.1rem;
+        }
+
+        .reading-content p {
+            margin-bottom: 12px;
+        }
+
+       .score-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary) 0%, #EDF2F7 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(255, 111, 97, 0.3);
+    padding: 10px;
+}
+
+.score-inner {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.score-number {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+        .feedback-msg {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .feedback-desc {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 80%;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                min-height: 100vh;
+                border-radius: 0;
+            }
+            .info-grid { grid-template-columns: 1fr; }
+            .question-text { font-size: 1.1rem; }
+            .screen { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div id="start-screen" class="screen active">
+        <div class="brand-logo">English<span>Pro</span></div>
+        <h1>English Level Check Test</h1>
+        <p class="subtitle">Find out if you are ready for EGE preparation</p>
+        
+        <div class="info-grid">
+            <div class="info-item">27 Questions</div>
+            <div class="info-item">12–15 Minutes</div>
+            <div class="info-item">Instant Results</div>
+        </div>
+
+        <button class="btn-primary" onclick="startQuiz()">Start Test</button>
+    </div>
+
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-header">
+            <div class="progress-info">
+                <span id="question-counter">Question 1/27</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div id="reading-container"></div>
+        <div id="question-area" style="width: 100%;"></div>
+    </div>
+
+    <div id="result-screen" class="screen">
+        <div class="brand-logo">English<span>Pro</span></div>
+        <h2>Your Result</h2>
+        
+        <div class="score-circle" id="score-chart">
+            <div class="score-inner">
+                <span class="score-number" id="final-score">0/27</span>
+                <span class="score-label">Score</span>
+            </div>
+        </div>
+
+        <div class="feedback-msg" id="feedback-title">Calculating...</div>
+        <p class="feedback-desc" id="feedback-text">...</p>
+
+        <button class="btn-primary" onclick="location.reload()">Retake Test</button>
+    </div>
+
+</div>
+
+<script>
+    const quizData = [
+        // Part 1: Grammar & Vocabulary (1-18)
+        { type: 'choice', q: "The manager isn't in the office. He ______ home for the day.", options: ["went", "has gone", "had gone", "was going"], correct: 1 },
+        { type: 'choice', q: "I ______ through the report when my manager suddenly called me into his office.", options: ["looked", "have looked", "was looking", "had looked"], correct: 2 },
+        { type: 'choice', q: "Students ______ to switch off their mobile phones before the exam begins.", options: ["are asked", "ask", "asked", "have asked"], correct: 0 },
+        { type: 'choice', q: "If I ______ more free time, I'd take up another foreign language.", options: ["have", "will have", "would have", "had"], correct: 3 },
+        { type: 'choice', q: "You ______ try this new restaurant. The food is amazing!", options: ["can", "should", "must", "may"], correct: 1 },
+        { type: 'choice', q: "I clearly remember ______ the front door before we left.", options: ["to lock", "lock", "locked", "locking"], correct: 3 },
+        { type: 'choice', q: "The woman ______ son won the competition is my maths teacher.", options: ["whose", "who", "which", "whom"], correct: 0 },
+        { type: 'choice', q: "After university, she hopes to find ______ job abroad.", options: ["an", "the", "a", "—"], correct: 2 },
+        { type: 'choice', q: "I'm really looking forward ______ you again.", options: ["see", "seeing", "to see", "to seeing"], correct: 3 },
+        { type: 'choice', q: "When we reached the airport, the plane ______.", options: ["already took off", "was already taking off", "had already taken off", "has already taken off"], correct: 2 },
+        { type: 'choice', q: "I don't know how she manages to ______ working full-time and studying.", options: ["get away", "keep up", "put off", "carry on"], correct: 3 },
+        { type: 'choice', q: "After several months of discussion, they finally ______ a solution.", options: ["got over", "took off", "looked after", "came up with"], correct: 3 },
+        { type: 'choice', q: "The government has decided to ______ new measures to reduce pollution.", options: ["take", "make", "do", "set"], correct: 0 },
+        { type: 'choice', q: "She was completely ______ in thought and didn't notice us come in.", options: ["attracted", "absorbed", "involved", "engaged"], correct: 1 },
+        { type: 'choice', q: "Many young people today are capable ______ working effectively in international teams.", options: ["to", "with", "of", "for"], correct: 2 },
+        { type: 'choice', q: "Everyone should ______ responsibility for their own decisions.", options: ["keep", "do", "make", "take"], correct: 3 },
+        { type: 'choice', q: "The company couldn't ______ the high demand for its new product.", options: ["supply", "meet", "reach", "achieve"], correct: 1 },
+        { type: 'choice', q: "The new campaign aims to ______ awareness of environmental issues.", options: ["rise", "lift", "raise", "grow"], correct: 2 },
+        
+        // Part 2: Extra Word (19-22)
+        { 
+            type: 'extra_word', 
+            q: "Despite of being extremely nervous, Kate managed to give an excellent presentation.", 
+            words: ["Despite", "of", "being", "extremely", "nervous,", "Kate", "managed", "to", "give", "an", "excellent", "presentation."], 
+            correctIndex: 1
+        },
+        { 
+            type: 'extra_word', 
+            q: "He asked me where did I live.", 
+            words: ["He", "asked", "me", "where", "did", "I", "live."], 
+            correctIndex: 4
+        },
+        { 
+            type: 'extra_word', 
+            q: "We discussed about the problem for an hour.", 
+            words: ["We", "discussed", "about", "the", "problem", "for", "an", "hour."], 
+            correctIndex: 2
+        },
+        { 
+            type: 'extra_word', 
+            q: "She can to swim very well.", 
+            words: ["She", "can", "to", "swim", "very", "well."], 
+            correctIndex: 2
+        },
+
+        // Part 3: Reading (23-27)
+        { type: 'reading', q: "What is the main purpose of the text?", options: ["To compare different forms of entertainment.", "To describe the history of psychological research.", "To encourage people to stop using technology completely.", "To explain why boredom can have positive effects on creativity."], correct: 3 },
+        { type: 'reading', q: "What does the author suggest about technology?", options: ["It has no influence on creativity.", "It should be avoided whenever possible.", "It can reduce creativity if it leaves no time for quiet thinking.", "It is the main reason people become more creative."], correct: 2 },
+        { type: 'reading', q: "What can be inferred from the text?", options: ["Creative people never use smartphones.", "Taking short breaks without distractions may help people generate new ideas.", "Scientists recommend feeling bored as often as possible.", "Watching educational videos is better than reading books."], correct: 1 },
+        { type: 'reading', q: "The word \"wander\" in the second paragraph is closest in meaning to:", options: ["travel abroad", "move freely from one idea to another", "become confused", "concentrate deeply"], correct: 1 },
+        { type: 'reading', q: "What does the word \"it\" refer to in the sentence: \"It is simply one of the conditions...\"?", options: ["Creativity", "Technology", "Boredom", "Research"], correct: 2 }
+    ];
+
+    const readingText = {
+        title: "Why Boredom Can Actually Improve Creativity",
+        content: `<p>Most people try to avoid being bored. Whenever they have a few free minutes, they check their phones, watch short videos or listen to music. However, psychologists believe that boredom is not always a bad thing. In fact, it may play an important role in developing creativity.</p>
+        <p>When our brains are constantly occupied, they have little time to process information or come up with new ideas. During quiet moments, however, the mind is free to wander. This is when people often remember forgotten details, solve problems or think of original solutions. Many writers, artists and scientists have said that some of their best ideas appeared while they were doing something simple, such as walking or washing the dishes.</p>
+        <p>Researchers have also found that people who spend every spare moment looking at a screen may become less creative over time. This does not mean that technology is harmful. Instead, it suggests that our brains also need periods of rest without constant entertainment. Even a short break from digital devices can encourage deeper thinking.</p>
+        <p>Of course, boredom alone will not turn someone into a creative person. It is simply one of the conditions that can help the brain work differently. The next time you find yourself with nothing to do, you may not need to reach for your phone immediately. Giving your mind a chance to slow down could be exactly what it needs to produce a new idea.</p>`
+    };
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let readingTextShown = false;
+
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const questionArea = document.getElementById('question-area');
+    const readingContainer = document.getElementById('reading-container');
+    const progressFill = document.getElementById('progress-fill');
+    const questionCounter = document.getElementById('question-counter');
+
+    function startQuiz() {
+        startScreen.classList.remove('active');
+        quizScreen.classList.add('active');
+        renderQuestion();
+    }
+
+    function updateProgress() {
+        const totalQuestions = 27;
+        const currentQNum = currentQuestionIndex + 1;
+        questionCounter.innerText = `Question ${currentQNum}/${totalQuestions}`;
+        progressFill.style.width = `${(currentQNum / totalQuestions) * 100}%`;
+    }
+
+    function renderQuestion() {
+        const data = quizData[currentQuestionIndex];
+        updateProgress();
+        questionArea.innerHTML = '';
+        
+        questionArea.style.animation = 'none';
+        questionArea.offsetHeight;
+        questionArea.style.animation = 'fadeIn 0.5s ease-out forwards';
+
+        if (data.type === 'reading' && !readingTextShown) {
+            renderReadingText();
+            readingTextShown = true;
+        }
+
+        if (data.type === 'choice' || data.type === 'reading') {
+            renderChoiceQuestion(data);
+        } else if (data.type === 'extra_word') {
+            renderExtraWordQuestion(data);
+        }
+    }
+
+    function renderReadingText() {
+        const collapsible = document.createElement('div');
+        collapsible.className = 'reading-collapsible';
+        
+        const header = document.createElement('div');
+        header.className = 'reading-header';
+        header.innerHTML = `
+            <span>📖 ${readingText.title}</span>
+            <span class="reading-header-icon" id="reading-icon">▼</span>
+        `;
+        
+        const content = document.createElement('div');
+        content.className = 'reading-content expanded';
+        content.id = 'reading-content';
+        content.innerHTML = `<h3>${readingText.title}</h3>${readingText.content}`;
+        
+        header.onclick = () => {
+            const content = document.getElementById('reading-content');
+            const icon = document.getElementById('reading-icon');
+            content.classList.toggle('expanded');
+            icon.classList.toggle('collapsed');
+        };
+        
+        collapsible.appendChild(header);
+        collapsible.appendChild(content);
+        readingContainer.appendChild(collapsible);
+    }
+
+    function renderChoiceQuestion(data) {
+        const qText = document.createElement('div');
+        qText.className = 'question-text';
+        qText.innerText = data.q;
+        questionArea.appendChild(qText);
+
+        const grid = document.createElement('div');
+        grid.className = 'options-grid';
+
+        data.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => handleChoiceAnswer(btn, index, data.correct, grid);
+            grid.appendChild(btn);
+        });
+
+        questionArea.appendChild(grid);
+    }
+
+    function renderExtraWordQuestion(data) {
+        const qText = document.createElement('div');
+        qText.className = 'question-text';
+        qText.innerText = "Find the extra word:";
+        questionArea.appendChild(qText);
+
+        const sentenceDisplay = document.createElement('div');
+        sentenceDisplay.style.marginBottom = "20px";
+        sentenceDisplay.style.fontStyle = "italic";
+        sentenceDisplay.style.color = "#718096";
+        sentenceDisplay.style.textAlign = "center";
+        sentenceDisplay.innerText = `"${data.q}"`;
+        questionArea.appendChild(sentenceDisplay);
+
+        const container = document.createElement('div');
+        container.className = 'extra-word-container';
+
+        data.words.forEach((word, index) => {
+            const chip = document.createElement('button');
+            chip.className = 'word-chip';
+            chip.innerText = word;
+            chip.onclick = () => handleExtraWordAnswer(chip, index, data.correctIndex, container);
+            container.appendChild(chip);
+        });
+
+        questionArea.appendChild(container);
+    }
+
+    function handleChoiceAnswer(selectedBtn, selectedIndex, correctIndex, grid) {
+        const buttons = grid.querySelectorAll('.option-btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        if (selectedIndex === correctIndex) {
+            selectedBtn.classList.add('correct');
+            selectedBtn.innerHTML += ' <span class="status-icon">✅</span>';
+            score++;
+        } else {
+            selectedBtn.classList.add('wrong');
+            selectedBtn.innerHTML += ' <span class="status-icon">❌</span>';
+            buttons[correctIndex].classList.add('correct');
+            buttons[correctIndex].innerHTML += ' <span class="status-icon">✅</span>';
+        }
+
+        setTimeout(nextQuestion, 1500);
+    }
+
+    function handleExtraWordAnswer(selectedChip, selectedIndex, correctIndex, container) {
+        const chips = container.querySelectorAll('.word-chip');
+        chips.forEach(c => c.disabled = true);
+
+        if (selectedIndex === correctIndex) {
+            selectedChip.classList.add('correct');
+            score++;
+        } else {
+            selectedChip.classList.add('wrong');
+            chips[correctIndex].classList.add('correct');
+        }
+
+        setTimeout(nextQuestion, 1500);
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        quizScreen.classList.remove('active');
+        resultScreen.classList.add('active');
+
+        const totalQuestions = 27;
+        const finalScoreEl = document.getElementById('final-score');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        const chart = document.getElementById('score-chart');
+
+        finalScoreEl.innerText = `${score} / ${totalQuestions}`;
+
+        const percentage = (score / totalQuestions) * 100;
+        chart.style.background = `conic-gradient(var(--primary) ${percentage}%, #EDF2F7 ${percentage}%)`;
+
+        if (score >= 23) {
+            feedbackTitle.innerText = "Excellent!";
+            feedbackText.innerText = "You have a strong foundation for EGE preparation.";
+            feedbackTitle.style.color = "var(--success)";
+        } else if (score >= 19) {
+            feedbackTitle.innerText = "Good result!";
+            feedbackText.innerText = "You are close to the required level.";
+            feedbackTitle.style.color = "var(--primary)";
+        } else if (score >= 14) {
+            feedbackTitle.innerText = "Not bad";
+            feedbackText.innerText = "You have some good skills, but some areas need improvement.";
+            feedbackTitle.style.color = "#DD6B20";
+        } else {
+            feedbackTitle.innerText = "Keep Practicing";
+            feedbackText.innerText = "You need to strengthen your English foundation before starting intensive EGE preparation.";
+            feedbackTitle.style.color = "var(--error)";
+        }
+    }
+</script>
+
+</body>
+</html>
