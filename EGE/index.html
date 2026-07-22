@@ -1,713 +1,576 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Эффективные онлайн-занятия английским языком с опытным преподавателем. Подготовка к ОГЭ, ЕГЭ, международным экзаменам.">
-    <meta name="keywords" content="английский язык, онлайн занятия, репетитор английского, подготовка к ЕГЭ, подготовка к ОГЭ">
-    <meta name="author" content="Ольга Медведева">
-    <title>English with Olga — Онлайн-занятия английским языком</title>
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #FF6B6B;
-            --secondary: #4ECDC4;
-            --accent: #FFD166;
-            --dark: #1A535C;
-            --light: #F7FFF7;
-            --purple: #9B5DE5;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            overflow-x: hidden;
-            padding-top: 120px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--purple));
-            color: white;
-            padding: 25px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-        }
+	
+</script>
+<noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3734334;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+<!-- /Top.Mail.Ru counter -->
 
-        .header-content nav {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подготовка к ЕГЭ по английскому</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-        .header-content .logo,
-        .header-content .social-icons {
-            flex-shrink: 0;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        nav li {
-            margin: 0 15px;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        nav a.active,
-        nav a:hover {
-            color: var(--accent);
-        }
-        
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-        
-        nav a.active:after,
-        nav a:hover:after {
-            width: 100%;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(168,181,255,0.3), transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(123,92,255,0.25), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(200,210,255,0.2), transparent 50%),
+        linear-gradient(180deg, #f5f0ff, #ede7ff);
+      color: #2a1a5a;
+    }
+html, body {
+  overflow-x: hidden;
+}
+* {
+  box-sizing: border-box;
+}
 
-        .social-icons {
-            display: flex;
-            gap: 20px;
-        }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .social-icons a {
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+     background: rgba(107, 90, 140, 0.9);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      z-index: 1000;
+      padding: 12px 0;
+    }
 
-        .social-icons a:hover {
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
+    .header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
 
-        .hero {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary), var(--purple));
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero p {
-            font-size: 1.5rem;
-            max-width: 900px;
-            line-height: 1.2;
-            margin: 5px auto;
-            position: relative;
-            z-index: 2;
-        }
 
-        .btn {
-            background-color: var(--accent);
-            color: var(--dark);
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            display: inline-block;
-        }
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: white;
+    }
 
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+    }
 
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 25px;
-        }
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      position: relative;
+    }
 
-        .hero-buttons .btn {
-            margin-top: 0;
-        }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(135deg, #b8a0e0, #dcd0f5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-        .btn-blue {
-            background-color: var(--secondary);
-            color: #fff;
-            border-radius: 50px;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+    nav a:hover::after,
+    nav a.active::after {
+      opacity: 1;
+    }
 
-        .btn-blue:hover {
-            background-color: #3dbdaf;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        
-        .about,
-        .results {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .services,
-        .contact {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: var(--dark);
-            position: relative;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px;
-        }
+    .social-icons {
+      display: flex;
+      gap: 18px;
+    }
 
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-        
-        .about-text p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        .about-image {
-            flex: 1;
-            position: relative;
-        }
-        
-        .about-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .floating-card {
-            position: absolute;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            animation: float-card 5s infinite ease-in-out;
-        }
-        
-        .floating-card:nth-child(2) {
-            top: -30px;
-            right: -30px;
-            background: var(--accent);
-            color: var(--dark);
-            animation-delay: -2.5s;
-        }
-        
-        .floating-card:nth-child(3) {
-            bottom: -30px;
-            left: -30px;
-            background: var(--secondary);
-            color: white;
-            animation-delay: -1.5s;
-        }
-        
-        @keyframes float-card {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .service-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-        
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .results .stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 50px;
-        }
-        
-        .stat {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .stat-text {
-            font-size: 1.2rem;
-            color: var(--dark);
-        }
-        
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-        }
-        
-        .form-group textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-        
-        .social-links {
-            margin: 20px 0;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            margin: 0 15px;
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--accent);
-            transform: translateY(-5px);
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding-top: 140px;
-            }
+    .social-icons a {
+      color: white;
+      font-size: 1.3rem;
+    }
 
-            header {
-                padding: 10px 0;
-            }
+    /* Hero */
+    .hero {
+      padding: 140px 0 100px;
+      background: linear-gradient(135deg, #2f3a8f, #7b4fe3);
+      color: white;
+      text-align: center;
+    }
 
-            .header-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-            }
+    .badge {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(6px);
+  font-size: 14px;
+  letter-spacing: 0.3px;
 
-            .header-content nav {
-                position: static;
-                transform: none;
-                margin: 0;
-            }
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
-            nav ul {
-                display: flex;
-                justify-content: center;
-                gap: 12px;
-                flex-wrap: nowrap;
-                white-space: nowrap;
-            }
 
-            nav li {
-                margin: 0;
-            }
+    h1 {
+      margin: 24px 0 18px;
+      font-size: 48px;
+      line-height: 1.15;
+    }
 
-            nav a {
-                font-size: 0.9rem;
-                padding: 4px 6px;
-            }
+    .vocabulary-upgrade {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+	  text-shadow: none;
+    }
 
-            .logo {
-                font-size: 1.4rem;
-            }
+    .relationships-feelings {
+font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.15;
 
-            .social-icons {
-                margin-top: 4px;
-            }
+  color: #ff5fa2;
 
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .floating-card {
-                display: none;
-            }
-        }
+  display: block;
+  margin-top: 6px;
 
-        #contact a,
-        #contact a:visited {
-            text-decoration: none !important;
-            outline: none !important;
-            border-bottom: none !important;
-        }
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+  -webkit-text-fill-color: currentColor;
+}
 
-        #contact a::after,
-        #contact a:after {
-            display: none !important;
-        }
 
-        #contact a i {
-            text-decoration: none !important;
-            border-bottom: none !important;
-        }
+    .lead {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 780px;
+      margin: 0 auto 24px;
+    }
 
-        footer .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+    .highlight-line {
+      font-size: 18px;
+      margin: 20px auto 32px;
+      max-width: 700px;
+      line-height: 1.6;
+    }
 
-    </style>
+    .cta {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 16px 34px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #a044ff, #d980ff);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid white;
+      box-shadow: 0 8px 20px rgba(160, 68, 255, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(160, 68, 255, 0.4);
+    }
+
+    /* Sections */
+    .section-light {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .section-purple {
+      padding: 60px 0;
+      background: linear-gradient(165deg, #e0d0ff, #cbb0ff);
+    }
+
+   h2 {
+  font-size: 30px;
+  margin: 0 0 28px;
+  text-align: center;
+  color: #4a1a7a;
+  position: relative;
+}
+
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 80%;
+      height: 3px;
+      background: linear-gradient(to right, #a044ff, #d980ff);
+      border-radius: 2px;
+    }
+
+    .card {
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .section-light .card {
+      background: #f0e6ff;
+      border: 1px solid #e0d5f5;
+      box-shadow: 0 6px 16px rgba(160, 68, 255, 0.08);
+    }
+
+    .section-purple .card {
+      background: white;
+      border: 1px solid #b8a0e0;
+      box-shadow: 0 6px 16px rgba(106, 48, 147, 0.15);
+    }
+
+    .section-content {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    ul {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .footer {
+  padding: 15px 0 20px;
+  text-align: center;
+  font-size: 15px;
+  color: #6b6fa8;
+  background: white;
+}
+
+
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 0;
+      }
+      nav ul {
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero {
+        padding: 120px 0 80px;
+      }
+      h1 {
+        font-size: 34px;
+      }
+      .relationships-feelings {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+      .lead {
+        font-size: 18px;
+      }
+      .highlight-line {
+        font-size: 16px;
+      }
+      .section-light,
+      .section-purple {
+        padding: 70px 0;
+      }
+      h2 {
+        font-size: 26px;
+      }
+      h2::after {
+        width: 90%;
+      }
+      .card {
+        padding: 24px 20px;
+      }
+      .contact-links {
+        font-size: 1.6rem !important;
+      }
+      .cta {
+        padding: 14px 30px;
+        border-width: 1px;
+      }
+    }
+	/* Галерея фотографий */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 50px auto;
+  max-width: 950px;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  border: 6px solid #ffffff;
+  box-shadow: 0 10px 30px rgba(74, 26, 122, 0.3);
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.photo-grid img:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(74, 26, 122, 0.4);
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 30px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>EnglishPro</span>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#about" class="nav-link">Обо мне</a></li>
-                        <li><a href="#services" class="nav-link">Услуги</a></li>
-                        <li><a href="#results" class="nav-link">Преимущества</a></li>
-                        <li><a href="#contact" class="nav-link">Контакты</a></li>
-                    </ul>
-                </nav>
-                <div class="social-icons">
-                    <a href="https://vk.com/english_olga_medvedeva" target="_blank" rel="noopener" aria-label="ВКонтакте">
-                        <i class="fab fa-vk"></i>
-                    </a>
-                    <a href="https://t.me/olga_m_english" target="_blank" rel="noopener" aria-label="Telegram">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                </div>
-            </div>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">✨&nbsp;ЕГЭ Английский&nbsp;✨</div>
+        <nav>
+          <ul>
+            <li><a href="#about" class="nav-link">Формат</a></li>
+            <li><a href="#for-whom" class="nav-link">Программа</a></li>
+            <li><a href="#format" class="nav-link">Для кого</a></li>
+            <li><a href="#contact" class="nav-link">Цена</a></li>
+          </ul>
+        </nav>
+        <div class="social-icons">
+  <a href="https://vk.com/english_with_olga_c1" target="_blank">ВК</a>
+  <a href="https://max.ru/se13305924_biz" target="_blank">Макс</a>
+</div>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Learn. Practise. Succeed.</h1>
-            <p>Эффективные занятия английским языком онлайн</p>     
-            <p>Комфорт + результат</p>    
-            <p>"Путь в тысячу ли начинается с первого шага"</p>
-            <p>(Китайская пословица)</p>
-            <p>Сделай первый шаг сегодня!</p>
+  <div class="hero">
+  <div class="container">
+    <span class="badge">Системный курс для учеников 11 класса</span>
+    <h1>
+      <span class="vocabulary-upgrade">Подготовка к ЕГЭ по английскому языку с Ольгой Медведевой</span>
+    </h1>
+    
+   <div class="photo-grid">
+  <img src="100.png" alt="">
+  <img src="101.png" alt="">
+  <img src="102.png" alt="">
+  <img src="103.png" alt="">
+  <img src="104.png" alt="">
+  <img src="105.png" alt="">
+  <img src="106.png" alt="">
+  <img src="107.png" alt="">
+  <img src="108.png" alt="">
+</div>
+    
+  </div>
+  <a class="cta" href="#contact">👉 Присоединиться</a>
+</div>
 
-            <div class="hero-buttons">
-                <a href="quiz.html" class="btn btn-blue" aria-label="Проверь свой уровень английского">Проверь свой уровень английского</a>
-                <a href="#contact" class="btn" aria-label="Запишись на занятие">Запишись на занятие</a>
-            </div>
+  <div id="about" class="section-light">
+    <div class="container">
+      <h2>✨&nbsp;Формат&nbsp;✨</h2>
+      <div class="card">
+        <div class="section-content">
+                     <li>Онлайн занятия в мини-группе <strong>с проверкой письменных и устных заданий;</strong></li>
+            <li>2 урока в неделю <strong>по 90 минут;</strong></li>
+            <li>Занятия проходят в ZOOM, все материалы расположены на онлайн доске HOLST (учебники, аудио и видеоматериалы, ссылки на карточки со словами и дополнительные упражнения) и на платформе ВЗНАНИЯ. На уроке работаем <strong>по учебным пособиям уровня B2 и с заданиями в формате экзамена.</strong> Уроки записываются, все записи есть в закрытом чате. В закрытый чат ученики присылают ответы на письменные и устные экзаменационные задания.</li>
+            <p><li><strong>Exam Club</strong></p>
+В течение недели ученики выполняют вариант ЕГЭ (аудирование, чтение, лексика + грамматика). Все слова и выражения, которые могут вызвать трудности, выделены и даётся их перевод. На самом занятии часть времени выделяется на повторение материалов этого варианта, а основное время отводится на практику заданий устной части ЕГЭ.
+</li>
+             <p><li><strong>Пробный экзамен</strong></p>
+По завершению модуля вместо клуба будет проходить пробный экзамен. Студенты получают задания, через определённое время они присылают фото/сканы бланков с ответами, которые будут проверены по критериям.
 
+</li>
+          </ul>
+          
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">Обо мне</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Медведева Ольга Александровна</h3>
-                    <p>Я преподаю английский язык школьникам и взрослым 17 лет. Моя квалификация:
-    МПГУ (Красный диплом), Кембриджский экзамен на уровень языка CAE (Grade A), Кембриджский методический экзамен TKT (три модуля), TEFL/TESOL (международный сертификат, позволяющий преподавать английский по всему миру), МЦКО (ЕГЭ, Экспертный уровень, 99%).
-    Мои ученики успешно сдают ОГЭ и ЕГЭ, повышают успеваемость и комфортно чувствуют себя в языке! </p>
-                </div>
-                <div class="about-image">
-                    <img src="myphoto.png" alt="Ольга Медведева — преподаватель английского языка" loading="lazy">
-                    <div class="floating-card">
-                        <h4>Опытный педагог</h4>
-                    </div>
-                    <div class="floating-card">
-                        <h4>Довольные ученики</h4>
-                    </div>
-                </div>
-            </div>
+  <div id="for-whom" class="section-purple">
+    <div class="container">
+      <h2>✨&nbsp;Программа&nbsp;✨</h2>
+      <div class="card">
+        <div class="section-content">
+          <p><strong>Курс составлен по тематическим блокам:</strong></p>
+   <p><strong>Модуль 1:</strong></p>
+<p>1) Travelling.</p>
+<p>2) Science and Technology.</p>
+<p>3) Hobbies, Sport and Games.</p>
+<p><strong>Модуль 2:</strong></p>
+<p>4) People. Relationships. Households.</p>
+<p>5) Education and Learning.</p>
+<p>6) Work and Business.</p>
+<p><strong>Модуль 3:</strong></p>
+<p>7) Healthy lifestyle.</p>
+<p>8) Education and Learning.</p>
+<p>9) Weather and Environment.</p>
+<p><strong>Модуль 4:</strong></p>
+<p>10) Money and Shopping.</p>
+<p>11) The media.</p>
+<p>12) Food and Drink.</p>
+<p><strong>Модуль 5:</strong></p>
+<p>13) Fashion and Design</p>
+<p>14) Problems of Modern Society.</p>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+            
+  <div id="format" class="section-light">
+    <div class="container">
+      <h2>✨&nbsp;Для кого&nbsp;✨</h2>
+      <div class="card">
+        <div class="section-content">
+          <p><strong>КОМУ ПОДОЙДЁТ КУРС</strong></p>
+
+          <p>Ученикам 11 класса, которые изучают английский на уровне B1 и выше (можно уверенный A2 при условии, что вы будете посвящать учёбе 2 часа и более ежедневно), готовы взять на себя ответственность и хотят:</p>
+		  <p>✔️ высокий балл на ЕГЭ;</p>
+            <p>✔️ системную и понятную подготовку без хаоса;</p>
+            <p>✔️ уверенное владение английским языком;</p>
+            <p>✔️ регулярную практику и контроль прогресса в течение года.</p>
+          </ul>
+
+          <p><strong>Кому формат может не подойти</strong></p>
+          
+            <p>✖️ Ученикам с низким уровнем языка (если вы не сдавали ОГЭ, не занимались дополнительно и вдруг в 11 классе решили сдавать ЕГЭ, то скорее всего вам нужен другой формат подготовки),</p>
+            <p>✖️ Ученикам, которые не привыкли к самостоятельности и не хотят брать ответственность за свой результат на себя.</p>
+           
+       
+
+          <p>
+            <strong>Если ученики трудоспособные и готовы посвящать достаточное время подготовке к экзамену, то я их жду на своих уроках!</strong>
+
+          </p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">Мои услуги</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <h3>Индивидуальные занятия</h3>
-                    <p>Персональный подход к каждому ученику с учетом его уровня и целей.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Занятия в мини-группах</h3>
-                    <p>Эффективное обучение в небольших группах по доступной цене.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                    <h3>Пробное занятие</h3>
-                    <p>Бесплатный урок-собеседование, на котором я определю уровень ученика и отвечу на все ваши вопросы.</p>
-                </div>
-            </div>
+         
+
+  <div class="section-purple">
+    <div class="container">
+      <h2>✨&nbsp;Стоимость&nbsp;✨</h2>
+      <div class="card">
+        <div class="section-content">
+         
+          <ul>
+            <li>1500 ₽ /90 минут (клуб идёт бонусом, за него оплата не взимается)</li>
+            <li>Оплата за месяц (до начала занятий)</li>
+          </ul>
+
+         
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <section id="results" class="results">
-        <div class="container">
-            <h2 class="section-title">Преимущества</h2>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number">Мой подход</div>
-                    <div class="stat-text">Я обеспечиваю полную открытость учебного процесса: каждое занятие записываю на видео, чтобы ученик мог пересмотреть материал в удобное время и повторить сложные моменты.
-    Домашние задания выполняются на интерактивных платформах, где автоматически фиксируются результаты, время выполнения и типичные ошибки.
-    Родители и ученики получают доступ к статистике и могут в любой момент отслеживать прогресс, динамику и успеваемость.</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">Материалы</div>
-                    <div class="stat-text">В работе я использую современные материалы ведущих британских издательств — Oxford, Cambridge, Pearson и Macmillan.
-    Дополняю занятия авторскими рабочими листами и тщательно подобранными видео-материалами на английском языке.
-    Также использую интерактивные онлайн-ресурсы и платформы для отработки грамматики, лексики и аудирования.</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">Поддержка</div>
-                    <div class="stat-text">Чтобы обучение было максимально удобным, я создаю для каждого ученика или группы отдельный закрытый канал. Это ваш личный учебный кабинет: видео, задания, подсказки и быстрая связь со мной. Можно писать текстом или отправлять аудио — я помогу разобраться в любых вопросах.</div>
-                </div>
-            </div>
+  <div id="contact" class="section-light">
+    <div class="container">
+      <h2>✨&nbsp;Присоединиться&nbsp;✨</h2>
+      <div class="card" style="text-align: center;">
+        <div class="section-content">
+          <p>Запись осуществляется через личные сообщения.</p>
+          <p style="margin: 28px 0;">
+            <a href="https://vk.com/english_with_olga_c1" target="_blank" class="contact-links" style="font-size: 1.7rem; color: #4a1a7a; text-decoration: none; font-weight: 600;">
+               Написать в VK
+            </a>
+          </p>
+          <p style="margin-top: 16px;">
+            <a href="https://max.ru/se13305924_biz" target="_blank" class="contact-links" style="font-size: 1.7rem; color: #4a1a7a; text-decoration: none; font-weight: 600;">
+               Написать в Макс
+            </a>
+          </p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Связаться со мной</h2>
-            <p style="text-align: center; font-size: 1.4rem; max-width: 700px; margin: 0 auto 40px;">
-                Если у вас есть вопросы, вы хотите записаться на занятие или узнать подробнее о программе — 
-                напишите мне в удобной для вас социальной сети:
-            </p>
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="https://vk.com/english_olga_medvedeva" target="_blank" rel="noopener" style="font-size: 2rem; margin: 0 20px; color: white;">
-                    <i class="fab fa-vk"></i>
-                </a>
-                <a href="https://t.me/olga_m_english" target="_blank" rel="noopener" style="font-size: 2rem; margin: 0 20px; color: white;">
-                    <i class="fab fa-telegram"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+  <div class="footer">
+    ✨&nbsp;English with Olga | ЕГЭ&nbsp;✨
+  </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 EnglishPro.</p>
-        </div>
-    </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const sections = document.querySelectorAll('.section-light, .section-purple');
+      const navLinks = document.querySelectorAll('.nav-link');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
+      function activateNavLink() {
+        let currentId = '';
+        const scrollY = window.scrollY + window.innerHeight / 2;
 
-            function activateNavLink() {
-                let currentSectionId = '';
-                const scrollY = window.scrollY + window.innerHeight / 2;
-
-                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 10) {
-                    currentSectionId = 'contact';
-                } else {
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop - 80;
-                        const sectionHeight = section.offsetHeight;
-                        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                            currentSectionId = section.getAttribute('id');
-                        }
-                    });
-                }
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + currentSectionId) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', activateNavLink);
-            activateNavLink();
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          const sectionHeight = section.offsetHeight;
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            currentId = section.id;
+          }
         });
-    </script>
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', activateNavLink);
+      activateNavLink();
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
