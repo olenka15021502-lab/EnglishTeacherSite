@@ -1,1 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Interview "Hobbies and Leisure Activities"</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* Brand */
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+/* Header */
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+
+/* Cards */
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+
+.card-front {
+    background: #BFDFF2; /* Цвет для Hobbies and Leisure Activities из вашей палитры */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #365536;
+}
+
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #4CAF50;
+}
+
+
+
+@media(max-width:800px){
+
+.cards-container {
+    grid-template-columns: repeat(2,1fr);
+}
+
+}
+
+
+@media(max-width:500px){
+
+.cards-container {
+    grid-template-columns: 1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app-wrapper">
+
+
+<div class="brand">
+<a href="https://t.me/english_exams_with_olga" target="_blank">
+English with Olga
+</a>
+</div>
+
+
+<div class="header">
+
+<h1>Interview "Hobbies and Leisure Activities"</h1>
+
+<div class="progress">
+Questions practised:
+<span id="score">0</span> / 20
+</div>
+
+</div>
+
+
+<div class="cards-container" id="cards"></div>
+
+
+</div>
+
+
+<script>
+const questions = [
+
+{
+question: "What is your main hobby and why do you enjoy it so much?",
+answer: "My main hobby is photography because it allows me to take beautiful photos and express my creativity. I really enjoy taking pictures of nature in the evening, as the light is always amazing."
+},
+
+{
+question: "How much free time do you usually spend on your hobbies every week?",
+answer: "I usually spend about five or six hours a week on my hobbies, mostly at the weekend. On school days, I try to find at least thirty minutes for reading or drawing before bed to relax."
+},
+
+{
+question: "Did you have a different hobby when you were a young child?",
+answer: "When I was a young child, I really loved collecting colourful stickers and building Lego sets. However, as I grew older, my interests changed towards more creative activities, like playing the guitar."
+},
+
+{
+question: "Who do you usually share your leisure activities with?",
+answer: "I usually share my leisure activities with my closest friends, especially when we play board games or go cycling together. Sometimes, I also enjoy doing things alone, like reading, because it helps me rest after a busy week."
+},
+
+{
+question: "Why do you think it is important for teenagers to have a hobby?",
+answer: "I believe having a hobby is very important for teenagers because it gives them a good break from school pressure. Also, it helps them discover new talents and learn useful skills, like time management."
+},
+
+{
+question: "What new hobby would you like to take up in the future and why?",
+answer: "In the future, I would love to try pottery, as I think working with clay is very relaxing. It would be a great way to take a break from screens and make something real with my own hands."
+},
+
+{
+question: "How do your friends usually spend their free time?",
+answer: "Most of my friends are quite active and usually spend their free time playing team sports like football or volleyball. However, some of them prefer quiet activities and like staying at home to watch films or play video games."
+},
+
+{
+question: "Do you prefer active or passive leisure activities? Please explain your choice.",
+answer: "I definitely prefer active leisure activities because they keep me fit and really improve my energy levels. For example, going for a run or swimming always helps me clear my mind after a stressful day at school."
+},
+
+{
+question: "Where do you usually pursue your main hobby?",
+answer: "I usually do my main hobby in the local park near my house, which has plenty of space and beautiful views. If the weather is bad, I just set up a comfortable corner in my room where I can focus without distractions."
+},
+
+{
+question: "Has your attitude towards your hobby changed since you started secondary school?",
+answer: "My attitude towards my hobby has become more serious since I started secondary school. I used to do it just for fun, but now I see it as a great way to relieve stress and balance my studies."
+},
+
+{
+question: "What special equipment or tools do you need for your hobby?",
+answer: "For my main hobby, I only need a good sketchbook, a set of quality pencils, and a rubber. Fortunately, these things are quite cheap and easy to find in any local art shop."
+},
+
+{
+question: "Do you think teenagers today spend too much time on their gadgets during their leisure time?",
+answer: "I absolutely agree that many teenagers today spend too much time on their phones and computers in their free time. Sitting too much can lead to health problems and less real-life communication, which is quite worrying."
+},
+
+{
+question: "How can having a hobby help you in your future career or studies?",
+answer: "Having a hobby can help in your future career by teaching you discipline and patience. For example, learning to code as a hobby can give you useful technical skills for a future job in IT."
+},
+
+{
+question: "What is the most popular leisure activity among teenagers in your region?",
+answer: "In my region, the most popular leisure activity among teenagers is probably meeting friends in shopping centres or local cafes. In the summer, however, many young people prefer going to the river or having picnics outdoors."
+},
+
+{
+question: "Do you prefer spending your free time indoors or outdoors? Why?",
+answer: "I generally prefer spending my free time outdoors because fresh air and nature always improve my mood and make me feel calm. That said, on cold or rainy days, I am perfectly happy staying indoors with a good book and a cup of hot tea."
+},
+
+{
+question: "Have you ever tried to turn your hobby into a part-time job or a way to earn money?",
+answer: "I have sometimes thought about turning my hobby into a part-time job, for example, by offering tutoring or selling handmade things online. However, I am currently focused on my studies, so I just treat it as a way to relax."
+},
+
+{
+question: "What hobby would you recommend to a person who wants to relax after a long day at school?",
+answer: "I would really recommend listening to calm music or doing some light yoga to relax after a long day at school. Both activities are easy to start, do not need special equipment, and help to reduce stress effectively."
+},
+
+{
+question: "How do you usually plan your leisure time at the weekend?",
+answer: "I usually plan my weekend leisure time in advance to make sure I have a good balance between rest and getting things done. I might spend Saturday morning on my hobby and leave Sunday afternoon completely free for my friends."
+},
+
+{
+question: "Is it expensive to pursue your main hobby in your city?",
+answer: "Fortunately, pursuing my main hobby is not very expensive in my city, as most of the things I need are either free or low-cost. For instance, the public library has a great selection of books, and the local parks are free to enter."
+},
+
+{
+question: "What leisure activity is considered traditional in your family?",
+answer: "A traditional leisure activity in my family is gathering around the dinner table on Sunday evenings to play classic board games. It is a special tradition that allows us to talk, laugh together, and feel closer as a family."
+}
+
+];
+
+
+let completedCount = 0;
+function createCards() {
+
+const container = document.getElementById("cards");
+
+questions.forEach((item, index) => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<div class="card-inner">
+    <div class="card-front">
+        ${index + 1}
+    </div>
+    <div class="card-back">
+        <div class="question-number">
+            Question ${index + 1}
+        </div>
+        <div class="question-text">
+            ${item.question}
+        </div>
+        <button class="answer-button">
+            SHOW MODEL ANSWER
+        </button>
+    </div>
+</div>
+`;
+
+const showAnswerButton = card.querySelector(".answer-button");
+const back = card.querySelector(".card-back");
+
+card.addEventListener("click", function(e){
+    if(e.target === showAnswerButton){
+        return;
+    }
+    if(!card.classList.contains("completed")){
+        card.classList.toggle("flipped");
+    }
+});
+
+showAnswerButton.addEventListener("click", function(e){
+    e.stopPropagation();
+    
+    if(!back.querySelector(".model-answer")){
+        const answer = document.createElement("div");
+        answer.className = "model-answer";
+        answer.innerHTML = `
+            <div class="model-title">
+                Model Answer
+            </div>
+            ${item.answer}
+        `;
+        back.appendChild(answer);
+        showAnswerButton.style.display = "none";
+
+        const doneButton = document.createElement("button");
+        doneButton.className = "answer-button";
+        doneButton.innerHTML = "✓";
+        back.appendChild(doneButton);
+
+        doneButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            card.classList.remove("flipped");
+            
+            setTimeout(function(){
+                card.classList.add("completed");
+                card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                back.innerHTML = "";
+            }, 300);
+
+            completedCount++;
+            document.getElementById("score").textContent = completedCount;
+        });
+    }
+});
+
+container.appendChild(card);
+});
+}
+
+createCards();
+</script>
+
+</body>
+</html>
