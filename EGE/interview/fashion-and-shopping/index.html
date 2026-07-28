@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Fashion and Shopping"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #FFE5B4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A4A1F;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C97A3A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Fashion and Shopping"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What kind of clothes do you usually wear?",
+        answer: "I usually wear casual clothes, like jeans, T-shirts, and trainers, because they are comfortable for school and meeting friends. At the weekend, I might wear a smart jumper or a nice shirt if we go somewhere special."
+    },
+    {
+        question: "How often do you go shopping for clothes?",
+        answer: "I go shopping for clothes about once a month, usually with my mum or my friends. I also sometimes order things online if I see a good bargain on a website I trust."
+    },
+    {
+        question: "Do you prefer shopping online or in real shops? Why?",
+        answer: "I prefer shopping in real shops because I can try the clothes on and check the size and material. However, online shopping is very convenient when I know exactly what I want and there is a good discount."
+    },
+    {
+        question: "What do you think about school uniforms?",
+        answer: "I think school uniforms are a good idea because they save time in the morning and make everyone look equal. However, I would like to have more freedom to choose the colour or style of my uniform."
+    },
+    {
+        question: "Are famous brands important to you? Why or why not?",
+        answer: "Famous brands are not very important to me because I care more about how clothes look and fit than about the label. However, I understand that some people like brands because they are a sign of good quality."
+    },
+    {
+        question: "How much money do you usually spend on clothes?",
+        answer: "I don't spend a lot of money on clothes because my parents usually buy them for me. When I buy something myself, I try to find good quality items at a reasonable price, especially during sales."
+    },
+    {
+        question: "Do you follow fashion trends? Why or why not?",
+        answer: "I follow fashion trends a little bit, for example, by looking at what my friends wear or what is popular on social media. However, I don't buy new clothes every season because I prefer a simple and classic style."
+    },
+    {
+        question: "What do you usually wear in winter?",
+        answer: "In winter, I usually wear a warm coat, a woollen jumper, jeans, and a scarf. I also always wear a hat and gloves because it gets very cold in my city, and I don't want to catch a cold."
+    },
+    {
+        question: "What do you usually wear in summer?",
+        answer: "In summer, I usually wear light clothes, like cotton T-shirts, shorts, and sandals. I also like wearing a cap or a sun hat when I spend a lot of time outdoors."
+    },
+    {
+        question: "Do you like wearing accessories, such as watches or jewellery?",
+        answer: "Yes, I like wearing simple accessories, such as a watch or a small bracelet, because they make my outfit look more interesting. However, I don't like wearing too many things at once because it looks a bit strange."
+    },
+    {
+        question: "What is the most comfortable piece of clothing in your wardrobe?",
+        answer: "The most comfortable piece of clothing in my wardrobe is my favourite grey hoodie. I wear it almost every day at home because it is soft, warm, and very easy to wash."
+    },
+    {
+        question: "Would you like to receive clothes as a present? Why or why not?",
+        answer: "I would be happy to receive clothes as a present if I really need them or if they are in my style. However, it can be difficult to choose the right size and colour, so I usually prefer other types of gifts."
+    },
+    {
+        question: "Is there any traditional clothing in your country that you like?",
+        answer: "Yes, I like the traditional Russian dress called a sarafan, which is often worn at folk festivals. It looks very beautiful with its bright colours and embroidery, and it makes me feel proud of my culture."
+    },
+    {
+        question: "Who is your fashion icon, and why?",
+        answer: "My fashion icon is a famous actress, Zendaya, because she always looks elegant and is not afraid to try different styles. I admire how she mixes classic and modern clothes in a very creative way."
+    },
+    {
+        question: "What do you usually wear for special occasions?",
+        answer: "For special occasions, like a birthday party or a family celebration, I usually wear something smart, like a nice dress or a shirt with trousers. I also like wearing my favourite shoes to feel more confident."
+    },
+    {
+        question: "What do you think about fast fashion and cheap clothes?",
+        answer: "I think fast fashion is a big problem because people buy too many cheap clothes and throw them away very quickly. I prefer to buy fewer but better quality items, even if they cost a little more."
+    },
+    {
+        question: "What colours do you usually prefer in your clothes?",
+        answer: "I usually prefer calm colours, like blue, grey, and white, because they are easy to match with other clothes. However, in summer, I sometimes wear bright colours, like yellow or green, to feel more cheerful."
+    },
+    {
+        question: "Do you like shopping with friends or alone? Why?",
+        answer: "I like shopping with friends because they can give me honest advice and help me choose the right outfit. It is also more fun to walk around the shopping centre together and have a coffee afterwards."
+    },
+    {
+        question: "Would you ever buy second-hand clothes? Why or why not?",
+        answer: "I would definitely buy second-hand clothes because it is a good way to save money and help the environment. Some vintage shops have very unique items that you cannot find anywhere else."
+    },
+    {
+        question: "How do you think fashion will change in the future?",
+        answer: "I think fashion in the future will become more eco-friendly, with clothes made from recycled materials. Also, I believe that smart clothes, which can change colour or keep you warm, will become more popular."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
