@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Interview "School and Education"</title>
 
 <style>
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -26,7 +24,6 @@ body {
     margin: auto;
 }
 
-/* Brand */
 .brand {
     text-align: center;
     margin-bottom: 20px;
@@ -43,7 +40,6 @@ body {
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* Header */
 .header {
     background: white;
     border-radius: 15px;
@@ -65,7 +61,6 @@ body {
     color: #555;
 }
 
-/* Cards */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -101,13 +96,13 @@ body {
 }
 
 .card-front {
-    background: #F9E79F; /* Пастельно-жёлтый (colour4) */
+    background: #F9E79F;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     font-weight: bold;
-    color: #7A6B1F; /* Тёмный оливково-жёлтый для контраста */
+    color: #7A6B1F;
 }
 
 .card-back {
@@ -169,7 +164,7 @@ body {
 
 .done-mark {
     font-size: 3.5rem;
-    color: #C9A227; /* Горчичный для галочки */
+    color: #C9A227;
 }
 
 @media(max-width:800px){
@@ -183,18 +178,14 @@ body {
         grid-template-columns: 1fr;
     }
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="app-wrapper">
-
     <div class="brand">
-        <a href="https://t.me/english_exams_with_olga" target="_blank">
-            English with Olga
-        </a>
+        <a href="https://t.me/english_exams_with_olga" target="_blank">English with Olga</a>
     </div>
 
     <div class="header">
@@ -205,7 +196,6 @@ body {
     </div>
 
     <div class="cards-container" id="cards"></div>
-
 </div>
 
 <script>
