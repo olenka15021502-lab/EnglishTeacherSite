@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Weather and Seasons"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #98D8E8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1A5A6A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #2A9BAA;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Weather and Seasons"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is your favourite season of the year, and why?",
+        answer: "My favourite season is autumn because the weather is cool and comfortable. I also love how the leaves change colour and make the parks look incredibly beautiful."
+    },
+    {
+        question: "What is the weather usually like in your region?",
+        answer: "In the Moscow region, we have four distinct seasons. Winters are usually quite cold and snowy, while summers are warm and sometimes a bit humid."
+    },
+    {
+        question: "How would you describe the typical weather in Russia to a foreigner?",
+        answer: "I would say that Russia is famous for its long, cold winters and short, warm summers. However, the weather can vary a lot depending on which part of the country you are in."
+    },
+    {
+        question: "What outdoor activities do you enjoy doing in winter?",
+        answer: "In winter, I really enjoy ice skating and making a snowman with my friends. If there is a lot of snow, we also like going cross-country skiing in the local park."
+    },
+    {
+        question: "How do you usually spend your time during the summer holidays?",
+        answer: "During the summer, I spend a lot of time outdoors, swimming in the river or riding my bicycle. I also try to visit my grandparents in the countryside to enjoy the fresh air."
+    },
+    {
+        question: "What changes in nature do you notice when spring arrives?",
+        answer: "When spring arrives, the snow melts, and the first green leaves appear on the trees. The days also become much longer and brighter, which makes everyone feel more energetic."
+    },
+    {
+        question: "Do you like autumn, or do you find it too gloomy?",
+        answer: "I actually like autumn. Although it can be a bit rainy and gloomy sometimes, I find the fresh, cool air very relaxing."
+    },
+    {
+        question: "How does the weather affect your mood or your daily routine?",
+        answer: "The weather affects my mood a lot. On sunny days, I feel cheerful and active, but on dark, rainy days, I prefer to stay indoors and read a book."
+    },
+    {
+        question: "Do you often check the weather forecast, and why is it important?",
+        answer: "Yes, I check the weather forecast every morning on my phone. It is important because it helps me decide what to wear and whether I need to take an umbrella."
+    },
+    {
+        question: "Have you ever experienced any extreme weather, like a heavy storm or a heatwave?",
+        answer: "Yes, last summer we had a terrible heatwave, and the temperature was over thirty degrees for weeks. It was very uncomfortable, so we had to stay indoors with the windows closed."
+    },
+    {
+        question: "What would you consider to be the perfect weather for a weekend?",
+        answer: "For me, the perfect weekend weather is a mild, sunny day with a light breeze. It is warm enough to go for a long walk, but not so hot that you get tired."
+    },
+    {
+        question: "How does the changing weather affect the clothes you choose to wear?",
+        answer: "I have to change my wardrobe completely depending on the season. In winter, I need warm coats, hats, and boots, while in summer, I prefer light cotton T-shirts and shorts."
+    },
+    {
+        question: "Which season do you think is the best for travelling around Russia, and why?",
+        answer: "I think late spring or early autumn is the best time to travel. The weather is mild, there are fewer crowds, and you can really enjoy sightseeing without freezing or overheating."
+    },
+    {
+        question: "What do you usually do when the weather is too bad to go outside?",
+        answer: "When the weather is bad, I usually stay at home and do my homework or watch a good film. Sometimes I also bake biscuits with my family to make the day more cosy."
+    },
+    {
+        question: "Have you noticed any changes in the weather patterns in recent years?",
+        answer: "Yes, I have noticed that winters are becoming milder and there is less snow than before. I think this is a clear sign of global climate change, which is quite worrying."
+    },
+    {
+        question: "Is there any season you really dislike, and what is the reason?",
+        answer: "I really dislike late autumn because it is often cold, windy, and constantly raining. The lack of sunlight can make you feel a bit tired and unmotivated."
+    },
+    {
+        question: "Does the weather influence your choice of sports or physical activities?",
+        answer: "Absolutely. In good weather, I prefer playing football or running outside, but when it rains or snows heavily, I switch to indoor activities like swimming or going to the gym."
+    },
+    {
+        question: "How does your city or town change when it snows heavily?",
+        answer: "When it snows heavily, the city looks like a beautiful winter fairy tale. However, the traffic can become very slow, and the streets get quite slippery and dangerous."
+    },
+    {
+        question: "How do you and your family prepare for the cold winter months?",
+        answer: "We prepare by buying warm clothes, checking the heating system, and stocking up on tea and vitamins. We also make sure our windows are properly sealed to keep the cold out."
+    },
+    {
+        question: "What advice would you give to a tourist visiting your region in winter?",
+        answer: "I would advise them to pack very warm clothes, including a good hat, gloves, and waterproof boots. I would also tell them to try traditional winter activities, like ice skating or sliding down snowy hills on a sledge."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
