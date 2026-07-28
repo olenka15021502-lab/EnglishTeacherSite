@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Holidays and Traditions"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #D4A5E5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #5A2A6A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #8B4FBF;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Holidays and Traditions"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is your favourite holiday, and why?",
+        answer: "My favourite holiday is New Year's Day because it is a magical time for my family. We decorate a Christmas tree, exchange gifts, and stay up until midnight to watch the fireworks."
+    },
+    {
+        question: "How do people in Russia usually celebrate New Year?",
+        answer: "In Russia, New Year is the biggest family holiday. We stay up to see in the New Year with a special holiday dinner, listen to the President's speech, and exchange presents, which is very similar to how people celebrate Christmas in the UK."
+    },
+    {
+        question: "How is International Women's Day celebrated in your country?",
+        answer: "On the 8th of March, we honour all women, especially our mothers and grandmothers. Men and boys usually give them flowers, like tulips or mimosas, and small gifts to show their appreciation."
+    },
+    {
+        question: "What is the most important patriotic holiday in Russia?",
+        answer: "The most important one is Victory Day on the 9th of May. We honour the memory of those who fought in the Second World War, watch the military parade on TV, and give red carnations to veterans."
+    },
+    {
+        question: "What school-related holidays do you celebrate in Russia?",
+        answer: "We celebrate Knowledge Day on the 1st of September, which marks the start of the school year with a special assembly. Later, on the 5th of October, we celebrate Teacher's Day to thank our educators for their hard work."
+    },
+    {
+        question: "Are there any unique modern holidays in Russia?",
+        answer: "Yes, on the 8th of July we celebrate the Day of Family, Love and Fidelity. It is a beautiful tradition to honour strong family values, and couples often exchange gifts like the symbolic chamomile flower."
+    },
+    {
+        question: "What do you know about how Christmas is celebrated in Great Britain?",
+        answer: "I know that British people celebrate Christmas on the 25th of December. They usually have a big roast dinner with turkey, exchange gifts with their families, and hang stockings by the fireplace for Santa Claus."
+    },
+    {
+        question: "How do people in the UK celebrate Easter?",
+        answer: "In the UK, Easter is a joyful spring holiday. Children often take part in Easter egg hunts in the garden, and families enjoy eating hot cross buns and chocolate eggs."
+    },
+    {
+        question: "Is traditional food an important part of holiday celebrations?",
+        answer: "Absolutely. For example, we always make Olivier salad and buy tangerines for New Year, while in Britain, a traditional Christmas pudding or mince pies are essential for the holiday table."
+    },
+    {
+        question: "Do you prefer giving or receiving presents on holidays?",
+        answer: "I think I prefer giving presents because it is a wonderful feeling to choose something special for your loved ones and see their happy reaction when they open them."
+    },
+    {
+        question: "Does your family have any special traditions for holidays?",
+        answer: "Yes, we have a tradition of baking a homemade cake together before any big celebration. It brings us closer and makes the holiday atmosphere much more cosy and memorable."
+    },
+    {
+        question: "Do you think it is important to have many public holidays?",
+        answer: "Yes, I think they are very important because they give people a chance to rest, spend time with their families, and recharge their batteries after long periods of work or study."
+    },
+    {
+        question: "Have holiday celebrations changed much compared to the past?",
+        answer: "I think they have become a bit more commercialised, with a focus on buying expensive gifts. However, the core value of spending time with your loved ones remains exactly the same."
+    },
+    {
+        question: "Would you like to celebrate a holiday in another country?",
+        answer: "I would love to celebrate Christmas in London one day. It would be amazing to see the decorated streets, the big Christmas tree in Trafalgar Square, and feel the authentic British holiday spirit."
+    },
+    {
+        question: "Do people in your country wear traditional clothes on holidays?",
+        answer: "Not on a daily basis, but during folk festivals or national holidays, some people wear traditional Russian costumes to honour our cultural heritage and history."
+    },
+    {
+        question: "What role does music play in holiday celebrations?",
+        answer: "Music sets the mood for any celebration. Whether it is traditional holiday music on New Year's Eve or cheerful pop songs at a birthday party, it makes the atmosphere much more lively."
+    },
+    {
+        question: "Are religious holidays widely celebrated in your country?",
+        answer: "Yes, holidays like Orthodox Easter and Christmas are very popular. Even people who are not strictly religious often attend church services or prepare traditional holiday dishes on these days."
+    },
+    {
+        question: "How do holidays help to strengthen family bonds?",
+        answer: "I think holidays are the perfect opportunity for families to gather and spend quality time together. Sharing a special meal and participating in old traditions helps to create strong, lasting memories and brings everyone closer."
+    },
+    {
+        question: "What do you think makes a holiday truly special?",
+        answer: "I believe it is not about expensive decorations or gifts, but about the people you spend it with. A warm, friendly atmosphere is what makes a holiday truly memorable."
+    },
+    {
+        question: "What advice would you give to a foreigner visiting Russia during a major holiday?",
+        answer: "I would advise them to try traditional holiday dishes, like blini during Maslenitsa, and to join in the local celebrations, as Russians are very welcoming and love sharing their traditions with guests."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
