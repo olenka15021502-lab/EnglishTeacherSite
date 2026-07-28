@@ -1,1 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Interview "Family and Friends"</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* Brand */
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+/* Header */
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+
+/* Cards */
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+
+.card-front {
+    background: #F8C8DC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #8B4A6B;
+}
+
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #D4789C;
+}
+
+
+
+@media(max-width:800px){
+
+.cards-container {
+    grid-template-columns: repeat(2,1fr);
+}
+
+}
+
+
+@media(max-width:500px){
+
+.cards-container {
+    grid-template-columns: 1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app-wrapper">
+
+
+<div class="brand">
+<a href="https://t.me/english_exams_with_olga" target="_blank">
+English with Olga
+</a>
+</div>
+
+
+<div class="header">
+
+<h1>Interview "Family and Friends"</h1>
+
+<div class="progress">
+Questions practised:
+<span id="score">0</span> / 20
+</div>
+
+</div>
+
+
+<div class="cards-container" id="cards"></div>
+
+
+</div>
+
+
+<script>
+const questions = [
+
+{
+question: "How many people are there in your family?",
+answer: "There are four people in my immediate family: my mum, my dad, my younger sister and me. We all live together in a flat in the city centre."
+},
+
+{
+question: "Who are you closest to in your family?",
+answer: "I am closest to my mum because we can talk about anything, from school problems to my future plans. She always listens carefully and gives me really good advice."
+},
+
+{
+question: "What does your best friend look like?",
+answer: "My best friend Anna is quite tall with long dark hair and bright green eyes. She always smiles a lot, which makes her look very friendly and approachable."
+},
+
+{
+question: "How do you usually spend time with your friends?",
+answer: "We usually meet at the weekend and go to the cinema, walk in the park or just hang out at one of our houses. In the summer, we often go cycling or have picnics by the river."
+},
+
+{
+question: "Do you have any brothers or sisters?",
+answer: "Yes, I have a younger sister who is ten years old. We share a bedroom, so we spend a lot of time together playing board games and watching films."
+},
+
+{
+question: "What do you and your friends have in common?",
+answer: "My friends and I all love music and playing computer games, so we often share new songs and play online together. We also have a similar sense of humour."
+},
+
+{
+question: "Who do you look like in your family?",
+answer: "Most people say I look exactly like my dad because we have the same dark hair, eye colour, and even the same smile. I also inherited his height, so we are both quite tall."
+},
+
+{
+question: "How often do you see your friends?",
+answer: "I see my closest friends almost every day because we study in the same class at school. At the weekend, we usually meet and spend a few hours together."
+},
+
+{
+question: "What is your best friend like?",
+answer: "My best friend is a very kind and honest person who always tells the truth, even when it is difficult. She is also quite funny and can make anyone laugh when they are feeling down."
+},
+
+{
+question: "Do you spend more time with your family or your friends?",
+answer: "During the week, I spend more time with my family because we have meals together every evening. However, at the weekend, I usually go out with my friends."
+},
+
+{
+question: "What do you usually do together as a family?",
+answer: "On Sunday evenings, we usually cook dinner together and watch a film on the sofa. It is a lovely routine that helps us relax after a busy week."
+},
+
+{
+question: "Have you ever had an argument with your friends?",
+answer: "Yes, I had an argument with my best friend last year because she forgot to come to my birthday party. We talked about it honestly and became even closer afterwards."
+},
+
+{
+question: "Who helps you the most in your family?",
+answer: "My dad helps me the most, especially with my maths homework because he is really good at numbers. He also teaches me how to fix things around the house."
+},
+
+{
+question: "What qualities do you value most in a friend?",
+answer: "I value honesty and loyalty most in a friend because I need to know I can trust them. It is also important for me that my friends are supportive when I have problems."
+},
+
+{
+question: "Would you say you have a big or a small family?",
+answer: "I would say I have quite a small immediate family because there are four of us. However, I have lots of cousins, aunts and uncles, so family gatherings are always large."
+},
+
+{
+question: "How do you help your parents at home?",
+answer: "I usually help my mum by washing the dishes, tidying my room and taking out the rubbish. At the weekend, I sometimes help my dad with the shopping or walk the dog."
+},
+
+{
+question: "What do your friends think of you?",
+answer: "My friends often say that I am a reliable and cheerful person who is always ready to help. They also think I am quite funny, which makes them enjoy spending time with me."
+},
+
+{
+question: "Is it better to have many friends or a few close ones?",
+answer: "I think it is better to have a few close friends because you can really trust them and share your secrets. Having lots of friends can be fun, but it is difficult to stay close to all of them."
+},
+
+{
+question: "What family tradition do you enjoy most?",
+answer: "I really enjoy celebrating New Year together as a family. We decorate the flat, cook lots of delicious food and stay up late watching films and talking."
+},
+
+{
+question: "Who do you turn to when you have a problem?",
+answer: "When I have a serious problem, I usually turn to my mum because she understands me very well. If it is something small, like a disagreement with a classmate, I prefer talking to my best friend."
+}
+
+];
+
+
+let completedCount = 0;
+function createCards() {
+
+const container = document.getElementById("cards");
+
+questions.forEach((item, index) => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<div class="card-inner">
+    <div class="card-front">
+        ${index + 1}
+    </div>
+    <div class="card-back">
+        <div class="question-number">
+            Question ${index + 1}
+        </div>
+        <div class="question-text">
+            ${item.question}
+        </div>
+        <button class="answer-button">
+            SHOW MODEL ANSWER
+        </button>
+    </div>
+</div>
+`;
+
+const showAnswerButton = card.querySelector(".answer-button");
+const back = card.querySelector(".card-back");
+
+card.addEventListener("click", function(e){
+    if(e.target === showAnswerButton){
+        return;
+    }
+    if(!card.classList.contains("completed")){
+        card.classList.toggle("flipped");
+    }
+});
+
+showAnswerButton.addEventListener("click", function(e){
+    e.stopPropagation();
+    
+    if(!back.querySelector(".model-answer")){
+        const answer = document.createElement("div");
+        answer.className = "model-answer";
+        answer.innerHTML = `
+            <div class="model-title">
+                Model Answer
+            </div>
+            ${item.answer}
+        `;
+        back.appendChild(answer);
+        showAnswerButton.style.display = "none";
+
+        const doneButton = document.createElement("button");
+        doneButton.className = "answer-button";
+        doneButton.innerHTML = "✓";
+        back.appendChild(doneButton);
+
+        doneButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            card.classList.remove("flipped");
+            
+            setTimeout(function(){
+                card.classList.add("completed");
+                card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                back.innerHTML = "";
+            }, 300);
+
+            completedCount++;
+            document.getElementById("score").textContent = completedCount;
+        });
+    }
+});
+
+container.appendChild(card);
+});
+}
+
+createCards();
+</script>
+
+</body>
+</html>
