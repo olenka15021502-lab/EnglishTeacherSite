@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Jobs and Professions"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #FFD1B3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #8B4A2B;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #D4784A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://t.me/english_exams_with_olga" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Jobs and Professions"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What job would you like to have in the future and why?",
+        answer: "I would like to become a software developer because I enjoy solving logical problems and creating useful applications. Also, it is a well-paid profession with great opportunities for remote work."
+    },
+    {
+        question: "Have you ever had a part-time job or done any volunteering?",
+        answer: "Yes, last summer I volunteered  at a local animal shelter. It was hard work, but it taught me responsibility and how to care for animals properly."
+    },
+    {
+        question: "What are the most important qualities for a good employee?",
+        answer: "I believe reliability and time management are the most important qualities. An employer needs to know that you will finish your tasks on time and can be trusted."
+    },
+    {
+        question: "Did your parents influence your choice of future career?",
+        answer: "Not really, my parents are both doctors, but I am more interested in graphic design. They support my choice and just want me to be happy in my future profession."
+    },
+    {
+        question: "Is it better to have a high salary or a job you enjoy? Why?",
+        answer: "I think it is much better to have a job you enjoy. If you hate your work, a high salary will not make you happy, and you will quickly feel burnt out."
+    },
+    {
+        question: "Would you like to try an unusual or exotic job, like a travel blogger?",
+        answer: "Yes, being a travel blogger sounds amazing because you can explore the world and share your experiences. However, I know it requires a lot of hard work behind the scenes."
+    },
+    {
+        question: "What skills do you think will be in demand in the future?",
+        answer: "I think digital literacy and the ability to learn new technologies quickly will be essential. Also, soft skills like communication and teamwork will always be valued by employers."
+    },
+    {
+        question: "Do you think working from home is better than working in an office?",
+        answer: "I prefer working from home because it saves time on commuting. Besides, you you may have a flexible schedule. However, I understand that some people miss the social interaction of an office."
+    },
+    {
+        question: "What advice would you give to a school leaver who is choosing a career?",
+        answer: "I would advise them to choose a profession that genuinely matches their interests and strengths, rather than just chasing a high salary. It is also a good idea to research different careers carefully and talk to people who already work in those fields before making a final decision."
+    },
+    {
+        question: "Which profession do you respect the most and why?",
+        answer: "I respect teachers the most because they shape the future generation. Their patience and dedication are truly admirable."
+    },
+    {
+        question: "Do you think teenagers should work during their school years?",
+        answer: "Yes, I think a light part-time job can be very beneficial. It teaches young people the value of money and helps them develop basic work skills before they enter the adult world."
+    },
+    {
+        question: "How often do you think people should change their jobs in their lifetime?",
+        answer: "I think changing jobs every five to ten years is a good idea. It helps people gain new experiences, learn different skills, and avoid getting stuck in a boring routine."
+    },
+    {
+        question: "What do you think is the most difficult profession in the modern world?",
+        answer: "I believe being a doctor or a surgeon is one of the most difficult professions. They have to make life-or-death decisions and work long, stressful hours."
+    },
+    {
+        question: "What personal strengths do you have that will help you in your future career?",
+        answer: "I am very organised and good at meeting deadlines, which will help me in any office job. I am also a good listener, which is important for working in a team."
+    },
+    {
+        question: "How important is it to know foreign languages for your future career?",
+        answer: "It is absolutely crucial, especially in fields like IT, business, or tourism. Knowing English allows you to work for international companies and access a wider range of information."
+    },
+    {
+        question: "Do you think robots and artificial intelligence will replace many human jobs?",
+        answer: "Yes, I think AI will replace many routine and manual jobs, like factory work or basic data entry. However, jobs requiring creativity and human empathy can't be replaced by AI."
+    },
+    {
+        question: "What kind of work environment do you think is the most productive?",
+        answer: "I think a friendly and supportive environment is the most productive. When colleagues help each other and the atmosphere is positive, people work much more efficiently."
+    },
+    {
+        question: "Would you consider taking a gap year before university to work or travel?",
+        answer: "Yes, I would definitely consider it. A gap year could give me valuable life experience, help me earn some money, and make me more certain about my university choices."
+    },
+    {
+        question: "Do you think wearing a uniform at work is a good idea?",
+        answer: "For some jobs, like nurses or police officers, a uniform is essential for safety and identification. But for office workers, I think a smart casual dress code is much better."
+    },
+    {
+        question: "Do you think it is necessary to have a university degree to get a good job?",
+        answer: "I don’t think a university degree is always necessary because, in many modern fields like IT, practical skills and experience are often more important than a diploma. However, for professions like medicine or law, a university education is definitely required to get a good job."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
