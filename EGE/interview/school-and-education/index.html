@@ -1,1 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Interview "School and Education"</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* Brand */
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+/* Header */
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+
+/* Cards */
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+
+.card-front {
+    background: #F9E79F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A6B1F;
+}
+
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C9A227;
+}
+
+
+
+@media(max-width:800px){
+
+.cards-container {
+    grid-template-columns: repeat(2,1fr);
+}
+
+}
+
+
+@media(max-width:500px){
+
+.cards-container {
+    grid-template-columns: 1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app-wrapper">
+
+
+<div class="brand">
+<a href="https://t.me/english_exams_with_olga" target="_blank">
+English with Olga
+</a>
+</div>
+
+
+<div class="header">
+
+<h1>Interview "School and Education"</h1>
+
+<div class="progress">
+Questions practised:
+<span id="score">0</span> / 20
+</div>
+
+</div>
+
+
+<div class="cards-container" id="cards"></div>
+
+
+</div>
+
+
+<script>
+const questions = [
+
+{
+question: "What is your favourite subject at school and why?",
+answer: "My favourite subject is History because I find it fascinating to learn about past events and how they shape our world. Also, our teacher makes every lesson very engaging and interactive."
+},
+
+{
+question: "How much time do you usually spend on your homework every day?",
+answer: "I usually spend about two or three hours on my homework every evening. It takes a bit longer when I have to prepare for tests or write essays for my literature classes."
+},
+
+{
+question: "Do you prefer studying alone or in a group? Why or why not?",
+answer: "I prefer studying in a group because we can discuss difficult topics and help each other understand the material. However, when I need to memorise facts, I find it easier to focus when I am alone in my room."
+},
+
+{
+question: "What kind of school uniform do you have to wear? Do you like it? Why or why not?",
+answer: "We have a strict school uniform, which includes a white shirt, a dark blazer and a tie. To be honest, I don't really like it because it is quite formal and not very comfortable for a whole day of classes."
+},
+
+{
+question: "How do you usually prepare for your exams?",
+answer: "I usually start revising a few weeks before the exams by making summary notes and doing practice tests. I also try to get enough sleep and eat well so I can stay focused on the exam day."
+},
+
+{
+question: "What extracurricular activities are available at your school?",
+answer: "My school offers a wide range of activities, such as a drama club, a debating club and various sports sections. I personally attend the debating club, which helps me improve my speaking skills."
+},
+
+{
+question: "Do you think school rules are necessary? Why or why not?",
+answer: "Yes, I believe school rules are absolutely necessary because they create a safe environment for learning. Without them, it would be very difficult for teachers to manage their classes effectively."
+},
+
+{
+question: "Who is your favourite teacher? Why?",
+answer: "My favourite teacher is my English teacher because she is incredibly patient and always explains grammar rules clearly. She also encourages us to watch British films to improve our listening skills."
+},
+
+{
+question: "What is the most difficult subject for you, and how do you deal with it?",
+answer: "The most difficult subject for me is Physics because the formulas and calculations are quite complex. To deal with it, I attend extra tutoring sessions and practise solving problems every week."
+},
+
+{
+question: "How do you usually spend your school holidays?",
+answer: "During the school holidays, I try to relax and devote time to my hobbies, like reading or playing football with my friends. Sometimes my family and I also go on a short trip to the countryside."
+},
+
+{
+question: "Do you use any digital devices or apps for your studies? Why?",
+answer: "Yes, I regularly use educational apps and websites to check my vocabulary and watch science videos. I find them very helpful because they make learning more interactive and visual."
+},
+
+{
+question: "What would you change about your school if you could?",
+answer: "If I could, I would add a larger and more comfortable school library with cosy reading areas. I would also introduce more practical lessons, like cooking or basic financial literacy."
+},
+
+{
+question: "How do you usually get to school every day?",
+answer: "I usually get to school by bus because the bus stop is just around the corner. On nice days, I sometimes ride my bicycle."
+},
+
+{
+question: "Do you think it is important to learn foreign languages at school? Why or why not?",
+answer: "I definitely think it is important because knowing a foreign language opens up many opportunities for future studies and travel. It also helps you understand different cultures and communicate with people around the world."
+},
+
+{
+question: "What is your favourite part of the school day?",
+answer: "My favourite part of the school day is the long lunch break because I can finally relax and chat with my friends in the canteen. We usually share our food and talk about our weekend plans."
+},
+
+{
+question: "Have you ever participated in any school projects or competitions?",
+answer: "Yes, last year I participated in a school science fair with my friend, and we built a small solar-powered car. It was a challenging project, but we were very proud when we won second place."
+},
+
+{
+question: "Do you get along well with your classmates?",
+answer: "Yes, I get along very well with most of my classmates because we have been studying together for several years. We support each other during difficult tests. We also hang out together after lessons."
+},
+
+{
+question: "What skills do you think are necessary to learn at school?",
+answer: "I think critical thinking and time management are the most important skills to learn at school. They are useful not only for passing exams but also for succeeding in any future career."
+},
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Interview "School and Education"</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* Brand */
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+/* Header */
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+
+/* Cards */
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+
+.card-front {
+    background: #F9E79F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A6B1F;
+}
+
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C9A227;
+}
+
+
+
+@media(max-width:800px){
+
+.cards-container {
+    grid-template-columns: repeat(2,1fr);
+}
+
+}
+
+
+@media(max-width:500px){
+
+.cards-container {
+    grid-template-columns: 1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app-wrapper">
+
+
+<div class="brand">
+<a href="https://t.me/english_exams_with_olga" target="_blank">
+English with Olga
+</a>
+</div>
+
+
+<div class="header">
+
+<h1>Interview "School and Education"</h1>
+
+<div class="progress">
+Questions practised:
+<span id="score">0</span> / 20
+</div>
+
+</div>
+
+
+<div class="cards-container" id="cards"></div>
+
+
+</div>
+
+
+<script>
+const questions = [
+
+{
+question: "What is your favourite subject at school and why?",
+answer: "My favourite subject is History because I find it fascinating to learn about past events and how they shape our world. Also, our teacher makes every lesson very engaging and interactive."
+},
+
+{
+question: "How much time do you usually spend on your homework every day?",
+answer: "I usually spend about two or three hours on my homework every evening. It takes a bit longer when I have to prepare for tests or write essays for my literature classes."
+},
+
+{
+question: "Do you prefer studying alone or in a group? Why or why not?",
+answer: "I prefer studying in a group because we can discuss difficult topics and help each other understand the material. However, when I need to memorise facts, I find it easier to focus when I am alone in my room."
+},
+
+{
+question: "What kind of school uniform do you have, and do you like it?",
+answer: "We have a strict school uniform, which includes a white shirt, a dark blazer and a tie. To be honest, I don't really like it because it is quite formal and not very comfortable for a whole day of classes."
+},
+
+{
+question: "How do you usually prepare for your exams?",
+answer: "I usually start revising a few weeks before the exams by making summary notes and doing practice tests. I also try to get enough sleep and eat well so I can stay focused on the exam day."
+},
+
+{
+question: "What extracurricular activities are available at your school?",
+answer: "My school offers a wide range of activities, such as a drama club, a robotics team and various sports sections. I personally attend the debating club, which helps me improve my speaking skills."
+},
+
+{
+question: "Do you think school rules are necessary? Why or why not?",
+answer: "Yes, I believe school rules are absolutely necessary because they create a safe and disciplined environment for learning. Without them, it would be very difficult for teachers to manage the classes effectively."
+},
+
+{
+question: "Who is your favourite teacher and what makes them special?",
+answer: "My favourite teacher is my English teacher because she is incredibly patient and always explains grammar rules clearly. She also encourages us to watch British films to improve our listening skills."
+},
+
+{
+question: "What is the most difficult subject for you, and how do you deal with it?",
+answer: "The most difficult subject for me is Physics because the formulas and calculations are quite complex. To deal with it, I attend extra tutoring sessions and practise solving problems every week."
+},
+
+{
+question: "How do you usually spend your school holidays?",
+answer: "During the school holidays, I try to relax and catch up on my hobbies, like reading or playing football with my friends. Sometimes my family and I also go on a short trip to the countryside."
+},
+
+{
+question: "Do you use any digital devices or apps for your studies? Why?",
+answer: "Yes, I regularly use educational apps and websites to check my vocabulary and watch science videos. I find them very helpful because they make learning more interactive and visual."
+},
+
+{
+question: "What would you change about your school if you could?",
+answer: "If I could, I would add a larger and more comfortable school library with cosy reading areas. I would also introduce more practical lessons, like cooking or basic financial literacy."
+},
+
+{
+question: "How do you usually get to school every day?",
+answer: "I usually get to school by bus because it is quite close to my house and the bus stop is just around the corner. On nice days, I sometimes ride my bicycle, which is good exercise."
+},
+
+{
+question: "Do you think it is important to learn foreign languages at school? Why or why not?",
+answer: "I definitely think it is important because knowing a foreign language opens up many opportunities for future studies and travel. It also helps you understand different cultures and communicate with people worldwide."
+},
+
+{
+question: "What is your favourite part of the school day?",
+answer: "My favourite part of the school day is the long lunch break because I can finally relax and chat with my friends in the canteen. We usually share our food and talk about our weekend plans."
+},
+
+{
+question: "Have you ever participated in any school projects or competitions?",
+answer: "Yes, last year I participated in a school science fair with my friend, and we built a small solar-powered car. It was a challenging project, but we were very proud when we won second place."
+},
+
+{
+question: "Do you get along well with your classmates?",
+answer: "Yes, I get along very well with most of my classmates because we have been studying together for several years. We support each other during difficult tests and often organise group study sessions."
+},
+
+{
+question: "What skills do you think are most important to learn at school?",
+answer: "I think critical thinking and time management are the most important skills to learn at school. They are useful not only for passing exams but also for succeeding in any future career."
+},
+
+{
+question: "How do you feel on the first day of the new school year?",
+answer: "On the first day of the new school year, I usually feel a mix of excitement and a little bit of nervousness. I am always happy to see my friends again and curious about my new teachers."
+},
+
+{
+question: "What are your plans after you finish secondary school?",
+answer: "After I finish secondary school, I plan to go to university and study computer science. I am  researching different universities and trying to improve my maths skills to pass the entrance exams."
+}
+
+];
+
+
+let completedCount = 0;
+function createCards() {
+
+const container = document.getElementById("cards");
+
+questions.forEach((item, index) => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<div class="card-inner">
+    <div class="card-front">
+        ${index + 1}
+    </div>
+    <div class="card-back">
+        <div class="question-number">
+            Question ${index + 1}
+        </div>
+        <div class="question-text">
+            ${item.question}
+        </div>
+        <button class="answer-button">
+            SHOW MODEL ANSWER
+        </button>
+    </div>
+</div>
+`;
+
+const showAnswerButton = card.querySelector(".answer-button");
+const back = card.querySelector(".card-back");
+
+card.addEventListener("click", function(e){
+    if(e.target === showAnswerButton){
+        return;
+    }
+    if(!card.classList.contains("completed")){
+        card.classList.toggle("flipped");
+    }
+});
+
+showAnswerButton.addEventListener("click", function(e){
+    e.stopPropagation();
+    
+    if(!back.querySelector(".model-answer")){
+        const answer = document.createElement("div");
+        answer.className = "model-answer";
+        answer.innerHTML = `
+            <div class="model-title">
+                Model Answer
+            </div>
+            ${item.answer}
+        `;
+        back.appendChild(answer);
+        showAnswerButton.style.display = "none";
+
+        const doneButton = document.createElement("button");
+        doneButton.className = "answer-button";
+        doneButton.innerHTML = "✓";
+        back.appendChild(doneButton);
+
+        doneButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            card.classList.remove("flipped");
+            
+            setTimeout(function(){
+                card.classList.add("completed");
+                card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                back.innerHTML = "";
+            }, 300);
+
+            completedCount++;
+            document.getElementById("score").textContent = completedCount;
+        });
+    }
+});
+
+container.appendChild(card);
+});
+}
+
+createCards();
+</script>
+
+</body>
+</html>
