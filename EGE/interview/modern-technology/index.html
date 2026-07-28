@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Modern Technology"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #D8C4F1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4A2F7A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #8B5FBF;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://t.me/english_exams_with_olga" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Modern Technology"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "How often do you use the Internet, and what do you mainly use it for?",
+        answer: "I use the Internet every single day, mostly for studying and keeping in touch with my friends. It is an essential tool for finding information quickly and watching educational videos."
+    },
+    {
+        question: "Which social media platforms do you use, and why?",
+        answer: "I actively use platforms like Telegram and VK to stay connected with my friends and follow interesting channels. However, I try to limit my screen time so it doesn't distract me from my homework."
+    },
+    {
+        question: "What do you think about the role of artificial intelligence in everyday life?",
+        answer: "I think AI is very useful for everyday tasks, like translating texts or analysing information. However, we should be careful not to rely on it too much for creative work or critical thinking."
+    },
+    {
+        question: "How has modern technology helped in medicine recently?",
+        answer: "Technology has revolutionised medicine, especially with telemedicine, which allows patients to consult doctors online. Also, modern surgical techniques and advanced medical equipment help patients recover much faster and with fewer complications"
+    },
+    {
+        question: "Can you imagine your life without a smartphone?",
+        answer: "  To be honest, it is hard to imagine my life without a smartphone because it is my camera, map, and communication tool all in one. However, I think taking a short digital detox sometimes is very healthy for the mind."
+    },
+    {
+        question: "Do you prefer online learning or traditional classroom learning? Why?",
+        answer: "I prefer traditional classroom learning because I can ask my teacher questions directly and interact with classmates. But I must admit that online platforms are very convenient for revising materials at home."
+    },
+    {
+        question: "What new technology would you like to see in the future?",
+        answer: "I would love to see more advanced virtual reality headsets that are lightweight and affordable. They could make distance learning and virtual travel much more realistic and engaging."
+    },
+    {
+        question: "Do you use any gadgets to track your health or fitness?",
+        answer: "Yes, I use a smartwatch to track my daily steps and monitor my heart rate during sports. It really motivates me to stay active and maintain a healthy lifestyle."
+    },
+    {
+        question: "What are the negative effects of social media on teenagers?",
+        answer: "One major negative effect is that social media can cause anxiety and lower self-esteem due to unrealistic standards. What's more, endless scrolling wastes a lot of time that could be spent on hobbies or sleep."
+    },
+    {
+        question: "Do you think artificial intelligence will replace human teachers?",
+        answer: "I don't think AI will ever completely replace human teachers. While AI can check grammar or provide facts, it cannot offer the emotional support and inspiration that a real teacher gives."
+    },
+    {
+        question: "How do you protect your personal data when you are online?",
+        answer: "I protect my data by using strong, unique passwords for different accounts and never sharing personal information with strangers. I also make sure to log out of public computers after using them."
+    },
+    {
+        question: "Have you heard of any impressive medical inventions involving technology?",
+        answer: "I have recently read about 3D-printed organs, which is an amazing medical invention. In the future, this technology could save millions of lives by providing perfect matches for transplant patients."
+    },
+    {
+        question: "Has technology made communication between people better or worse?",
+        answer: "I believe technology has made communication much faster and easier, especially for long-distance relationships. On the other hand, it sometimes reduces the quality of face-to-face conversations."
+    },
+    {
+        question: "Do you think you spend too much time looking at screens?",
+        answer: "Yes, I probably spend too much time looking at screens, especially when I watch videos or chat with friends late at night. I am trying to improve this by setting a daily screen-time limit on my phone."
+    },
+    {
+        question: "Do you prefer reading e-books or traditional paper books?",
+        answer: "I prefer reading paper books because I love the smell of the pages and the feeling of holding a real book. However, e-books are definitely more convenient when I am travelling light."
+    },
+    {
+        question: "Can modern technology help solve environmental problems?",
+        answer: "Yes, technology can help a lot, for example, by developing electric cars to reduce air pollution. Also, smart systems can optimise energy usage in buildings to save electricity."
+    },
+    {
+        question: "Do you think playing video games is a waste of time?",
+        answer: "I don't think playing video games is a waste of time if it is done in moderation. Many games actually improve problem-solving skills and reaction time, as long as they don't replace physical activity."
+    },
+    {
+        question: "Would you like to live in a smart home in the future? Why?",
+        answer: "I would definitely like to live in a smart home because it can make daily life much more comfortable. For instance, having lights and heating that turn on automatically when I arrive home is very convenient."
+    },
+    {
+        question: "Is it important for everyone to know how to write computer code?",
+        answer: "I think basic digital literacy is essential for everyone today, but not everyone needs to know how to code. However, understanding the basics of programming is a great skill that can open many career doors."
+    },
+    {
+        question: "What would you do if the internet stopped working for a whole week?",
+        answer: "If the internet stopped working for a week, I would spend more time outdoors reading paper books and meeting friends in person. It would be a great opportunity for a real digital detox and a break from constant notifications."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
