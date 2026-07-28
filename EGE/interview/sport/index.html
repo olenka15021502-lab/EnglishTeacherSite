@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Sport and Healthy Lifestyle"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #B8E6D5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2D6B4A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #4CAF50;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://t.me/english_exams_with_olga" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Sport and Healthy Lifestyle"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is your favourite sport and why do you enjoy it?",
+        answer: "My favourite sport is swimming because it is a full-body workout that keeps me fit without putting stress on my joints. I try to go to the local pool at least twice a week."
+    },
+    {
+        question: "How often do you exercise, and what do you usually do?",
+        answer: "I usually exercise about three times a week, mostly by going for a run in the park or doing home workouts. It helps me stay active and clear my mind after school."
+    },
+    {
+        question: "Do you enjoy PE (Physical Education) lessons at school, and why or why not?",
+        answer: "Yes, I enjoy PE lessons because they give us a chance to move around and play team games like football. However, I wish we had more variety, such as yoga or dance classes."
+    },
+    {
+        question: "What does a healthy diet mean to you?",
+        answer: "To me, a healthy diet means eating plenty of fresh vegetables, fruits, and lean protein, while cutting down on sugar and fast food. It is not about strict diets, but about having a balanced approach to food."
+    },
+    {
+        question: "Do you prefer playing sports or watching them on TV, and why?",
+        answer: "I definitely prefer playing sports rather than just watching them on TV. Being active myself gives me much more energy and satisfaction than sitting on the sofa."
+    },
+    {
+        question: "Would you like to try any extreme sports in the future? Why or why not?",
+        answer: "I would not like to try extreme sports like skydiving because I think they are too dangerous and stressful. I prefer safer activities, like cycling or hiking in the countryside."
+    },
+    {
+        question: "Why do you think sport is important for teenagers?",
+        answer: "I believe sport is absolutely essential for teenagers because it keeps them physically healthy and helps to reduce stress from exams. It also teaches valuable lessons about teamwork and discipline."
+    },
+    {
+        question: "Do you enjoy water sports, and why or why not?",
+        answer: "Yes, I really enjoy water sports, especially swimming in the sea during summer holidays. It is incredibly refreshing and a great way to cool down on a hot day."
+    },
+    {
+        question: "Do you prefer team sports or individual sports, and why?",
+        answer: "I prefer team sports, such as volleyball, because I enjoy the social aspect and supporting each other. Playing with friends makes the training sessions much more fun and motivating."
+    },
+    {
+        question: "What other healthy habits do you try to maintain besides sport?",
+        answer: "Besides regular exercise, I try to maintain other healthy habits, like drinking at least two litres of water a day and getting eight hours of sleep. These small routines make a big difference to my overall energy levels."
+    },
+    {
+        question: "Do you admire any famous sportspeople, and why?",
+        answer: "I really admire professional tennis players because of their incredible discipline and mental strength. They have to travel constantly and maintain peak physical condition, which is very inspiring."
+    },
+    {
+        question: "What winter sports do you enjoy, if any, and why?",
+        answer: "In winter, I enjoy outdoor activities like ice skating with my family because it is a wonderful way to enjoy the fresh air. It helps me stay active and have fun even when it is cold."
+    },
+    {
+        question: "Do you often eat fast food, and why or why not?",
+        answer: "I rarely eat fast food because it is usually high in calories and low in nutrients. I might have a burger once in a while as a treat, but it is not a regular part of my diet."
+    },
+    {
+        question: "What new sport or physical activity would you like to try, and why?",
+        answer: "In the future, I would love to try yoga to improve my flexibility and posture. I think it would be a perfect complement to my more active workouts."
+    },
+    {
+        question: "Are there good sports facilities in your area, and do you use them?",
+        answer: "Fortunately, there are good sports facilities in my area, including a modern swimming pool and a local park with a running track. I use them regularly, which makes it very easy for me to stay active."
+    },
+    {
+        question: "How does sport affect a person's mental health?",
+        answer: "I think sport has a huge positive impact on mental health because physical activity releases endorphins, which improve your mood. Whenever I feel stressed, a good run always helps me feel better."
+    },
+    {
+        question: "Have you ever taken part in any school sports competitions, and how did you feel about it?",
+        answer: "Yes, I recently took part in a school relay race, and it was an unforgettable experience. Even though we were tired, cheering for my classmates and working together was amazing."
+    },
+    {
+        question: "Do you do morning exercises, and why or why not?",
+        answer: "Yes, I do morning exercises every day because it is essential for my health and helps me wake up properly. Even just five minutes of light stretching gives me energy for the whole day."
+    },
+    {
+        question: "What advice would you give to someone who wants to start a healthy lifestyle?",
+        answer: "I would advise them to start with small, manageable changes, like walking to school or swapping sugary drinks for water. It is important not to rush, as building a healthy lifestyle is a long-term process."
+    },
+    {
+        question: "Do you often watch sports programmes on TV, and why or why not?",
+        answer: "I rarely watch sports on TV, because I find it a bit boring to just sit and watch. However, I might make an exception for major events like the Olympic Games or the World Cup."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
