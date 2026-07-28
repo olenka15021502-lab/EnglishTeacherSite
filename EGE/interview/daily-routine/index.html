@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Daily Routine"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #C7EAFB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2A5A7A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #3A7AC9;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Daily Routine"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is the first thing you do when you wake up in the morning?",
+        answer: "The first thing I do is make my bed and open the curtains to let some fresh air in. Then, I head to the bathroom to wash my face and brush my teeth to wake myself up properly."
+    },
+    {
+        question: "Do you have any household chores to do before you leave for school?",
+        answer: "Yes, I usually have to tidy up my room and load the dishwasher before I leave. It only takes a few minutes, but it helps keep the house organised."
+    },
+    {
+        question: "What does your typical evening routine look like?",
+        answer: "In the evening, I usually do my homework, have dinner with my family, and then unwind by reading a book. I try to switch off all screens at least an hour before going to bed to sleep better."
+    },
+    {
+        question: "How is your routine at the weekend different from your weekday routine?",
+        answer: "At the weekend, I can wake up a bit later and don't have to rush to get ready. I also use Saturdays to do such household chores as vacuuming the carpets or doing the laundry."
+    },
+    {
+        question: "Which household chore do you actually enjoy doing, and why?",
+        answer: "I  enjoy cooking and doing the washing-up afterwards. I find it quite relaxing to listen to music while I clean the kitchen, and it gives me a sense of accomplishment."
+    },
+    {
+        question: "What is the household chore you dislike the most?",
+        answer: "I absolutely hate taking out the rubbish, especially in winter when it is cold and dark outside. I also find ironing clothes very boring and time-consuming."
+    },
+    {
+        question: "How are household chores divided in your family?",
+        answer: "In my family, we share the chores fairly. My mum usually does the grocery shopping and cooking, my dad fixes things around the house and walks the dog. And I am responsible for keeping my room tidy."
+    },
+    {
+        question: "Are you good at managing your time during the day?",
+        answer: "I try to be, so I usually make a to-do list every morning to prioritise my tasks. However, I sometimes procrastinate on difficult homework, which can make my evening a bit stressful."
+    },
+    {
+        question: "Do you prefer to stick to a strict daily routine or be more flexible?",
+        answer: "I prefer a flexible routine because life is unpredictable, and I do not like feeling rushed. However, having a basic schedule helps me stay productive and ensures I do not forget important tasks."
+    },
+    {
+        question: "Has your daily routine changed much in the last few years?",
+        answer: "Yes, it has changed a lot since I started secondary school. I have much more homework and extracurricular activities, so I have to manage my free time much more carefully than before."
+    },
+    {
+        question: "How do you help your parents around the house on a regular basis?",
+        answer: "I regularly help my parents by setting the table for dinner and unloading the dishwasher. On Sundays, I also help my mum water the plants and dust the furniture in the living room."
+    },
+    {
+        question: "If you could change one thing about your daily routine, what would it be?",
+        answer: "If I could, I would wake up an hour earlier to have a proper, relaxed breakfast and do some light stretching. Rushing in the morning is quite stressful, and I would love to start the day more calmly."
+    },
+    {
+        question: "Does technology help you manage your daily routine?",
+        answer: "Yes, I use the alarm and calendar apps on my phone every day to remind me of school deadlines and chores."
+    },
+    {
+        question: "Do you often go shopping for your family, and what do you usually buy?",
+        answer: "I sometimes go to the local shop for my parents, usually to buy bread, milk, or other things we need for dinner. It is a small responsibility, but it helps my mum when she is busy."
+    },
+    {
+        question: "At what time of the day do you feel most productive?",
+        answer: "I feel most productive in the late morning, after my breakfast. By the evening, my energy levels drop, so I prefer to do lighter tasks like reading or tidying up."
+    },
+    {
+        question: "Do you think doing household chores teaches teenagers to be more independent?",
+        answer: "Absolutely, because it teaches young people basic life skills they will need when they move out. Learning how to cook, clean, and manage a household is essential for adult life."
+    },
+    {
+        question: "Do you think teenagers should be paid for doing household chores?",
+        answer: "I don't think so, because helping around the house is a normal part of family life. However, parents might give extra pocket money for bigger, occasional jobs like washing the car."
+    },
+    {
+        question: "Would you describe yourself as a morning person or a night owl?",
+        answer: "I am definitely a night owl because I find it hard to wake up early, but I feel really energetic in the evening. However, I have to make myself go to bed earlier on school nights to get enough sleep."
+    },
+    {
+        question: "What do you do in the evening to prepare for the next day?",
+        answer: "Every evening, I pack my school bag, lay out my clothes for the next morning, and check my timetable. This simple habit saves me a lot of time before school."
+    },
+    {
+        question: "What advice would you give to someone who struggles with their daily routine?",
+        answer: "I would advise them to go to bed at the same time every night to get enough sleep. When you have a good rest, it is much easier to follow your plan and stay focused during the day."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
