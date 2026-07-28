@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Country Life and City Life"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #FFE066;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A5A1A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C98A2A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Country Life and City Life"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "Where would you prefer to live: in a big city or in the countryside, and why?",
+        answer: "I would prefer to live in a big city because of the better infrastructure and more opportunities for education and work. However, I would love to have a country house to visit at weekends."
+    },
+    {
+        question: "What are the main advantages of living in a city?",
+        answer: "The main advantages are excellent infrastructure, such as reliable public transport, modern hospitals, and good schools. Also, there are more entertainment options, like cinemas, museums, and shopping centres."
+    },
+    {
+        question: "What do you think are the biggest problems of living in a big city?",
+        answer: "I think the biggest problems are air and noise pollution, heavy traffic, and the fast pace of life. It can be quite stressful and exhausting to live in a crowded city centre."
+    },
+    {
+        question: "Why do some people prefer living in the countryside?",
+        answer: "People choose the countryside for the fresh air, beautiful nature, and a peaceful environment. It is a great place to escape the noise and stress of the city."
+    },
+    {
+        question: "What are the main drawbacks of living in a rural area?",
+        answer: "The main drawbacks are poorer infrastructure and fewer job opportunities. Sometimes, you have to travel a long way to get to a good hospital, a large supermarket, or a secondary school."
+    },
+    {
+        question: "How does commuting to work or school differ in the city and the country?",
+        answer: "In the city, people often spend hours in traffic jams or crowded public transport. In the countryside, the journey can be even longer because people have to drive to the city, but at least the roads are less congested."
+    },
+    {
+        question: "Do you think having a garden is an important part of country life?",
+        answer: "Yes, absolutely. Gardening is a very popular activity in the countryside. Growing your own vegetables and flowers is not only a useful hobby but also a great way to relax and connect with nature."
+    },
+    {
+        question: "How does the place where you live affect your health?",
+        answer: "It affects it significantly. Living in the countryside with clean air and less stress is generally better for physical and mental health, while city pollution can sometimes cause respiratory problems."
+    },
+    {
+        question: "Is it true that there is nothing to do for young people in the countryside?",
+        answer: "Not necessarily. While there are fewer cinemas or clubs, young people in rural areas can enjoy outdoor activities like hiking, cycling, or swimming in rivers, which are much healthier."
+    },
+    {
+        question: "Why are some city dwellers moving to the countryside these days?",
+        answer: "Many city dwellers are moving to the countryside to find a better work-life balance. The rise of remote work has made it possible for them to live in a peaceful environment while keeping their city jobs."
+    },
+    {
+        question: "Is it more expensive to live in the city or in the country?",
+        answer: "Generally, it is much more expensive to live in a big city because of high rent prices and the overall cost of living. Housing in rural areas is usually much more affordable."
+    },
+    {
+        question: "How does the sense of community differ between the city and the countryside?",
+        answer: "In the countryside, people usually know their neighbours and help each other, creating a strong sense of community. In big cities, people can often feel lonely despite being surrounded by millions of others."
+    },
+    {
+        question: "Where do you think it is better to bring up children?",
+        answer: "I think the countryside is a safer and healthier place for children to grow up. They can play outside, breathe fresh air, and learn to appreciate nature from an early age."
+    },
+    {
+        question: "Does modern technology make the difference between city and country life smaller?",
+        answer: "Yes, it does. With high-speed internet and online shopping, people in rural areas can now access the same information, entertainment, and services as city residents."
+    },
+    {
+        question: "Do you or your family have a country house, and how often do you go there?",
+        answer: "Yes, my family has a small country house, and we try to go there every weekend in the summer. We spend our time gardening, having barbecues, and enjoying the silence."
+    },
+    {
+        question: "Do you think it is possible to grow your own food in a big city?",
+        answer: "Yes, it is definitely possible. Many city dwellers grow herbs and small vegetables on their balconies or participate in community gardens. It is a wonderful way to have fresh, organic food and connect with nature even in an urban environment."
+    },
+    {
+        question: "How do you think cities will change in the future?",
+        answer: "I think future cities will become greener and more eco-friendly. There will be more parks, electric public transport, and stricter rules to reduce air pollution."
+    },
+    {
+        question: "Why is rural tourism becoming more popular?",
+        answer: "Rural tourism is popular because city people want to escape the hustle and bustle. They want to experience authentic country life, eat organic food, and enjoy the quietness of nature."
+    },
+    {
+        question: "What would be your ideal living situation in the future?",
+        answer: "My ideal situation would be living in a small town near a big city. This way, I could enjoy the fresh air and peace of the countryside, but still have easy access to all necessary city facilities."
+    },
+    {
+        question: "What advice would you give to a foreigner who wants to experience real Russian country life?",
+        answer: "I would advise them to visit a traditional Russian village, try homemade food like fresh milk and berries, and take a walk in the forest to truly feel the beauty and calmness of Russian nature."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
