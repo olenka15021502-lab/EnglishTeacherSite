@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Food and Cooking"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #F7B7A3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A3A2A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C75A3A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Food and Cooking"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is your favourite dish? Why do you like it so much?",
+        answer: "My favourite dish is pasta with tomato sauce and cheese. I like it because it is very tasty, easy to cook, and always reminds me of cozy family dinners."
+    },
+    {
+        question: "How often do you cook? What do you usually make?",
+        answer: "I cook dinner about three times a week. I usually make simple meals like scrambled eggs, fresh salad, or roast chicken with potatoes."
+    },
+    {
+        question: "Do you often eat fast food or order takeaways? Why or why not?",
+        answer: "I rarely eat fast food or order takeaways because home-cooked meals are much healthier and cheaper. Sometimes I have a pizza with my friends, but only as a special treat."
+    },
+    {
+        question: "What does a healthy diet mean to you?",
+        answer: "To me, a healthy diet means eating a lot of fresh vegetables, fruit, and lean meat. It is not about strict rules, but about eating balanced meals every day."
+    },
+    {
+        question: "Who taught you how to cook? How did you learn?",
+        answer: "I learned to cook by watching my mum in the kitchen and helping her prepare meals. She taught me basic skills, like how to chop vegetables and boil pasta properly."
+    },
+    {
+        question: "Is there any food you really dislike? Why?",
+        answer: "I really dislike blue cheese and olives. I find their taste and smell too strong, and I prefer mild, fresh flavours in my food."
+    },
+    {
+        question: "What is a traditional dish in your country?",
+        answer: "A very traditional dish in Russia is borscht, which is hot beetroot soup. It is usually cooked with meat and vegetables, and served with a spoon of sour cream."
+    },
+    {
+        question: "Do you prefer eating at home or eating out at restaurants? Why?",
+        answer: "I prefer eating at home because it is cheaper and I know exactly what ingredients are in my food. However, eating out is a nice way to celebrate a birthday."
+    },
+    {
+        question: "What do you usually have for breakfast? Is it important to you?",
+        answer: "I usually have oatmeal with berries and a cup of tea for breakfast. I think it is very important because it gives me the energy I need for my morning lessons."
+    },
+    {
+        question: "Do you consider cooking to be a hobby or just a daily chore? Why?",
+        answer: "I really think cooking is a relaxing hobby. Trying out new recipes is a great way to unwind after a long day."
+    },
+    {
+        question: "Would you ever try a vegetarian or vegan diet? Why or why not?",
+        answer: "I would like to try a vegetarian diet for a short time to see how I feel. However, I would miss meat and fish too much to do it forever."
+    },
+    {
+        question: "Who usually does the food shopping in your family? Do you help?",
+        answer: "My mum usually does the main food shopping, but I often help her by making the shopping list. Sometimes I go to the local shop myself to buy fresh bread."
+    },
+    {
+        question: "Do you or anyone in your family have any food allergies or special dietary needs?",
+        answer: "Luckily, no one in my family has any serious food allergies. However, my dad tries to avoid sugary drinks and pastry because he wants to lose some weight."
+    },
+    {
+        question: "What do you think about the food served in your school canteen?",
+        answer: "I think the food in our school canteen is OK, but it could be healthier. I would love to see more fresh salads and hot, homemade dishes on the menu."
+    },
+    {
+        question: "Do you enjoy cooking for other people? Why or why not?",
+        answer: "Yes, I really enjoy cooking for my family and friends. It makes me happy to see them enjoy the food I have made, and it is a nice way to show I care."
+    },
+    {
+        question: "What new cooking skill or recipe would you like to learn in the future?",
+        answer: "In the future, I would lIKE to learn how to bake fresh bread or make homemade sushi. These skills seem a bit challenging, but very interesting to learn."
+    },
+    {
+        question: "Do you think trying food from other countries is a good way to learn about their culture?",
+        answer: "Trying food from other cultures is a wonderful way to learn about the world because it reveals local history, geography, and traditions. Every meal tells a unique story about the people who made it."
+    },
+    {
+        question: "What are your favourite snacks? Do you try to keep them healthy?",
+        answer: "My favourite snacks are fresh fruit, like apples or bananas, and sometimes nuts. I try to keep my snacks healthy so I don't feel tired during the day."
+    },
+    {
+        question: "What do you do to avoid wasting food at home?",
+        answer: "To avoid wasting food, we plan our meals for the week and only buy what we actually need. We also make sure to eat any leftovers for lunch the next day."
+    },
+    {
+        question: "If you could have any meal right now, what would you choose? Why?",
+        answer: "If I could have any meal right now, I would choose a large plate of spaghetti with cheese. It  always puts me in a good mood."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
