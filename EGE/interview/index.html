@@ -8,7 +8,6 @@
 
 <title>Interview Practice</title>
 
-
 <style>
 
 * {
@@ -17,39 +16,26 @@
     padding: 0;
 }
 
-
 body {
-
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #F7F1E8;
     min-height: 100vh;
     padding: 20px;
-
 }
 
-
 .app-wrapper {
-
     max-width: 1200px;
     width: 100%;
     margin: auto;
-
 }
-
-
 
 /* Brand */
-
 .brand {
-
     text-align: center;
     margin-bottom: 20px;
-
 }
 
-
 .brand a {
-
     display: inline-block;
     background: white;
     color: #6B46C1;
@@ -58,443 +44,263 @@ body {
     padding: 10px 25px;
     border-radius: 30px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-
 }
 
-
-
 /* Header */
-
-
 .header {
-
     background: white;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-
 }
 
-
 .header h1 {
-
     color: #4A6B45;
     font-size: clamp(1.3rem, 3vw, 2rem);
     margin-bottom: 10px;
-
 }
-
 
 .header p {
-
     color: #555;
     font-size: 1.05rem;
-
 }
 
-
-
 /* Cards */
-
-
 .topics-container {
-
     display: grid;
     grid-template-columns: repeat(5, 170px);
     gap: 18px;
     justify-content: center;
-
 }
-
-
 
 .topic-card {
-
     aspect-ratio: 1;
-
     border-radius: 15px;
-
     padding: 15px;
-
     text-decoration: none;
-
     color: #333;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     box-shadow: 0 5px 12px rgba(0,0,0,0.12);
-
     transition: transform 0.3s, box-shadow 0.3s;
-
 }
-
 
 .topic-card:hover {
-
     transform: translateY(-5px);
-
     box-shadow: 0 8px 18px rgba(0,0,0,0.18);
-
 }
-
-
 
 .number {
-
     display: none;
-
 }
 
-
-
 .topic-name {
-
     text-align: center;
     font-size: 0.95rem;
     font-weight: 700;
     line-height: 1.3;
-
 }
-
-
 
 .practice {
-
     display: none;
-
 }
 
+/* 20 pastel colours - Updated 11-20 to be brighter and more vibrant */
 
+.colour1 { background: #C6E8C1; }
+.colour2 { background: #F8C8DC; }
+.colour3 { background: #BFDFF2; }
+.colour4 { background: #F9E79F; }
+.colour5 { background: #FFD1B3; }
+.colour6 { background: #D8C4F1; }
+.colour7 { background: #B8E6D5; }
+.colour8 { background: #F7B7A3; }
+.colour9 { background: #FFE5B4; }
+.colour10 { background: #C7EAFB; }
 
-/* 20 pastel colours */
-
-
-.colour1 {
-background:#C6E8C1;
-}
-
-.colour2 {
-background:#F8C8DC;
-}
-
-.colour3 {
-background:#BFDFF2;
-}
-
-.colour4 {
-background:#F9E79F;
-}
-
-.colour5 {
-background:#FFD1B3;
-}
-
-.colour6 {
-background:#D8C4F1;
-}
-
-.colour7 {
-background:#B8E6D5;
-}
-
-.colour8 {
-background:#F7B7A3;
-}
-
-.colour9 {
-background:#FFE5B4;
-}
-
-.colour10 {
-background:#C7EAFB;
-}
-
-.colour11 {
-background:#F4CCCC;
-}
-
-.colour12 {
-background:#D9D2E9;
-}
-
-.colour13 {
-background:#D9EAD3;
-}
-
-.colour14 {
-background:#D0E0E3;
-}
-
-.colour15 {
-background:#EADCF8;
-}
-
-.colour16 {
-background:#FFF2CC;
-}
-
-.colour17 {
-background:#EDEDED;
-}
-
-.colour18 {
-background:#FCE5CD;
-}
-
-.colour19 {
-background:#CFE8D5;
-}
-
-.colour20 {
-background:#D9EAF7;
-}
-
-
+/* Новые, более яркие и насыщенные цвета для тем 11-20 */
+.colour11 { background: #F8A4B8; } /* Яркий розовый (Music and Cinema) */
+.colour12 { background: #C9A8E8; } /* Насыщенная лаванда (Art and Literature) */
+.colour13 { background: #A3D9A5; } /* Свежий зелёный (Environmental Problems) */
+.colour14 { background: #98D8E8; } /* Яркая аква (Weather and Seasons) */
+.colour15 { background: #D4A5E5; } /* Тёплая сирень (Holidays and Traditions) */
+.colour16 { background: #FFE066; } /* Солнечный жёлтый (Country and City Life) */
+.colour17 { background: #B3E5FC; } /* Чистый голубой (Health and Medicine) */
+.colour18 { background: #FFC87A; } /* Тёплый оранжевый (Appearance and Personality) */
+.colour19 { background: #88D8B0; } /* Насыщенная мята (Russia) */
+.colour20 { background: #82CAFA; } /* Жизнерадостный синий (Animals and Nature) */
 
 /* Responsive */
-
-
 @media(max-width:1100px){
-
-.topics-container {
-
-    grid-template-columns: repeat(4,170px);
-
+    .topics-container {
+        grid-template-columns: repeat(4,170px);
+    }
 }
-
-}
-
-
 
 @media(max-width:850px){
-
-.topics-container {
-
-    grid-template-columns: repeat(3,170px);
-
+    .topics-container {
+        grid-template-columns: repeat(3,170px);
+    }
 }
-
-}
-
-
 
 @media(max-width:620px){
-
-.topics-container {
-
-    grid-template-columns: repeat(2,170px);
-
+    .topics-container {
+        grid-template-columns: repeat(2,170px);
+    }
 }
-
-}
-
-
 
 @media(max-width:400px){
-
-.topics-container {
-
-    grid-template-columns: 170px;
-
+    .topics-container {
+        grid-template-columns: 170px;
+    }
 }
-
-}
-
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="app-wrapper">
 
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">
+            English with Olga
+        </a>
+    </div>
 
-<div class="brand">
+    <div class="header">
+        <h1>Interview Practice</h1>
+        <p>Speaking Task 3 (EGE English)</p>
+        <p>Choose a topic and practise answering questions</p>
+    </div>
 
-<a href="https://max.ru/se13305924_biz" target="_blank">
+    <div class="topics-container">
+        <a href="travelling/" class="topic-card colour1">
+            <div class="number">1</div>
+            <div class="topic-name">Travelling</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-English with Olga
+        <a href="family-and-friends/" class="topic-card colour2">
+            <div class="number">2</div>
+            <div class="topic-name">Family and Friends</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-</a>
+        <a href="hobbies/" class="topic-card colour3">
+            <div class="number">3</div>
+            <div class="topic-name">Hobbies and Leisure Activities</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-</div>
+        <a href="school-and-education/" class="topic-card colour4">
+            <div class="number">4</div>
+            <div class="topic-name">School and Education</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="jobs-and-professions/" class="topic-card colour5">
+            <div class="number">5</div>
+            <div class="topic-name">Jobs and Professions</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="modern-technology/" class="topic-card colour6">
+            <div class="number">6</div>
+            <div class="topic-name">Modern Technology</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<div class="header">
+        <a href="sport/" class="topic-card colour7">
+            <div class="number">7</div>
+            <div class="topic-name">Sport and Healthy Lifestyle</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<h1>
-Interview Practice
-</h1>
+        <a href="food-and-cooking/" class="topic-card colour8">
+            <div class="number">8</div>
+            <div class="topic-name">Food and Cooking</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<p>
-Speaking Task 3 (EGE English)
-</p>
+        <a href="fashion-and-shopping/" class="topic-card colour9">
+            <div class="number">9</div>
+            <div class="topic-name">Fashion and Shopping</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<p>
-Choose a topic and practise answering questions
-</p>
+        <a href="daily-routine/" class="topic-card colour10">
+            <div class="number">10</div>
+            <div class="topic-name">Daily Routine</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-</div>
+        <a href="music-and-cinema/" class="topic-card colour11">
+            <div class="number">11</div>
+            <div class="topic-name">Music and Cinema</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="art-and-literarure/" class="topic-card colour12">
+            <div class="number">12</div>
+            <div class="topic-name">Art and Literature</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="environmental-problems/" class="topic-card colour13">
+            <div class="number">13</div>
+            <div class="topic-name">Environmental Problems</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<div class="topics-container">
-<a href="travelling/" class="topic-card colour1">
-<div class="number">1</div>
-<div class="topic-name">Travelling</div>
-<div class="practice">Practise →</div>
-</a>
+        <a href="weather-and-seasons/" class="topic-card colour14">
+            <div class="number">14</div>
+            <div class="topic-name">Weather and Seasons</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="holidays-and-traditions/" class="topic-card colour15">
+            <div class="number">15</div>
+            <div class="topic-name">Holidays and Traditions</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<a href="family-and-friends/" class="topic-card colour2">
-<div class="number">2</div>
-<div class="topic-name">Family and Friends</div>
-<div class="practice">Practise →</div>
-</a>
+        <a href="country-and-city/" class="topic-card colour16">
+            <div class="number">16</div>
+            <div class="topic-name">Country Life and City Life</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="health-and-medicine/" class="topic-card colour17">
+            <div class="number">17</div>
+            <div class="topic-name">Health and Medicine</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<a href="hobbies/" class="topic-card colour3">
-<div class="number">3</div>
-<div class="topic-name">Hobbies and Leisure Activities</div>
-<div class="practice">Practise →</div>
-</a>
+        <a href="appearance-and-personality/" class="topic-card colour18">
+            <div class="number">18</div>
+            <div class="topic-name">Appearance and Personality</div>
+            <div class="practice">Practise →</div>
+        </a>
 
+        <a href="russia/" class="topic-card colour19">
+            <div class="number">19</div>
+            <div class="topic-name">Russia</div>
+            <div class="practice">Practise →</div>
+        </a>
 
-<a href="school-and-education/" class="topic-card colour4">
-<div class="number">4</div>
-<div class="topic-name">School and Education</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="jobs-and-professions/" class="topic-card colour5">
-<div class="number">5</div>
-<div class="topic-name">Jobs and Professions</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="modern-technology/" class="topic-card colour6">
-<div class="number">6</div>
-<div class="topic-name">Modern Technology</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="sport/" class="topic-card colour7">
-<div class="number">7</div>
-<div class="topic-name">Sport and Healthy Lifestyle</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="food-and-cooking/" class="topic-card colour8">
-<div class="number">8</div>
-<div class="topic-name">Food and Cooking</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="fashion-and-shopping/" class="topic-card colour9">
-<div class="number">9</div>
-<div class="topic-name">Fashion and Shopping</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="daily-routine/" class="topic-card colour10">
-<div class="number">10</div>
-<div class="topic-name">Daily Routine</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="music-and-cinema/" class="topic-card colour11">
-<div class="number">11</div>
-<div class="topic-name">Music and Cinema</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="art-and-literarure/" class="topic-card colour12">
-<div class="number">12</div>
-<div class="topic-name">Art and Literature</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="environmental-problems/" class="topic-card colour13">
-<div class="number">13</div>
-<div class="topic-name">Environmental Problems</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="weather-and-seasons/" class="topic-card colour14">
-<div class="number">14</div>
-<div class="topic-name">Weather and Seasons</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="holidays-and-traditions/" class="topic-card colour15">
-<div class="number">15</div>
-<div class="topic-name">Holidays and Traditions</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="country-and-city/" class="topic-card colour16">
-<div class="number">16</div>
-<div class="topic-name">Country Life and City Life</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="health-and-medicine/" class="topic-card colour17">
-<div class="number">17</div>
-<div class="topic-name">Health and Medicine</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="appearance-and-personality/" class="topic-card colour18">
-<div class="number">18</div>
-<div class="topic-name">Appearance and Personality</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="russia/" class="topic-card colour19">
-<div class="number">19</div>
-<div class="topic-name">Russia</div>
-<div class="practice">Practise →</div>
-</a>
-
-
-<a href="animals-and-nature" class="topic-card colour20">
-<div class="number">20</div>
-<div class="topic-name">Animals and Nature</div>
-<div class="practice">Practise →</div>
-</a>
-
+        <a href="animals-and-nature/" class="topic-card colour20">
+            <div class="number">20</div>
+            <div class="topic-name">Animals and Nature</div>
+            <div class="practice">Practise →</div>
+        </a>
+    </div>
 
 </div>
-
-
-</div>
-
 
 </body>
-
 </html>
