@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Art and Literature"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #C9A8E8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4A2F7A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #8B5FBF;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Art and Literature"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What kind of art do you prefer, and why?",
+        answer: "I prefer classical art because I enjoy realistic paintings with clear stories. For example, I really like Valentin Serov's 'Girl with Peaches' because it is so bright, lively, and full of light."
+    },
+    {
+        question: "Do you often visit museums or art galleries?",
+        answer: "Yes, I try to visit them a few times a year. My favourite place is the Tretyakov Gallery in Moscow, where you can see an amazing collection of Russian masterpieces."
+    },
+    {
+        question: "What is your favourite Russian painting, and why?",
+        answer: "I really love 'Morning in a Pine Forest' by Ivan Shishkin. The bears and the pine trees look so realistic that you can almost smell the forest when you look at it."
+    },
+    {
+        question: "Have you ever seen a famous painting in real life, or which one would you like to see?",
+        answer: "I would love to see Leonardo da Vinci's 'Mona Lisa' in the Louvre. Her mysterious smile has fascinated people for centuries, and it must be breathtaking to see it in person."
+    },
+    {
+        question: "Do you enjoy looking at historical or religious paintings?",
+        answer: "Yes, I find them very powerful. For instance, Alexander Ivanov's 'The Appearance of Christ Before the People' is a huge and deeply emotional work of art that leaves a strong impression."
+    },
+    {
+        question: "Would you prefer to have an original painting or a reproduction at home?",
+        answer: "I would love to have an original, but they are very expensive. A good quality reproduction is also wonderful because it still brings beauty and warmth to a room."
+    },
+    {
+        question: "Do you prefer classical art or modern art, and why?",
+        answer: "I prefer classical art because the details are beautiful and the stories are clear. Modern art is sometimes interesting, but I often find it difficult to understand the message behind it."
+    },
+    {
+        question: "Did you learn to draw or paint when you were a child?",
+        answer: "Yes, I went to an art school and learned the basics of drawing. Although I don't paint seriously now, those lessons helped me appreciate art much more."
+    },
+    {
+        question: "How does looking at a beautiful painting affect your mood?",
+        answer: "It affects my mood significantly. A beautiful landscape or a touching portrait can inspire me, calm me down, and make me think deeply about life."
+    },
+    {
+        question: "What do you think makes a painting a true masterpiece?",
+        answer: "I think a masterpiece must show great skill and deep emotion. For example, Rembrandt's 'The Return of the Prodigal Son' is brilliant because of its incredible use of light and its touching story of forgiveness."
+    },
+    {
+        question: "Do you enjoy reading books, and what genres do you prefer?",
+        answer: "Yes, I really enjoy reading, especially fiction and classic novels. I also like reading short stories because they are perfect for a quiet evening at home."
+    },
+    {
+        question: "Who is your favourite Russian writer, and why?",
+        answer: "My favourite is Alexander Pushkin because his language is beautiful and his stories are timeless. He is the founder of modern Russian literature, and I completely agree with that."
+    },
+    {
+        question: "Have you read any major novels by Leo Tolstoy or Fyodor Dostoevsky?",
+        answer: "Yes, I have read 'War and Peace' by Leo Tolstoy at school, and it is a truly profound novel. I would also love to read Dostoevsky's 'Crime and Punishment' soon."
+    },
+    {
+        question: "Do you like reading poetry, and who are your favourite poets?",
+        answer: "Yes, I enjoy poetry, especially from the beginning of the 20th century. I really like Sergei Yesenin for his beautiful descriptions of nature, and Anna Akhmatova for her deep, emotional verses."
+    },
+    {
+        question: "Do you prefer reading the original book or watching its film adaptation?",
+        answer: "I usually prefer reading the book because it gives more details about the characters' thoughts. However, a good film adaptation can still be very enjoyable."
+    },
+    {
+        question: "Do you prefer reading paper books or e-books?",
+        answer: "I prefer paper books because I love the feeling of holding a real book and turning its pages. E-books are convenient for travelling, but they cannot replace the atmosphere of a real book."
+    },
+    {
+        question: "Can you recommend a good book to someone who wants to start reading Russian classics?",
+        answer: "I highly recommend 'The Captain's Daughter' by Pushkin. It is a short but very exciting historical story, and it is perfect for beginners."
+    },
+    {
+        question: "How does reading a good book affect your mood or your life?",
+        answer: "It affects me a lot. A good novel can help me forget about my problems for a while, and it often teaches me valuable lessons about human psychology and life."
+    },
+    {
+        question: "Do you enjoy the literature you study at school?",
+        answer: "Sometimes it is challenging because the old language is difficult, but overall I enjoy it. Analysing classic texts helps me understand history and different cultures better."
+    },
+    {
+        question: "Which do you think is more important for a person's development: visual art or literature?",
+        answer: "I think both are equally important. Visual art teaches us to see beauty in the world, while literature helps us understand different people and their complex feelings."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
