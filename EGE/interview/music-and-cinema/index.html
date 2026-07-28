@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Music and Cinema"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #F8A4B8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7A2A4A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #C94A6A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Music and Cinema"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What is your favourite genre of music, and why do you like it?",
+        answer: "My favourite genre is pop music because the melodies are easy to remember and make me want to dance. It always puts me in a good mood and gives me energy."
+    },
+    {
+        question: "When and where do you usually listen to music?",
+        answer: "I listen to music every day, mostly on my way to school or when I am doing my homework. A good playlist helps me focus and ignore the noise around me."
+    },
+    {
+        question: "Have you ever been to a live concert? What was it like?",
+        answer: "Yes, I went to a live concert last year, and the atmosphere was amazing. Seeing the singer in real life and singing along with other fans was an unforgettable experience."
+    },
+    {
+        question: "Who are your favourite modern singers, and why do you admire them?",
+        answer: "I really admire modern singers like Lady Gaga and Shakira because they are incredibly talented performers. They not only sing great songs but also put on amazing shows that inspire millions of people."
+    },
+    {
+        question: "Do you think listening to English songs helps you learn the language?",
+        answer: "Yes, I definitely think so, because it is a fun way to improve your pronunciation and learn new words. When I read the lyrics and sing along, I naturally memorise useful phrases."
+    },
+    {
+        question: "Can you play any musical instruments, or would you like to learn?",
+        answer: "I can play the guitar a bit, which I learned a few years ago. I would love to become much better at it so I can play my favourite songs for my friends."
+    },
+    {
+        question: "What is your favourite genre of film, and why?",
+        answer: "My favourite genre is science fiction because I love stories about the future and space. These films usually have interesting plots and make you think about technology."
+    },
+    {
+        question: "What do you think makes a film truly famous or successful?",
+        answer: "I think a film becomes famous when it has a strong, emotional story and amazing special effects. For example, Avatar is a great film because it created a completely new and fascinating world."
+    },
+    {
+        question: "Do you prefer watching films at the cinema or at home? Why?",
+        answer: "I prefer watching films at the cinema because of the huge screen and the great sound. It makes the experience much more exciting, although watching films at home is more comfortable."
+    },
+    {
+        question: "What is your favourite animated film, and what do you like about it?",
+        answer: "My favourite animated film is Frozen. The songs are very catchy, and the story about family and sisterly love is warm and touching."
+    },
+    {
+        question: "Who is your favourite actor or actress, and why do you like them?",
+        answer: "My favourite actor is Leonardo DiCaprio because he is very talented. He always chooses interesting roles and plays his characters in a deep and believable way."
+    },
+    {
+        question: "Do you prefer reading a book or watching its film version?",
+        answer: "I usually prefer reading the book because it gives more details about the characters and their thoughts. However, a good film version can still be very enjoyable."
+    },
+    {
+        question: "How often do you use streaming services like Netflix or YouTube?",
+        answer: "I use streaming services almost every day to watch TV series or music videos. It is very convenient because I can choose what I want to watch and see many episodes in a row."
+    },
+    {
+        question: "How important is the soundtrack in a film?",
+        answer: "I think the soundtrack is very important because it sets the mood and makes the emotions in every scene stronger. A great song can make a good film truly memorable."
+    },
+    {
+        question: "Would you like to work in the music or film industry in the future?",
+        answer: "I would love to work in the film industry, perhaps as a director. It seems like a very creative and exciting job where you can bring your own stories to life."
+    },
+    {
+        question: "Do you enjoy watching films or listening to music from other countries?",
+        answer: "Yes, I really enjoy it because it is a wonderful way to learn about different cultures. For example, watching French or Japanese films gives you a great chance to see their way of life."
+    },
+    {
+        question: "Do you often sing along to your favourite songs?",
+        answer: "Yes, I sing along to my favourite songs all the time, especially when I am alone in my room. It is a great way to relax and just have fun."
+    },
+    {
+        question: "How do films and music affect your mood?",
+        answer: "They affect my mood a lot. If I feel sad, a happy pop song or a funny comedy can instantly cheer me up and make me feel much better."
+    },
+    {
+        question: "What do you think about the influence of social media on music and cinema?",
+        answer: "I think social media has a huge influence because it allows singers and actors to talk directly to their fans. However, sometimes things become popular just because of a short video on TikTok, not because they are actually good."
+    },
+    {
+        question: "Can you recommend a good film or a song to me? Why?",
+        answer: "I highly recommend the film The Pursuit of Happyness. It is an inspiring true story about a man who never gives up on his dreams, and it always motivates me to work hard."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
