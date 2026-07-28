@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Environmental Problems"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #A3D9A5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2A5A2A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #3A8A3A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Environmental Problems"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "What do you think is the most serious environmental problem today?",
+        answer: "I think the most serious problem is global warming because it affects the whole planet. It causes extreme weather, a rise in sea levels, and threatens many animals with extinction."
+    },
+    {
+        question: "What kind of pollution is the biggest problem in your area?",
+        answer: "In my area, air pollution is the biggest problem because there are many factories and heavy traffic. On bad days, you can even smell the exhaust fumes in the city centre."
+    },
+    {
+        question: "What are the main causes of air pollution?",
+        answer: "The main causes of air pollution are car exhaust fumes, factory emissions, and the burning of fossil fuels like coal and oil. All of these release harmful gases into the atmosphere."
+    },
+    {
+        question: "How does water pollution affect people and animals?",
+        answer: "Water pollution destroys the habitats of fish and other sea creatures, and it can also make people seriously ill. Factories and farms often pour chemicals into rivers, which is very dangerous for everyone."
+    },
+    {
+        question: "What do you think causes land pollution?",
+        answer: "I think land pollution is mainly caused by plastic waste, rubbish dumps, and harmful chemicals from farms. People throw away too much plastic, and it takes hundreds of years to break down."
+    },
+    {
+        question: "Do you think noise pollution is a real problem?",
+        answer: "Yes, I think noise pollution is a real problem, especially in big cities. Loud traffic, construction work, and neighbours can cause stress and even hearing problems."
+    },
+    {
+        question: "What can ordinary people do to help the environment?",
+        answer: "Ordinary people can do a lot, for example, by recycling waste, using public transport, and saving water and electricity at home. Even small changes in our daily habits can make a big difference."
+    },
+    {
+        question: "Do you recycle anything at home?",
+        answer: "Yes, my family recycles paper, plastic bottles, and glass jars. We have separate bins in the kitchen, and it has become a normal part of our daily routine."
+    },
+    {
+        question: "Why is it important to buy local products?",
+        answer: "It is important because local products do not need to be transported over long distances, which saves fuel and reduces air pollution. Also, local food is usually fresher and tastier."
+    },
+    {
+        question: "What can governments do to solve environmental problems?",
+        answer: "Governments can pass strict laws to limit factory emissions, invest in renewable energy like wind and solar power, and build more parks in cities. They can also encourage people to use public transport."
+    },
+    {
+        question: "Do you try to save energy at home, and how?",
+        answer: "Yes, I always turn off the lights when I leave a room and unplug electrical devices when I don't need them. We also use energy-saving light bulbs, which help reduce our electricity bill."
+    },
+    {
+        question: "What do you think about using public transport instead of cars?",
+        answer: "I think it is a great idea because it reduces the number of cars on the road and decreases air pollution. It is also cheaper and often faster during rush hour."
+    },
+    {
+        question: "Have you ever taken part in any environmental activities?",
+        answer: "Yes, last spring I took part in a school project where we planted trees in a local park. It was hard work, but it was very rewarding to see the young trees growing."
+    },
+    {
+        question: "Do you think young people care about the environment?",
+        answer: "Yes, I think young people care a lot because they will have to live on this planet in the future. Many teenagers now refuse to use plastic bags and try to buy eco-friendly products."
+    },
+    {
+        question: "What is your opinion about plastic bags?",
+        answer: "I think plastic bags are a big problem because people use them once and then throw them away. It is much better to use a reusable cloth bag when you go shopping."
+    },
+    {
+        question: "How does the environment in your city affect your health?",
+        answer: "I think the environment has a huge impact on my health. When the air is clean, I feel more energetic and sleep better, but on polluted days I often get headaches."
+    },
+    {
+        question: "What would you like to change about the way people treat nature?",
+        answer: "I would like people to understand that nature is not endless and we must protect it. If everyone started with small daily habits, like saving water or recycling, the planet would be much cleaner."
+    },
+    {
+        question: "Do you think it is possible to solve all environmental problems in the future?",
+        answer: "I think it is possible if governments, businesses, and ordinary people work together. New technologies, like electric cars and solar panels, give me hope for the future."
+    },
+    {
+        question: "What role do schools play in teaching children about the environment?",
+        answer: "Schools play a very important role because they teach children to respect nature from an early age. Lessons about recycling and ecology help young people become responsible citizens."
+    },
+    {
+        question: "What advice would you give to someone who wants to live a more eco-friendly life?",
+        answer: "I would advise them to start with small steps, like using a reusable water bottle, turning off the tap while brushing teeth, and walking instead of taking the car for short trips. These simple habits can really help the planet."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
