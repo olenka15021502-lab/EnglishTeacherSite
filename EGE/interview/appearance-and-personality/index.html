@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Appearance and Personality"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #FFC87A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6A3A1A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #D87A2A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Appearance and Personality"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "How would you describe your physical appearance?",
+        answer: "I am of average height with short dark brown hair and a warm skin tone. I prefer a natural look, so I do not wear much makeup or flashy clothes."
+    },
+    {
+        question: "What are you like as a person?",
+        answer: "I would describe myself as a friendly, open, and reliable person. I am usually calm, but I can be a bit of a perfectionist when it comes to my work or studies."
+    },
+    {
+        question: "Can you describe your best friend?",
+        answer: "My best friend is quite tall with bright, expressive eyes. As for her personality, she is incredibly cheerful, loyal, and has a great sense of humour that always lifts my spirits."
+    },
+    {
+        question: "How important is physical appearance to you when you meet someone new?",
+        answer: "I believe that first impressions matter, and looking neat shows respect. However, a person's character and kindness are much more important in the long run."
+    },
+    {
+        question: "Do you think people can change their personality as they grow older?",
+        answer: "I think core traits usually stay the same, but people can develop new qualities. For example, life experience can make a shy person more confident or an impatient person more tolerant."
+    },
+    {
+        question: "Who is a famous person you admire for their personality, and why?",
+        answer: "I really admire the actress Emma Watson. Besides being talented, she is known for her intelligence and her work for charity, which shows her kind and strong character."
+    },
+    {
+        question: "Do you agree with the saying \"don't judge a book by its cover\" when it comes to people?",
+        answer: "Absolutely. A well-dressed, attractive person can be quite rude, while someone with a simple appearance might have a heart of gold. True character is revealed through actions, not looks."
+    },
+    {
+        question: "What personality traits do you value most in other people?",
+        answer: "I value honesty, reliability, and a good sense of humour above all else. I really appreciate people who are supportive, good listeners, and easy to talk to."
+    },
+    {
+        question: "How does your appearance affect your self-confidence?",
+        answer: "It affects it significantly. When I look neat and wear clothes that fit well, I feel much more confident and ready for the day."
+    },
+    {
+        question: "Do you prefer spending time with people who are similar to you or different from you?",
+        answer: "I prefer a mix of both. Having similar values is important for a good friendship, but friends with different personalities bring new ideas and make life more interesting."
+    },
+    {
+        question: "What do you think makes someone truly attractive?",
+        answer: "I believe true attractiveness comes from within. A warm smile, genuine kindness, and passion for life make a person much more appealing than just perfect physical features."
+    },
+    {
+        question: "Have you ever changed your appearance significantly, for example, your hairstyle or hair colour?",
+        answer: "Yes, I once decided to dye my hair bright pink. It was a bold change that made me feel much more energetic and refreshed, but to be honest, my teachers at school didn't like it at all."
+    },
+    {
+        question: "How do social media platforms affect young people's self-image?",
+        answer: "These platforms can have a negative impact, as people often compare themselves to edited, idealised photos. It is important to remember that they do not always show real life."
+    },
+    {
+        question: "What is the best compliment you have ever received about your personality?",
+        answer: "The best compliment I have ever received was that I am a great listener and can always give a helping hand in a difficult situation. That means a lot to me because I always try to be there for my friends."
+    },
+    {
+        question: "Do you think children inherit their personality from their parents?",
+        answer: "I believe it is a mix of genetics and upbringing. Children might inherit their energy levels or temper from their parents, but their environment shapes their core values."
+    },
+    {
+        question: "How do you usually dress for a special occasion?",
+        answer: "I prefer a smart-casual style, which makes me look elegant and neat. At the same time, I want to feel comfortable and natural."
+    },
+    {
+        question: "What role does fashion play in expressing your personality?",
+        answer: "Fashion is a great way to show who you are without speaking. I prefer modern, minimalist styles with neutral colours, as it reflects my organised and calm nature."
+    },
+    {
+        question: "Is it easy for you to make new friends?",
+        answer: "Yes, I am quite an easy-going and friendly person. I find it easy to start a conversation and find common ground with them."
+    },
+    {
+        question: "How do you handle conflicts with people who have a completely different temperament?",
+        answer: "I try to stay calm and listen to their point of view without interrupting. I believe that patience and open communication can resolve most disagreements."
+    },
+    {
+        question: "If you could instantly acquire one personality trait, what would it be and why?",
+        answer: "I would love to be completely fearless. It would allow me to take more risks, try new things, and step out of my comfort zone without any hesitation."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
