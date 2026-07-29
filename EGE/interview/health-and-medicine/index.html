@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Health and Medicine"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #B3E5FC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1A4A6A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #2A7BAA;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Health and Medicine"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "How do you try to keep fit and stay healthy in your daily life?",
+        answer: "I try to keep fit by eating a balanced diet and doing regular exercise, like jogging or swimming. I also make sure to get enough sleep, as it is essential for both physical and mental health."
+    },
+    {
+        question: "What is your opinion on consulting doctors online?",
+        answer: "I think it is incredibly convenient for minor issues. However, for serious symptoms, I still prefer a face-to-face consultation so the doctor can examine me properly."
+    },
+    {
+        question: "What do you usually do when you catch a cold or have a bad cough?",
+        answer: "I usually stay at home, drink a lot of warm drinks like tea with honey, and get enough rest. If I still have a cough after a few days, I go to the doctor."
+    },
+    {
+        question: "Have you ever had a serious injury? How did it affect your life?",
+        answer: "Yes, I have. Once I broke my leg while skiing, and another time I sprained my ankle playing football. Both injuries affected my life a lot because I had to miss school and avoid sports for weeks."
+    },
+    {
+        question: "Do you think it is important to have regular medical check-ups, even if you feel fine?",
+        answer: "Yes, absolutely. Regular check-ups can help detect potential health problems early, before they become serious. Prevention is always better than cure."
+    },
+    {
+        question: "How important is mental health compared to physical health?",
+        answer: "I believe they are equally important and closely connected. High levels of stress or anxiety can lead to physical illnesses, so taking care of your mental well-being is crucial."
+    },
+    {
+        question: "How much does diet affect a person's overall health?",
+        answer: "Diet plays a huge role. Eating too much junk food can lead to obesity and heart problems, while a diet rich in vegetables and fresh fruit boosts the immune system and gives you energy."
+    },
+    {
+        question: "What do you think about alternative medicine, like herbal remedies?",
+        answer: "I think some herbal remedies can be helpful for minor issues, like chamomile tea for a sore throat. However, I would always consult a qualified medical professional before trying any alternative treatments."
+    },
+    {
+        question: "Should schools teach children more about health and basic first aid?",
+        answer: "Definitely. Teaching children basic first aid and the importance of hygiene can save lives and help them develop healthy habits from a young age."
+    },
+    {
+        question: "How do you cope with stress, which can be bad for your health?",
+        answer: "I cope with stress by taking walks in the fresh air, listening to calming music, or practising deep breathing exercises. It is important to find healthy ways to unwind."
+    },
+    {
+        question: "How often do you visit the dentist, and why is it important?",
+        answer: "I try to visit the dentist twice a year for a routine cleaning and check-up. Good oral hygiene is vital not just for a nice smile, but for preventing serious infections."
+    },
+    {
+        question: "How do you think people should use antibiotics?",
+        answer: "I believe antibiotics should be taken when prescribed by a doctor for bacterial infections, not for viruses like the flu. It is also crucial to finish the whole course of treatment, even if you start feeling better."
+    },
+    {
+        question: "How do you feel about the healthcare system in your country?",
+        answer: "I appreciate that we have free state healthcare, which is accessible to everyone. However, private clinics are sometimes faster and offer more comfortable conditions."
+    },
+    {
+        question: "Why do you think some people continue to have bad habits like smoking, despite knowing the risks?",
+        answer: "I think it is mostly due to addiction and stress. Quitting smoking is very difficult, which is why many people need professional support or nicotine replacement therapy."
+    },
+    {
+        question: "Do you know basic first aid procedures?",
+        answer: "Yes, I know a few. For example, if you get a minor burn, you should immediately run it under cool water for several minutes. You should never apply ice or butter to the affected area."
+    },
+    {
+        question: "How has modern technology improved medical treatment?",
+        answer: "Technology has revolutionised medicine. We now have advanced diagnostic tools like MRI scanners and robotic surgery, which make treatments much safer and more effective."
+    },
+    {
+        question: "How do you protect yourself from seasonal illnesses like the flu?",
+        answer: "I try to get a flu vaccination every autumn. I also wash my hands frequently and avoid crowded places when there is an outbreak of the virus."
+    },
+    {
+        question: "What is the best way to recover quickly after being ill?",
+        answer: "The best way to recover is to follow the doctor's advice strictly, get a lot of bed rest, and eat nutritious, easily digestible food like chicken soup."
+    },
+    {
+        question: "What do you think about modern fitness trends, like yoga or cross-fit?",
+        answer: "I think they are great as long as you choose an activity that suits your fitness level. Yoga is excellent for flexibility and relaxation, while cross-fit is good for building strength."
+    },
+    {
+        question: "What advice would you give to someone who wants to start living a healthier life?",
+        answer: "I would advise them to start with small, manageable changes, like drinking more water, taking the stairs instead of the lift, and going to bed at the same time every night."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
