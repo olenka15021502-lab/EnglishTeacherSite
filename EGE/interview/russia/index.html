@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview "Russia"</title>
 
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    margin-bottom: 10px;
+}
+
+.progress {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #88D8B0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1A4A3A;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #4A6B45;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.answer-button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: #3E8E41;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F7F1E8;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #4A6B45;
+    margin-bottom: 5px;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #2A9B6A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Russia"</h1>
+        <div class="progress">
+            Questions practised: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "Who is the most famous Russian scientist, in your opinion?",
+        answer: "I would say Dmitri Mendeleev is the most famous. He created the periodic table of elements in 1869, which is still used by scientists all over the world today."
+    },
+    {
+        question: "Can you name a famous Russian scientist and their major achievement?",
+        answer: "Ivan Pavlov won the Nobel Prize in 1904 for his research on digestion and conditioned reflexes. Also, Sergei Korolev was the lead rocket engineer behind the first human spaceflight by Yuri Gagarin in 1961."
+    },
+    {
+        question: "Who is the greatest Russian athlete of the 20th century?",
+        answer: "I think it is Lev Yashin, the legendary football goalkeeper. He is the only goalkeeper in history to win the Ballon d'Or in 1963, and he revolutionised the position with his incredible reflexes."
+    },
+    {
+        question: "Who is a famous Russian athlete you admire, and what did they achieve?",
+        answer: "I admire Alexander Karelin, a Greco-Roman wrestler who was undefeated for 13 years and won three Olympic gold medals. Also, gymnast Larisa Latynina held the record for the most Olympic medals for almost 50 years."
+    },
+    {
+        question: "What is the best time of year to visit Russia, and why?",
+        answer: "I think late spring or early summer is the best time. The weather is warm and pleasant, and in St. Petersburg, you can experience the famous White Nights, when it hardly gets dark at all."
+    },
+    {
+        question: "Which Russian cities would you recommend a tourist to visit?",
+        answer: "Definitely Moscow and St. Petersburg. Moscow has the Red Square and the Kremlin, while St. Petersburg is famous for the Hermitage Museum and its beautiful canals. I would also recommend visiting Kazan for its unique mix of cultures."
+    },
+    {
+        question: "What is the most important national holiday in Russia?",
+        answer: "Victory Day on the 9th of May is the most important patriotic holiday. We honour the memory of those who fought in the Second World War, watch the military parade, and give flowers to veterans."
+    },
+    {
+        question: "What traditional Russian holiday do you find the most interesting?",
+        answer: "I find Maslenitsa very interesting. It is an ancient Slavic holiday marking the end of winter. People eat blini (pancakes), which symbolise the sun, and burn a straw effigy to say goodbye to winter."
+    },
+    {
+        question: "Who is the greatest Russian writer, in your opinion?",
+        answer: "I would say Alexander Pushkin is the greatest. He is considered the founder of modern Russian literature. Of course, Leo Tolstoy and Fyodor Dostoevsky are also world-famous for their masterpieces like War and Peace and Crime and Punishment."
+    },
+    {
+        question: "What Russian book would you recommend to a foreigner?",
+        answer: "I would recommend The Cherry Orchard by Anton Chekhov. It is not too long, but it beautifully captures Russian life and the changes society was going through at the turn of the 20th century."
+    },
+    {
+        question: "What do you know about Russian ballet?",
+        answer: "Russian ballet is world-renowned for its high standards and tradition. The Bolshoi Theatre in Moscow and the Mariinsky Theatre in St. Petersburg are two of the most famous ballet companies in the world."
+    },
+    {
+        question: "Have you ever been to a ballet performance?",
+        answer: "Yes, I have seen Swan Lake at the theatre. It was a magnificent experience with incredible music by Tchaikovsky, beautiful costumes, and amazing dancers who seemed to float on stage."
+    },
+    {
+        question: "What Russian artist or painter do you admire?",
+        answer: "I admire Ilya Repin, who painted realistic scenes of Russian life. His painting Barge Haulers on the Volga is very powerful. I also like the abstract works of Wassily Kandinsky, who was a pioneer of modern art."
+    },
+    {
+        question: "Where can tourists see the best collection of Russian art?",
+        answer: "The State Tretyakov Gallery in Moscow has the world's best collection of Russian fine art, from ancient icons to modern paintings. In St. Petersburg, the Russian Museum is also excellent."
+    },
+    {
+        question: "How would you describe the climate in Russia?",
+        answer: "Russia has a mostly continental climate, which means long, cold winters and short, warm summers. However, the weather can vary a lot depending on the region, from subtropical Sochi to freezing Siberia."
+    },
+    {
+        question: "Do you think the Russian winter is as cold as people say?",
+        answer: "It can be very cold, especially in January and February, with temperatures often dropping below minus 20 degrees. However, we have central heating everywhere, so indoors it is always warm and cosy."
+    },
+    {
+        question: "What is special about Russian theatre?",
+        answer: "Russian theatre has a deep tradition, with famous directors like Konstantin Stanislavsky, who developed an acting system still used by actors worldwide. The performances are usually very emotional and intense."
+    },
+    {
+        question: "What Russian tradition would you like to share with the world?",
+        answer: "I would like to share the tradition of hospitality. Russians are known for being very welcoming to guests. We always prepare a lot of food, like homemade pies and tea, to make our guests feel comfortable and loved."
+    },
+    {
+        question: "How has Russia changed in recent years from a tourist's perspective?",
+        answer: "Russia has become much more tourist-friendly. Many signs are now in English, payment systems are modern, and there are more hotels and tours available. It is much easier to travel around now than before."
+    },
+    {
+        question: "What advice would you give to someone visiting Russia for the first time?",
+        answer: "I would advise them to learn a few basic Russian phrases, as not everyone speaks English. I would also tell them to try traditional food like borscht and pelmeni, and to visit at least one major art gallery or theatre."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
