@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditionals</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand a {
+    display: inline-block;
+    background: white;
+    color: #6B46C1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 30px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #6B46C1;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: 10px;
+}
+
+.instructions {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.progress {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6B46C1;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.card-front {
+    background: #9B59B6; /* Bright purple */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FFFFFF; /* White numbers */
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.question-number {
+    text-align: center;
+    color: #6B46C1;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    text-align: center;
+    font-size: clamp(0.8rem, 1.4vw, 1.05rem);
+    line-height: 1.4;
+    font-weight: 600;
+    color: #333;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.answer-button {
+    background: #6B46C1;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.answer-button:hover {
+    background: #553C9A;
+}
+
+.model-answer {
+    margin-top: 10px;
+    background: #F3E8FF; /* Light purple background for answer */
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #333;
+    border-left: 4px solid #6B46C1;
+}
+
+.model-title {
+    font-weight: bold;
+    color: #6B46C1;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.completed .card-front {
+    opacity: 0.65;
+}
+
+.done-mark {
+    font-size: 3.5rem;
+    color: #2A7B4A;
+}
+
+@media(max-width:800px){
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper">
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+    </div>
+
+    <div class="header">
+        <h1>Conditionals</h1>
+        <p class="instructions">Choose a card, flip it over, translate the sentence into English and check your answer.</p>
+        <div class="progress">
+            Sentences translated: <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        question: "Если я не высплюсь, я всегда чувствую себя уставшим на первом уроке.",
+        answer: "If I don't get enough sleep, I always feel tired during the first lesson."
+    },
+    {
+        question: "Если ты не заряжаешь наушники, они перестают работать.",
+        answer: "If you don't charge your headphones, they stop working."
+    },
+    {
+        question: "Когда у меня есть свободное время в выходные, я обычно играю в видеоигры или встречаюсь с друзьями.",
+        answer: "When I have free time at the weekend, I usually play video games or hang out with my friends."
+    },
+    {
+        question: "Если смешать красный и синий цвета, получается фиолетовый.",
+        answer: "If you mix red and blue, you get purple."
+    },
+    {
+        question: "Если ты не начнешь готовиться к своим экзаменам сейчас, ты не получишь хорошие оценки.",
+        answer: "If you don't start preparing for your exams now, you won't get good grades."
+    },
+    {
+        question: "Мы пойдем в кино в пятницу, если закончим наш проект по истории вовремя.",
+        answer: "We will go to the cinema on Friday if we finish our history project on time."
+    },
+    {
+        question: "Если завтра будет идти дождь, мы отменим пикник и останемся дома.",
+        answer: "If it rains tomorrow, we will cancel the picnic and stay at home."
+    },
+    {
+        question: "Я одолжу тебе свою новую куртку, при условии что ты будешь осторожен с ней.",
+        answer: "I will lend you my new jacket as long as you are careful with it."
+    },
+    {
+        question: "Если ты не извинишься перед ней, она перестанет с тобой разговаривать.",
+        answer: "If you don't apologise to her, she will stop talking to you."
+    },
+    {
+        question: "Если бы я был тобой, я бы не стал публиковать эту фотографию в соцсетях.",
+        answer: "If I were you, I wouldn't post this photo on social media."
+    },
+    {
+        question: "Если бы у меня было больше денег, я бы купил последнюю модель iPhone.",
+        answer: "If I had more money, I would buy the latest iPhone."
+    },
+    {
+        question: "Мы бы поехали в путешествие по Европе этим летом, если бы у нас были каникулы подольше.",
+        answer: "We would travel around Europe this summer if we had longer holidays."
+    },
+    {
+        question: "Если бы я умел играть на гитаре, я бы создал свою собственную музыкальную группу.",
+        answer: "If I could play the guitar, I would start my own band."
+    },
+    {
+        question: "Что бы ты сделал, если бы нашел на улице кошелек с большой суммой денег?",
+        answer: "What would you do if you found a wallet with a lot of money in the street?"
+    },
+    {
+        question: "Если бы он жил ближе к школе, он бы не опаздывал на уроки каждый день.",
+        answer: "If he lived closer to school, he wouldn't be late for lessons every day."
+    },
+    {
+        question: "Если бы я учился усерднее в прошлом триместре, я бы получил отличную оценку по математике.",
+        answer: "If I had studied harder last term, I would have got a good grade in maths."
+    },
+    {
+        question: "Мы бы не опоздали на поезд, если бы вышли из дома раньше.",
+        answer: "We wouldn't have missed the train if we had left home earlier."
+    },
+    {
+        question: "Если бы ты сказал мне, что у тебя день рождения, я бы купил тебе подарок.",
+        answer: "If you had told me it was your birthday, I would have bought you a present."
+    },
+    {
+        question: "Она бы не провалила собеседование, если бы подготовила ответы на типичные вопросы.",
+        answer: "She wouldn't have failed the interview if she had prepared answers to typical questions."
+    },
+    {
+        question: "Если бы мы не забыли карту, мы бы не заблудились в лесу.",
+        answer: "If we hadn't forgotten the map, we wouldn't have got lost in the forest."
+    }
+];
+
+let completedCount = 0;
+
+function createCards() {
+    const container = document.getElementById("cards");
+
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Sentence ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        CHECK YOUR ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
+
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
+
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Correct Translation:
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
+
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓ DONE";
+                back.appendChild(doneButton);
+
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
+
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
+
+        container.appendChild(card);
+    });
+}
+
+createCards();
+</script>
+
+</body>
+</html>
