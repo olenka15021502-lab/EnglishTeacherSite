@@ -151,6 +151,229 @@
       box-shadow: 0 15px 40px rgba(15, 74, 74, 0.45);
     }
 
+    /* ФУТЕР (Добавлен сюда) */
+    .footer {
+      padding: 15px 0 20px;
+      text-align: center;
+      font-size: 15px;
+      color: #0f766e; /* Цвет адаптирован под мятную гамму этой страницы */
+      background: white;
+    }
+
+    /* Мобильная версия */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 0;
+      }
+      .hero {
+        padding: 120px 0 60px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .vocabulary-upgrade {
+        font-size: 32px !important;
+      }
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 30px auto;
+      }
+      .badge-btn, .cta {
+        padding: 14px 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .photo-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">✨&nbsp;English with Olga&nbsp;✨</div>
+        <div class="social-icons">
+          <a href="https://vk.ru/english_olga_medvedeva" target="_blank">ВК</a>
+          <a href="https://max.ru/se13305924_biz" target="_blank">Макс</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <a href="/EGE" class="badge-btn">👉 Обо мне</a>
+
+      <h1>
+        <span class="vocabulary-upgrade">Магазин<br>
+        полезных материалов<br>
+        для уроков английского языка</span>
+      </h1>
+
+      <div class="photo-grid">
+        <a href="EGE/interview/"><img src="1.png" alt=""></a>
+        <a href="shop/feelings/"><img src="2.png" alt=""></a>
+        <a href="#"><img src="3.png" alt=""></a>
+        <a href="#"><img src="4.png" alt=""></a>
+        <a href="#"><img src="5.png" alt=""></a>
+        <a href="#"><img src="6.png" alt=""></a>
+        <a href="#"><img src="7.png" alt=""></a>
+        <a href="#"><img src="8.png" alt=""></a>
+        <a href="#"><img src="9.png" alt=""></a>
+      </div>
+
+      <a class="cta" href="/EGE">👉 Записаться на урок</a>
+    </div>
+  </div>
+
+  <!-- ФУТЕР (Добавлен перед закрывающим тегом body) -->
+  <div class="footer">
+    Медведева Ольга Александровна<br>
+    ИНН 501106530902
+  </div>
+
+</body>
+</html>4,239,0.25), transparent 50%),
+        linear-gradient(180deg, #f0fdfa, #e0f7f5);
+      color: #0f3a3a;
+    }
+    html, body {
+      overflow-x: hidden;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(13, 115, 119, 0.9);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      z-index: 1000;
+      padding: 12px 0;
+    }
+
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 18px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 140px 0 80px;
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+      color: white;
+      text-align: center;
+    }
+
+    .badge-btn, .cta {
+      display: inline-block;
+      padding: 16px 34px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ec4899, #a855f7);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid white;
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6), 0 8px 20px rgba(168, 85, 247, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 16px;
+    }
+
+    .badge-btn {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .cta {
+      margin-top: 20px;
+    }
+
+    .badge-btn:hover, .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 10px 24px rgba(168, 85, 247, 0.6);
+    }
+
+    h1 {
+      margin: 24px 0 18px;
+      font-size: 48px;
+      line-height: 1.15;
+    }
+
+    .vocabulary-upgrade {
+      color: white;
+      font-family: 'Caveat', cursive;
+      font-size: 64px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    /* Галерея */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin: 50px auto;
+      max-width: 950px;
+    }
+
+    .photo-grid a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+      border: 6px solid #ffffff;
+      box-shadow: 0 10px 30px rgba(15, 74, 74, 0.3);
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .photo-grid a:hover img {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(15, 74, 74, 0.45);
+    }
+
     /* КНОПКА "НА ГЛАВНУЮ" */
     .back-to-home-wrapper {
       text-align: center;
