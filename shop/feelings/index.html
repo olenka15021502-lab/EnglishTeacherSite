@@ -140,16 +140,22 @@
       display: block;
     }
 
+    /* ИСПРАВЛЕННЫЙ БЛОК ДЛЯ ВИДЕО */
     .video-box {
-      width: 280px;
-      aspect-ratio: 9 / 16;
+      width: 280px; /* Ширина блока */
+      aspect-ratio: 9 / 16; /* Пропорции вертикального клипа */
       background: #123f3f;
+      position: relative; /* ВАЖНО: создает контекст для растягивания iframe */
     }
 
-    .video-box video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    /* Стили специально для iframe внутри video-box */
+    .video-box iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
       display: block;
     }
 
@@ -310,7 +316,7 @@
       }
 
       .video-box {
-        width: min(75%, 300px);
+        width: min(75%, 300px); /* На мобильных чуть шире для удобства */
       }
 
       .description {
@@ -412,13 +418,15 @@
             <img src="1.png" alt="Speaking Club Relationships & Feelings">
           </div>
 
-         <div class="media-box video-box">
-  <iframe 
-    src="https://vk.ru/clip_ext.php?oid=-130948752&id=456239154&autoplay=1" 
-    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
-    allowfullscreen>
-  </iframe>
-</div>
+          <!-- ВСТАВКА КЛИПА VK -->
+          <div class="media-box video-box">
+            <iframe 
+              src="https://vk.ru/clip_ext.php?oid=-130948752&id=456239154&autoplay=1&hd=2" 
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
+              allowfullscreen>
+            </iframe>
+          </div>
+
         </div>
 
 
