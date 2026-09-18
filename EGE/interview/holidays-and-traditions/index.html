@@ -24,21 +24,56 @@ body {
     margin: auto;
 }
 
+/* Brand - ЯРКАЯ БИРЮЗОВАЯ ПЛАШКА */
 .brand {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .brand a {
     display: inline-block;
-    background: white;
-    color: #6B46C1;
+    background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+    color: white;
     text-decoration: none;
     font-weight: 700;
-    padding: 10px 25px;
+    padding: 12px 30px;
     border-radius: 30px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.brand a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+}
+
+/* === ВТОРАЯ ЯРКАЯ ПЛАШКА === */
+.brand-secondary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-secondary a {
+    display: inline-block;
+    background: linear-gradient(90deg, #ec4899, #a855f7);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brand-secondary a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+/* =========================== */
 
 .header {
     background: white;
@@ -167,6 +202,24 @@ body {
     color: #8B4FBF;
 }
 
+/* === ФУТЕР === */
+.site-footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.site-footer strong {
+    color: #4A6B45;
+}
+
+/* Адаптация для мобильных */
 @media(max-width:800px){
     .cards-container {
         grid-template-columns: repeat(2,1fr);
@@ -177,6 +230,17 @@ body {
     .cards-container {
         grid-template-columns: 1fr;
     }
+    /* Уменьшаем кнопки на очень маленьких экранах */
+    .brand a,
+    .brand-secondary a {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+    .site-footer {
+        font-size: 0.85rem;
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
 }
 </style>
 </head>
@@ -184,8 +248,15 @@ body {
 <body>
 
 <div class="app-wrapper">
+    
+    <!-- ПЕРВАЯ ПЛАШКА: БИРЮЗОВАЯ -->
     <div class="brand">
-        <a href="https://max.ru/se13305924_biz" target="_blank">English with Olga</a>
+        <a href="https://max.ru/se13305924_biz" target="_blank">✨ English with Olga ✨</a>
+    </div>
+
+    <!-- ВТОРАЯ ПЛАШКА: РОЗОВО-ФИОЛЕТОВАЯ -->
+    <div class="brand-secondary">
+        <a href="/" target="_blank">📚 Useful Materials for English Lessons</a>
     </div>
 
     <div class="header">
@@ -196,6 +267,13 @@ body {
     </div>
 
     <div class="cards-container" id="cards"></div>
+
+    <!-- ФУТЕР -->
+    <footer class="site-footer">
+        <strong>Медведева Ольга Александровна</strong><br>
+        ИНН: 501106530902
+    </footer>
+
 </div>
 
 <script>
