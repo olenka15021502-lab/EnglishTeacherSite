@@ -32,7 +32,7 @@ body {
 /* Brand */
 .brand {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .brand a {
@@ -45,6 +45,32 @@ body {
     border-radius: 30px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
+
+/* === НОВАЯ ЯРКАЯ ПЛАШКА === */
+.brand-secondary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-secondary a {
+    display: inline-block;
+    background: linear-gradient(90deg, #ec4899, #a855f7);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brand-secondary a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+/* =========================== */
 
 /* Header */
 .header {
@@ -121,17 +147,16 @@ body {
 .colour9 { background: #FFE5B4; }
 .colour10 { background: #C7EAFB; }
 
-/* Новые, более яркие и насыщенные цвета для тем 11-20 */
-.colour11 { background: #F8A4B8; } /* Яркий розовый (Music and Cinema) */
-.colour12 { background: #C9A8E8; } /* Насыщенная лаванда (Art and Literature) */
-.colour13 { background: #A3D9A5; } /* Свежий зелёный (Environmental Problems) */
-.colour14 { background: #98D8E8; } /* Яркая аква (Weather and Seasons) */
-.colour15 { background: #D4A5E5; } /* Тёплая сирень (Holidays and Traditions) */
-.colour16 { background: #FFE066; } /* Солнечный жёлтый (Country and City Life) */
-.colour17 { background: #B3E5FC; } /* Чистый голубой (Health and Medicine) */
-.colour18 { background: #FFC87A; } /* Тёплый оранжевый (Appearance and Personality) */
-.colour19 { background: #88D8B0; } /* Насыщенная мята (Russia) */
-.colour20 { background: #82CAFA; } /* Жизнерадостный синий (Animals and Nature) */
+.colour11 { background: #F8A4B8; }
+.colour12 { background: #C9A8E8; }
+.colour13 { background: #A3D9A5; }
+.colour14 { background: #98D8E8; }
+.colour15 { background: #D4A5E5; }
+.colour16 { background: #FFE066; }
+.colour17 { background: #B3E5FC; }
+.colour18 { background: #FFC87A; }
+.colour19 { background: #88D8B0; }
+.colour20 { background: #82CAFA; }
 
 /* Responsive */
 @media(max-width:1100px){
@@ -158,7 +183,7 @@ body {
     }
 }
 
-/* === ДОБАВЛЕН СТИЛЬ ДЛЯ ФУТЕРА === */
+/* Футер */
 .site-footer {
     text-align: center;
     padding: 25px 20px;
@@ -172,7 +197,7 @@ body {
 }
 
 .site-footer strong {
-    color: #4A6B45; /* Цвет как у заголовка для гармонии */
+    color: #4A6B45;
 }
 
 @media(max-width: 400px) {
@@ -181,8 +206,11 @@ body {
         padding: 20px 15px;
         margin-top: 30px;
     }
+    .brand-secondary a {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
 }
-/* ================================ */
 
 </style>
 
@@ -197,6 +225,15 @@ body {
             English with Olga
         </a>
     </div>
+
+    <!-- === НОВАЯ ЯРКАЯ ПЛАШКА === -->
+    <div class="brand-secondary">
+        <!-- Замените href="/" на нужную вам ссылку, если ваша главная страница магазина находится по другому адресу -->
+        <a href="/" target="_blank">
+            📚 Useful Materials for English Lessons
+        </a>
+    </div>
+    <!-- =========================== -->
 
     <div class="header">
         <h1>Interview Practice</h1>
@@ -326,12 +363,10 @@ body {
         </a>
     </div>
 
-    <!-- === ДОБАВЛЕН ФУТЕР === -->
     <footer class="site-footer">
         <strong>Медведева Ольга Александровна</strong><br>
         ИНН: 501106530902
     </footer>
-    <!-- ====================== -->
 
 </div>
 
