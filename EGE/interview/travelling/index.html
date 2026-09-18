@@ -26,28 +26,57 @@ body {
     margin: auto;
 }
 
-
-/* Brand */
-
+/* Brand - ЯРКАЯ БИРЮЗОВАЯ ПЛАШКА */
 .brand {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .brand a {
     display: inline-block;
-    background: white;
-    color: #6B46C1;
+    background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+    color: white;
     text-decoration: none;
     font-weight: 700;
-    padding: 10px 25px;
+    padding: 12px 30px;
     border-radius: 30px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.brand a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+}
+
+/* === ВТОРАЯ ЯРКАЯ ПЛАШКА === */
+.brand-secondary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-secondary a {
+    display: inline-block;
+    background: linear-gradient(90deg, #ec4899, #a855f7);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brand-secondary a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
 
 /* Header */
-
 .header {
     background: white;
     border-radius: 15px;
@@ -69,22 +98,18 @@ body {
     color: #555;
 }
 
-
 /* Cards */
-
 .cards-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 18px;
 }
 
-
 .card {
     aspect-ratio: 1;
     perspective: 1000px;
     cursor: pointer;
 }
-
 
 .card-inner {
     position: relative;
@@ -94,11 +119,9 @@ body {
     transform-style: preserve-3d;
 }
 
-
 .card.flipped .card-inner {
     transform: rotateY(180deg);
 }
-
 
 .card-front,
 .card-back {
@@ -110,7 +133,6 @@ body {
     box-shadow: 0 5px 12px rgba(0,0,0,0.12);
 }
 
-
 .card-front {
     background: #C6E8C1;
     display: flex;
@@ -120,7 +142,6 @@ body {
     font-weight: bold;
     color: #365536;
 }
-
 
 .card-back {
     background: white;
@@ -132,7 +153,6 @@ body {
     overflow-y: auto;
 }
 
-
 .question-number {
     text-align: center;
     color: #4A6B45;
@@ -140,14 +160,12 @@ body {
     font-size: 0.85rem;
 }
 
-
 .question-text {
     text-align: center;
     font-size: clamp(0.75rem, 1.4vw, 1rem);
     line-height: 1.4;
     font-weight: 600;
 }
-
 
 .answer-button {
     background: #4CAF50;
@@ -159,11 +177,9 @@ body {
     cursor: pointer;
 }
 
-
 .answer-button:hover {
     background: #3E8E41;
 }
-
 
 .model-answer {
     margin-top: 10px;
@@ -174,373 +190,263 @@ body {
     line-height: 1.4;
 }
 
-
 .model-title {
     font-weight: bold;
     color: #4A6B45;
     margin-bottom: 5px;
 }
 
-
 .completed .card-front {
     opacity: 0.65;
 }
-
 
 .done-mark {
     font-size: 3.5rem;
     color: #4CAF50;
 }
 
+/* === ФУТЕР === */
+.site-footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
 
+.site-footer strong {
+    color: #4A6B45;
+}
 
 @media(max-width:800px){
-
-.cards-container {
-    grid-template-columns: repeat(2,1fr);
+    .cards-container {
+        grid-template-columns: repeat(2,1fr);
+    }
 }
-
-}
-
 
 @media(max-width:500px){
-
-.cards-container {
-    grid-template-columns: 1fr;
-}
-
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+    /* Уменьшаем кнопки на очень маленьких экранах */
+    .brand a,
+    .brand-secondary a {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+    .site-footer {
+        font-size: 0.85rem;
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
 }
 
 </style>
 
 </head>
 
-
 <body>
 
 <div class="app-wrapper">
 
+    <!-- ПЕРВАЯ ПЛАШКА: БИРЮЗОВАЯ -->
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">✨ English with Olga ✨</a>
+    </div>
 
-<div class="brand">
-<a href="https://max.ru/se13305924_biz" target="_blank">
-English with Olga
-</a>
+    <!-- ВТОРАЯ ПЛАШКА: РОЗОВО-ФИОЛЕТОВАЯ -->
+    <div class="brand-secondary">
+        <a href="/" target="_blank">📚 Useful Materials for English Lessons</a>
+    </div>
+
+    <div class="header">
+        <h1>Interview "Travelling"</h1>
+        <div class="progress">
+            Questions practised:
+            <span id="score">0</span> / 20
+        </div>
+    </div>
+
+    <div class="cards-container" id="cards"></div>
+
+    <!-- ФУТЕР -->
+    <footer class="site-footer">
+        <strong>Медведева Ольга Александровна</strong><br>
+        ИНН: 501106530902
+    </footer>
+
 </div>
-
-
-<div class="header">
-
-<h1>Interview "Travelling"</h1>
-
-<div class="progress">
-Questions practised:
-<span id="score">0</span> / 20
-</div>
-
-</div>
-
-
-<div class="cards-container" id="cards"></div>
-
-
-</div>
-
 
 <script>
 const questions = [
-
-{
-question: "Do you enjoy travelling? Why or why not?",
-answer: "Yes, I really enjoy travelling because it helps me relax and forget about my daily routine. I also like discovering new places, meeting different people and learning about other cultures. Every trip gives me unforgettable memories."
-},
-
-{
-question: "What places in Russia would you recommend visiting?",
-answer: "I’d recommend visiting Saint Petersburg because it has beautiful architecture and world-famous museums. Lake Baikal is another amazing destination for people who love nature. I think these places are definitely worth visiting."
-},
-
-{
-question: "Do you usually travel with your family or with your friends? Why?",
-answer: "I usually travel with my family because we enjoy spending time together. We often go sightseeing, try local food and take lots of photos. Travelling together always brings us closer."
-},
-
-{
-question: "What means of transport do you prefer when you travel? Why?",
-answer: "I prefer travelling by train because it’s comfortable and relaxing. I enjoy looking out of the window and watching the scenery. Besides, train journeys are often less stressful than flying."
-},
-
-{
-question: "What country would you like to visit in the future? Why?",
-answer: "I’d like to visit Japan because I’m interested in its unique culture and traditions. I’d also love to see modern cities as well as beautiful temples. I think it would be an unforgettable experience."
-},
-
-{
-question: "How often do you travel?",
-answer: "I usually travel two or three times a year, mostly during school holidays. Even short trips help me relax and recharge my batteries. I always look forward to my next journey."
-},
-
-{
-question: "What do you usually do before going on a trip?",
-answer: "Before a trip, I usually book my accommodation, buy my tickets and make a list of things to pack. I also check the weather forecast and read about the places I’m going to visit. It helps me feel well-prepared for the journey."
-},
-
-{
-question: "What do you usually pack when you travel?",
-answer: "I usually pack comfortable clothes, my phone charger, a camera and some personal items. I also take important documents and some basic medicine. I prefer travelling light, so I never take unnecessary things."
-},
-
-{
-question: "Do you prefer travelling in summer or in winter? Why?",
-answer: "I prefer travelling in summer because the weather is warm and the days are much longer. It’s easier to spend time outdoors and visit different places. Besides, I really enjoy swimming and walking in the fresh air."
-},
-
-{
-question: "Have you ever travelled abroad?",
-answer: "Yes, I’ve travelled abroad a few times, and I really enjoyed those trips. It was exciting to explore new places, try local food and practise my English. I’d definitely like to travel abroad again."
-},
-
-{
-question: "What was the best trip you have ever had?",
-answer: "The best trip I’ve ever had was a holiday by the sea with my family. We spent a lot of time outdoors, visited interesting places and enjoyed the local cuisine. It was both relaxing and memorable."
-},
-
-{
-question: "Do you prefer staying in a hotel or renting an apartment? Why?",
-answer: "I usually prefer staying in a hotel because it’s more convenient. Everything is organised for guests, and I don’t have to worry about cleaning or cooking. It allows me to enjoy my holiday without any stress."
-},
-
-{
-question: "What is your favourite holiday destination?",
-answer: "My favourite holiday destination is the seaside because I love swimming and walking along the beach. I also enjoy the peaceful atmosphere and fresh air. It’s the perfect place to relax after a busy year."
-},
-
-{
-question: "Do you like sightseeing when you travel? Why or why not?",
-answer: "Yes, I do because sightseeing helps me learn more about the history and culture of a place. I enjoy visiting famous landmarks and taking photographs. It makes every trip more interesting and educational."
-},
-
-{
-question: "What place would you like to visit in your own region?",
-answer: "I’d like to visit a beautiful nature reserve in my region because I enjoy spending time outdoors. I think it would be a great opportunity to go hiking and take photographs. It would also be a nice break from city life."
-},
-
-{
-question: "Do you prefer travelling by yourself or with other people? Why?",
-answer: "I prefer travelling with other people because it’s more enjoyable to share new experiences. We can help each other and create happy memories together. Besides, travelling in a group often feels safer."
-},
-
-{
-question: "What do you usually take photos of when you travel?",
-answer: "I usually take photos of beautiful landscapes, famous landmarks and local food. I also like taking pictures with my family or friends. Looking at these photos later always reminds me of my trips."
-},
-
-{
-question: "What problems can people have while travelling?",
-answer: "People can face different problems while travelling, such as delayed flights, bad weather or losing their luggage. Sometimes it’s also difficult to communicate in another language. However, most problems can be solved if you stay calm."
-},
-
-{
-question: "Why do you think travelling is important?",
-answer: "I think travelling is important because it broadens people’s minds and helps them understand other cultures. It also allows us to improve our communication skills and become more independent. In my opinion, travelling is one of the best ways to learn."
-},
-
-{
-question: "What advice would you give to someone who is travelling for the first time?",
-answer: "I’d advise them to plan their trip in advance and pack only the things they really need. They should also keep their documents and money in a safe place. Most importantly, they should enjoy the experience and not worry too much about minor problems that may happen along the way."
-}
-
+    {
+        question: "Do you enjoy travelling? Why or why not?",
+        answer: "Yes, I really enjoy travelling because it helps me relax and forget about my daily routine. I also like discovering new places, meeting different people and learning about other cultures. Every trip gives me unforgettable memories."
+    },
+    {
+        question: "What places in Russia would you recommend visiting?",
+        answer: "I’d recommend visiting Saint Petersburg because it has beautiful architecture and world-famous museums. Lake Baikal is another amazing destination for people who love nature. I think these places are definitely worth visiting."
+    },
+    {
+        question: "Do you usually travel with your family or with your friends? Why?",
+        answer: "I usually travel with my family because we enjoy spending time together. We often go sightseeing, try local food and take lots of photos. Travelling together always brings us closer."
+    },
+    {
+        question: "What means of transport do you prefer when you travel? Why?",
+        answer: "I prefer travelling by train because it’s comfortable and relaxing. I enjoy looking out of the window and watching the scenery. Besides, train journeys are often less stressful than flying."
+    },
+    {
+        question: "What country would you like to visit in the future? Why?",
+        answer: "I’d like to visit Japan because I’m interested in its unique culture and traditions. I’d also love to see modern cities as well as beautiful temples. I think it would be an unforgettable experience."
+    },
+    {
+        question: "How often do you travel?",
+        answer: "I usually travel two or three times a year, mostly during school holidays. Even short trips help me relax and recharge my batteries. I always look forward to my next journey."
+    },
+    {
+        question: "What do you usually do before going on a trip?",
+        answer: "Before a trip, I usually book my accommodation, buy my tickets and make a list of things to pack. I also check the weather forecast and read about the places I’m going to visit. It helps me feel well-prepared for the journey."
+    },
+    {
+        question: "What do you usually pack when you travel?",
+        answer: "I usually pack comfortable clothes, my phone charger, a camera and some personal items. I also take important documents and some basic medicine. I prefer travelling light, so I never take unnecessary things."
+    },
+    {
+        question: "Do you prefer travelling in summer or in winter? Why?",
+        answer: "I prefer travelling in summer because the weather is warm and the days are much longer. It’s easier to spend time outdoors and visit different places. Besides, I really enjoy swimming and walking in the fresh air."
+    },
+    {
+        question: "Have you ever travelled abroad?",
+        answer: "Yes, I’ve travelled abroad a few times, and I really enjoyed those trips. It was exciting to explore new places, try local food and practise my English. I’d definitely like to travel abroad again."
+    },
+    {
+        question: "What was the best trip you have ever had?",
+        answer: "The best trip I’ve ever had was a holiday by the sea with my family. We spent a lot of time outdoors, visited interesting places and enjoyed the local cuisine. It was both relaxing and memorable."
+    },
+    {
+        question: "Do you prefer staying in a hotel or renting an apartment? Why?",
+        answer: "I usually prefer staying in a hotel because it’s more convenient. Everything is organised for guests, and I don’t have to worry about cleaning or cooking. It allows me to enjoy my holiday without any stress."
+    },
+    {
+        question: "What is your favourite holiday destination?",
+        answer: "My favourite holiday destination is the seaside because I love swimming and walking along the beach. I also enjoy the peaceful atmosphere and fresh air. It’s the perfect place to relax after a busy year."
+    },
+    {
+        question: "Do you like sightseeing when you travel? Why or why not?",
+        answer: "Yes, I do because sightseeing helps me learn more about the history and culture of a place. I enjoy visiting famous landmarks and taking photographs. It makes every trip more interesting and educational."
+    },
+    {
+        question: "What place would you like to visit in your own region?",
+        answer: "I’d like to visit a beautiful nature reserve in my region because I enjoy spending time outdoors. I think it would be a great opportunity to go hiking and take photographs. It would also be a nice break from city life."
+    },
+    {
+        question: "Do you prefer travelling by yourself or with other people? Why?",
+        answer: "I prefer travelling with other people because it’s more enjoyable to share new experiences. We can help each other and create happy memories together. Besides, travelling in a group often feels safer."
+    },
+    {
+        question: "What do you usually take photos of when you travel?",
+        answer: "I usually take photos of beautiful landscapes, famous landmarks and local food. I also like taking pictures with my family or friends. Looking at these photos later always reminds me of my trips."
+    },
+    {
+        question: "What problems can people have while travelling?",
+        answer: "People can face different problems while travelling, such as delayed flights, bad weather or losing their luggage. Sometimes it’s also difficult to communicate in another language. However, most problems can be solved if you stay calm."
+    },
+    {
+        question: "Why do you think travelling is important?",
+        answer: "I think travelling is important because it broadens people’s minds and helps them understand other cultures. It also allows us to improve our communication skills and become more independent. In my opinion, travelling is one of the best ways to learn."
+    },
+    {
+        question: "What advice would you give to someone who is travelling for the first time?",
+        answer: "I’d advise them to plan their trip in advance and pack only the things they really need. They should also keep their documents and money in a safe place. Most importantly, they should enjoy the experience and not worry too much about minor problems that may happen along the way."
+    }
 ];
 
-
 let completedCount = 0;
+
 function createCards() {
+    const container = document.getElementById("cards");
 
-const container = document.getElementById("cards");
+    questions.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
 
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${index + 1}
+                </div>
+                <div class="card-back">
+                    <div class="question-number">
+                        Question ${index + 1}
+                    </div>
+                    <div class="question-text">
+                        ${item.question}
+                    </div>
+                    <button class="answer-button">
+                        SHOW MODEL ANSWER
+                    </button>
+                </div>
+            </div>
+        `;
 
-questions.forEach((item, index) => {
+        const showAnswerButton = card.querySelector(".answer-button");
+        const back = card.querySelector(".card-back");
 
+        card.addEventListener("click", function(e){
+            if(e.target === showAnswerButton){
+                return;
+            }
+            if(!card.classList.contains("completed")){
+                card.classList.toggle("flipped");
+            }
+        });
 
-const card = document.createElement("div");
+        showAnswerButton.addEventListener("click", function(e){
+            e.stopPropagation();
+            
+            if(!back.querySelector(".model-answer")){
+                const answer = document.createElement("div");
+                answer.className = "model-answer";
+                answer.innerHTML = `
+                    <div class="model-title">
+                        Model Answer
+                    </div>
+                    ${item.answer}
+                `;
+                back.appendChild(answer);
+                showAnswerButton.style.display = "none";
 
-card.className = "card";
+                const doneButton = document.createElement("button");
+                doneButton.className = "answer-button";
+                doneButton.innerHTML = "✓";
+                back.appendChild(doneButton);
 
+                doneButton.addEventListener("click", function(e){
+                    e.stopPropagation();
+                    card.classList.remove("flipped");
+                    
+                    setTimeout(function(){
+                        card.classList.add("completed");
+                        card.querySelector(".card-front").innerHTML = '<span class="done-mark">✓</span>';
+                        back.innerHTML = "";
+                    }, 300);
 
-card.innerHTML = `
+                    completedCount++;
+                    document.getElementById("score").textContent = completedCount;
+                });
+            }
+        });
 
-<div class="card-inner">
-
-
-<div class="card-front">
-${index + 1}
-</div>
-
-
-<div class="card-back">
-
-
-<div class="question-number">
-Question ${index + 1}
-</div>
-
-
-<div class="question-text">
-${item.question}
-</div>
-
-
-<button class="answer-button">
-SHOW MODEL ANSWER
-</button>
-
-
-</div>
-
-
-</div>
-
-`;
-
-
-const showAnswerButton = card.querySelector(".answer-button");
-
-const back = card.querySelector(".card-back");
-
-
-
-card.addEventListener("click", function(e){
-
-
-if(e.target === showAnswerButton){
-return;
+        container.appendChild(card);
+    });
 }
-
-
-if(!card.classList.contains("completed")){
-
-card.classList.toggle("flipped");
-
-}
-
-
-});
-
-
-
-showAnswerButton.addEventListener("click", function(e){
-
-
-e.stopPropagation();
-
-
-if(!back.querySelector(".model-answer")){
-
-
-const answer = document.createElement("div");
-
-
-answer.className = "model-answer";
-
-
-answer.innerHTML = `
-
-<div class="model-title">
-Model Answer
-</div>
-
-${item.answer}
-
-`;
-
-
-back.appendChild(answer);
-
-
-
-showAnswerButton.style.display = "none";
-
-
-
-const doneButton = document.createElement("button");
-
-
-doneButton.className = "answer-button";
-
-
-doneButton.innerHTML = "✓";
-
-
-back.appendChild(doneButton);
-
-
-
-doneButton.addEventListener("click", function(e){
-
-
-e.stopPropagation();
-
-
-
-card.classList.remove("flipped");
-
-
-
-setTimeout(function(){
-
-
-card.classList.add("completed");
-
-
-
-card.querySelector(".card-front").innerHTML =
-'<span class="done-mark">✓</span>';
-
-
-
-back.innerHTML = "";
-
-
-},300);
-
-
-
-completedCount++;
-
-
-document.getElementById("score").textContent =
-completedCount;
-
-
-
-});
-
-
-
-}
-
-
-
-});
-
-
-
-container.appendChild(card);
-
-
-
-});
-
-
-}
-
-
 
 createCards();
-
-
 </script>
 
-
 </body>
-
 </html>
