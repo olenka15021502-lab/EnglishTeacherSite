@@ -15,13 +15,13 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      /* Насыщенный, но приятный мятный фон */
+      /* Приятный, но более выраженный мятный фон */
       background:
-        radial-gradient(circle at 20% 20%, rgba(0, 150, 136, 0.15), transparent 40%),
-        radial-gradient(circle at 80% 10%, rgba(0, 188, 212, 0.15), transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(128, 222, 234, 0.2), transparent 50%),
+        radial-gradient(circle at 20% 20%, rgba(0, 150, 136, 0.12), transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(0, 188, 212, 0.12), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(128, 222, 234, 0.15), transparent 50%),
         linear-gradient(180deg, #e0f2f1, #b2dfdb);
-      color: #004d40; /* Более глубокий и контрастный цвет текста */
+      color: #004d40;
     }
 
     html, body {
@@ -45,9 +45,9 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 137, 123, 0.95); /* Насыщенный мятный */
+      background: rgba(0, 137, 123, 0.95);
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255,255,255,0.3);
+      border-bottom: 2px solid rgba(255,255,255,0.3);
       z-index: 1000;
       padding: 12px 0;
       box-shadow: 0 4px 15px rgba(0, 77, 64, 0.15);
@@ -102,11 +102,11 @@
       text-transform: uppercase;
       color: #00695c;
       margin-bottom: 10px;
-      background: rgba(255, 255, 255, 0.8);
+      background: #ffffff;
       display: inline-block;
       padding: 6px 16px;
       border-radius: 20px;
-      border: 1px solid rgba(0, 150, 136, 0.2);
+      border: 2px solid #4db6ac; /* Заметная рамка */
     }
 
     h1 {
@@ -114,7 +114,7 @@
       font-family: 'Caveat', cursive;
       font-size: 68px;
       line-height: 1;
-      color: #00897b; /* Яркий, но спокойный мятный оттенок */
+      color: #00897b;
     }
 
     .subtitle {
@@ -135,10 +135,10 @@
     }
 
     .media-box {
-      background: #ffffff; /* Плотный белый фон, чтобы не сливался */
-      border: 1px solid rgba(0, 150, 136, 0.2); /* Тонкая мятная рамка */
+      background: #ffffff;
+      border: 2px solid #4db6ac; /* Четкая мятная рамка */
       border-radius: 20px;
-      box-shadow: 0 12px 35px rgba(0, 137, 123, 0.15); /* Заметная мятная тень */
+      box-shadow: 0 12px 35px rgba(0, 137, 123, 0.15);
       overflow: hidden;
     }
 
@@ -158,6 +158,7 @@
       width: 280px;
       aspect-ratio: 9 / 16;
       background: #004d40;
+      border: none; /* У видео своя темная подложка */
     }
 
     .video-box video {
@@ -173,8 +174,8 @@
       max-width: 820px;
       margin: 0 auto;
       text-align: left;
-      background: #ffffff; /* Плотный белый для отличной видимости */
-      border: 1px solid rgba(0, 150, 136, 0.15);
+      background: #ffffff;
+      border: 2px solid #4db6ac; /* Четкая рамка */
       border-radius: 24px;
       padding: 35px 40px;
       box-shadow: 0 10px 30px rgba(0, 137, 123, 0.12);
@@ -198,49 +199,59 @@
       margin-bottom: 0;
     }
 
-    /* FEATURES */
+    /* FEATURES - ИСПРАВЛЕНО: теперь четко видны */
 
     .features {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
+      gap: 20px; /* Чуть больше воздуха между карточками */
       margin: 30px 0;
     }
 
     .feature {
-      background: #ffffff;
-      border: 1px solid rgba(0, 150, 136, 0.15);
-      border-radius: 18px;
-      padding: 20px 12px;
+      background: #ffffff; /* Чисто белый фон */
+      border: 2px solid #4db6ac; /* Заметная мятная рамка */
+      border-radius: 16px;
+      padding: 24px 16px;
       text-align: center;
       font-weight: 600;
       line-height: 1.35;
       color: #00695c;
-      box-shadow: 0 6px 18px rgba(0, 137, 123, 0.08);
+      box-shadow: 0 8px 20px rgba(0, 137, 123, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Эффект при наведении на карточку */
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: #009688;
+      box-shadow: 0 12px 28px rgba(0, 137, 123, 0.2);
     }
 
     .feature-icon {
       display: block;
-      font-size: 28px;
-      margin-bottom: 8px;
+      font-size: 32px; /* Чуть крупнее иконки */
+      margin-bottom: 10px;
     }
 
-    /* INTERACTIVE */
+    /* INTERACTIVE - ИСПРАВЛЕНО: теперь выглядит как отдельный блок */
 
     .interactive {
       margin-top: 35px;
       padding: 30px;
-      background: linear-gradient(135deg, rgba(0, 150, 136, 0.08), rgba(0, 188, 212, 0.08));
-      border: 1px solid rgba(0, 150, 136, 0.2);
-      border-radius: 24px;
+      background: #ffffff; /* Белый фон для контраста */
+      border: 2px solid #009688; /* Более насыщенная мятная рамка */
+      border-left: 6px solid #009688; /* Акцентная толстая линия слева */
+      border-radius: 16px;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 137, 123, 0.15);
     }
 
     .interactive h2 {
       margin: 0 0 10px;
       font-family: 'Playfair Display', serif;
       font-size: 27px;
-      color: #00897b;
+      color: #00695c; /* Более темный заголовок для читаемости */
     }
 
     .interactive p {
@@ -272,7 +283,7 @@
       margin-bottom: 18px;
     }
 
-    /* BUTTON - теперь в мятной гамме, но яркий и сочный */
+    /* BUTTON */
 
     .cta {
       display: inline-block;
@@ -341,6 +352,7 @@
 
       .features {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
       }
     }
 
@@ -367,12 +379,16 @@
       }
 
       .features {
-        gap: 10px;
+        gap: 12px;
       }
 
       .feature {
-        padding: 16px 8px;
+        padding: 20px 12px; /* Сохраняем воздух даже на мобильных */
         font-size: 14px;
+      }
+
+      .feature-icon {
+        font-size: 28px;
       }
 
       .video-box {
