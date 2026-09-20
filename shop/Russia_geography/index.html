@@ -280,6 +280,20 @@
         0 10px 24px rgba(168, 85, 247, 0.6);
     }
 
+    /* AGREEMENT TEXT */
+    .agreement {
+      font-size: 14px;
+      color: #426464;
+      text-align: center;
+      margin-top: 15px;
+      line-height: 1.4;
+    }
+
+    .agreement a {
+      color: #0f766e;
+      text-decoration: underline;
+    }
+
     .final-line {
       margin-top: 25px;
       font-family: 'Caveat', cursive;
@@ -302,6 +316,23 @@
 
     .site-footer strong {
       color: #0f766e;
+    }
+
+    .footer-links {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #0f766e;
+      text-decoration: underline;
+    }
+
+    .footer-links a:hover {
+      color: #14b8a6;
     }
 
     /* MOBILE */
@@ -533,6 +564,12 @@
             👉 Купить материал
           </a>
 
+          <p class="agreement">
+            Нажимая на кнопку «Купить материал», вы соглашаетесь с условиями 
+            <a href="/oferta.html" target="_blank">публичной оферты</a> и 
+            <a href="/privacy.html" target="_blank">политики конфиденциальности</a>.
+          </p>
+
           <div class="final-line">
             Успешная подготовка к ЕГЭ начинается здесь!
           </div>
@@ -545,6 +582,10 @@
       <footer class="site-footer">
         <strong>Медведева Ольга Александровна</strong><br>
         ИНН: 501106530902
+        <div class="footer-links">
+          <a href="/oferta.html">Публичная оферта</a> |
+          <a href="/privacy.html">Политика конфиденциальности</a>
+        </div>
       </footer>
       <!-- ========= -->
 
