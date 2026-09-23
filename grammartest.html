@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Grammar Diagnostic Test | English with Olga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* === БАЗОВЫЕ СТИЛИ СТРАНИЦЫ === */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #fdf4ff 50%, #fff1f2 100%);
+      color: #1e293b;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* === ЛИПКИЕ ПЛАШКИ (ВСЕГДА ВВИДУ) === */
+    .ot-sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    }
+
+    .ot-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .ot-badge:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.18);
+    }
+
+    .ot-badge-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .ot-badge-secondary {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      font-size: 13px;
+      padding: 10px 24px;
+    }
+
+    /* === КОНТЕЙНЕР ТЕСТА === */
+    .ot-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding-bottom: 60px;
+    }
+
+    /* === ПРОГРЕСС-БАР И СЧЁТЧИК === */
+    .ot-progress-wrap {
+      background: #e2e8f0;
+      height: 8px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .ot-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #ec4899);
+      border-radius: 10px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .ot-question-counter {
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* === КАРТОЧКА ВОПРОСА === */
+    .ot-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15);
+      animation: otFadeIn 0.4s ease;
+    }
+
+    @keyframes otFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ot-topic-label {
+      display: inline-block;
+      background: linear-gradient(135deg, #ede9fe, #fce7f3);
+      color: #6366f1;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .ot-question-text {
+      font-size: 20px;
+      line-height: 1.6;
+      color: #1e293b;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    /* === ВАРИАНТЫ ОТВЕТОВ === */
+    .ot-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ot-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #ffffff;
+      font-size: 16px;
+      color: #1e293b;
+      user-select: none;
+    }
+
+    .ot-option:hover {
+      border-color: #6366f1;
+      background: #f5f3ff;
+      transform: translateX(4px);
+    }
+
+    .ot-option.selected {
+      border-color: #6366f1;
+      background: linear-gradient(135deg, #ede9fe, #e0e7ff);
+      font-weight: 600;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.15);
+    }
+
+    .ot-option-letter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #e2e8f0;
+      font-weight: 700;
+      font-size: 14px;
+      color: #64748b;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ot-option.selected .ot-option-letter {
+      background: #6366f1;
+      color: white;
+    }
+
+    /* === КНОПКИ НАВИГАЦИИ === */
+    .ot-btn-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+      gap: 12px;
+    }
+
+    .ot-btn {
+      padding: 14px 32px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .ot-btn-prev {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+
+    .ot-btn-prev:hover:not(:disabled) {
+      background: #cbd5e1;
+    }
+
+    .ot-btn-prev:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .ot-btn-next {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      margin-left: auto;
+    }
+
+    .ot-btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    .ot-btn-finish {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      margin-left: auto;
+    }
+
+    .ot-btn-finish:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    }
+
+    /* === ЭКРАН РЕЗУЛЬТАТОВ === */
+    .ot-results {
+      animation: otFadeIn 0.5s ease;
+    }
+
+    .ot-score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+    }
+
+    .ot-score-number {
+      font-size: 42px;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+    }
+
+    .ot-score-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .ot-results-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .ot-results-subtitle {
+      text-align: center;
+      font-size: 15px;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+
+    .ot-topics-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .ot-topic-row {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #e2e8f0;
+    }
+
+    .ot-topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .ot-topic-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .ot-topic-score {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .ot-topic-score.excellent { background: #d1fae5; color: #065f46; }
+    .ot-topic-score.good { background: #fef3c7; color: #92400e; }
+    .ot-topic-score.needs-work { background: #fee2e2; color: #991b1b; }
+
+    .ot-topic-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .ot-topic-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.6s ease;
+    }
+
+    .ot-recommendation {
+      background: linear-gradient(135deg, #fef3c7, #fffbeb);
+      border: 2px solid #fbbf24;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-top: 8px;
+    }
+
+    .ot-recommendation-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ot-recommendation-text {
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    .ot-retry-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .ot-retry-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    /* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      
+      .ot-sticky-header { padding: 12px 16px; margin-bottom: 20px; }
+      .ot-badge { padding: 10px 20px; font-size: 13px; }
+      .ot-badge-secondary { font-size: 11px; padding: 8px 18px; }
+      
+      .ot-card { padding: 24px 20px; border-radius: 20px; }
+      .ot-question-text { font-size: 17px; }
+      
+      .ot-option { padding: 14px 16px; font-size: 15px; border-radius: 14px; }
+      .ot-option-letter { width: 28px; height: 28px; font-size: 13px; }
+      
+      .ot-btn { padding: 12px 24px; font-size: 14px; }
+      
+      .ot-score-circle { width: 120px; height: 120px; }
+      .ot-score-number { font-size: 36px; }
+      .ot-results-title { font-size: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .ot-btn-row { flex-direction: column-reverse; }
+      .ot-btn { width: 100%; text-align: center; }
+      .ot-btn-next, .ot-btn-finish { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === ЛИПКИЕ ПЛАШКИ === -->
+  <div class="ot-sticky-header">
+    <a href="https://max.ru/se13305924_biz" target="_blank" class="ot-badge ot-badge-primary">✨ English with Olga</a>
+    <a href="/" target="_blank" class="ot-badge ot-badge-secondary">📚 Useful Materials for English Lessons</a>
+  </div>
+
+  <!-- === ОСНОВНОЙ КОНТЕЙНЕР === -->
+  <div class="ot-container">
+    
+    <!-- Область теста -->
+    <div id="ot-quiz-area">
+      <div class="ot-question-counter" id="ot-counter">Question 1 of 60</div>
+      <div class="ot-progress-wrap">
+        <div class="ot-progress-fill" id="ot-progress"></div>
+      </div>
+      
+      <div class="ot-card" id="ot-card">
+        <span class="ot-topic-label" id="ot-topic-label"></span>
+        <p class="ot-question-text" id="ot-question-text"></p>
+        <div class="ot-options" id="ot-options"></div>
+        
+        <div class="ot-btn-row">
+          <button class="ot-btn ot-btn-prev" id="ot-prev" disabled>← Previous</button>
+          <button class="ot-btn ot-btn-next" id="ot-next">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Область результатов (скрыта по умолчанию) -->
+    <div id="ot-results-area" style="display:none;" class="ot-results">
+      <div class="ot-card">
+        <div class="ot-score-circle">
+          <span class="ot-score-number" id="ot-score-num"></span>
+          <span class="ot-score-label">out of 60</span>
+        </div>
+        <h2 class="ot-results-title" id="ot-results-title"></h2>
+        <p class="ot-results-subtitle" id="ot-results-subtitle"></p>
+        
+        <div class="ot-topics-grid" id="ot-topics-grid"></div>
+        
+        <div class="ot-recommendation" id="ot-recommendation" style="display:none;">
+          <div class="ot-recommendation-title">⚠️ Focus Areas</div>
+          <p class="ot-recommendation-text" id="ot-recommendation-text"></p>
+        </div>
+        
+        <button class="ot-retry-btn" onclick="otRestart()">🔄 Retake the Test</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- === ЛОГИКА ТЕСТА === -->
+  <script>
+    const OT_DATA = [
+      {q:"My brother usually _______ black coffee, but today he is drinking tea with milk.",o:["is drinking","drinks","drank","drink"],a:1,t:"Present and Past"},
+      {q:"Be quiet, please! The baby _______ in the next room.",o:["sleeps","has slept","is sleeping","slept"],a:2,t:"Present and Past"},
+      {q:"We _______ each other since we were in primary school.",o:["have known","know","are knowing","knew"],a:0,t:"Present and Past"},
+      {q:"I _______ a very interesting documentary when the electricity suddenly went off.",o:["watched","have watched","am watching","was watching"],a:3,t:"Present and Past"},
+      {q:"_______ you _______ the new superhero film that came out last week?",o:["Did / see","Do / see","Have / seen","Are / seeing"],a:2,t:"Present and Past"},
+      {q:"Sarah _______ to Japan three times, and she wants to go there again next year.",o:["went","has been","was going","goes"],a:1,t:"Present Perfect and Past"},
+      {q:"I _______ my homework an hour ago, so I can relax now.",o:["have finished","finish","had finished","finished"],a:3,t:"Present Perfect and Past"},
+      {q:"They _______ in this house since 2015, and they don't want to move.",o:["have lived","live","lived","are living"],a:0,t:"Present Perfect and Past"},
+      {q:"Sorry, I can't talk right now. I _______ just _______ an online meeting and I need to listen.",o:["did / join","was / joining","have / joined","do / join"],a:2,t:"Present Perfect and Past"},
+      {q:"_______ you ever _______ traditional spicy food in a real local restaurant?",o:["Did / eat","Have / eaten","Do / eat","Were / eating"],a:1,t:"Present Perfect and Past"},
+      {q:"The boxes are really heavy. \"Don't worry, I _______ you carry them.\"",o:["help","'m going to help","am helping","'ll help"],a:3,t:"Future"},
+      {q:"I can't come to the party on Friday. I _______ my dentist at 6 pm.",o:["'m seeing","'ll see","see","will see"],a:0,t:"Future"},
+      {q:"Look at those dark clouds! It _______ rain soon.",o:["is raining","rains","is going to","will"],a:2,t:"Future"},
+      {q:"I think people _______ more electric cars in the next ten years.",o:["are going to buy","will buy","buy","bought"],a:1,t:"Future"},
+      {q:"Hurry up! The train _______ by the time we get to the station.",o:["will have already left","will already leave","already leaves","is already leaving"],a:0,t:"Future"},
+      {q:"Mark isn't answering his phone. His battery _______.",o:["might run out","must run out","must have run out","should have run out"],a:2,t:"Modals"},
+      {q:"You _______ pay for the museum. It's free on Sundays.",o:["shouldn't","can't","don't have to","mustn't"],a:2,t:"Modals"},
+      {q:"The exam was really difficult. I _______ more time preparing for it.",o:["must spend","had to spend","should spend","should have spent"],a:3,t:"Modals"},
+      {q:"I'm not sure about my plans for the weekend. I _______ visit my grandparents, but I haven't decided yet.",o:["might","will","must","should"],a:0,t:"Modals"},
+      {q:"She _______ be at home. I just saw her walking into the supermarket!",o:["shouldn't","might not","mustn't","can't"],a:3,t:"Modals"},
+      {q:"If I _______ enough money, I would buy a house by the sea.",o:["have","had","will have","would have"],a:1,t:"If and Wish"},
+      {q:"Unless you _______ now, you will miss the bus.",o:["will leave","left","leave","don't leave"],a:2,t:"If and Wish"},
+      {q:"I wish I _______ how to play the guitar. It would be so useful at parties.",o:["knew","know","have known","would know"],a:0,t:"If and Wish"},
+      {q:"If she _______ me about the traffic jam, I wouldn't have been late for the meeting.",o:["tells","told","would tell","had told"],a:3,t:"If and Wish"},
+      {q:"We'll go for a picnic tomorrow if the weather _______ nice.",o:["will be","is","was","would be"],a:1,t:"If and Wish"},
+      {q:"This historic building _______ in the 19th century.",o:["built","was built","has been built","is building"],a:1,t:"Passive Voice"},
+      {q:"The new shopping centre _______ next year. Everyone is excited about it.",o:["will open","opens","will be opened","is opening"],a:2,t:"Passive Voice"},
+      {q:"English _______ in many countries around the world as an official language.",o:["speaks","is spoken","has spoken","was speaking"],a:1,t:"Passive Voice"},
+      {q:"My car _______ right now, so I have to take the bus to work.",o:["is repairing","repairs","is being repaired","has been repaired"],a:2,t:"Passive Voice"},
+      {q:"All the tickets for the concert _______ before we got to the box office.",o:["had been sold","were sold","have been sold","are sold"],a:0,t:"Passive Voice"},
+      {q:"\"I will call you tomorrow,\" she said. → She said that she _______ me the next day.",o:["will call","would call","called","has called"],a:1,t:"Reported Speech"},
+      {q:"\"Where did you put my keys?\" he asked. → He asked where _______ his keys.",o:["did I put","have I put","I had put","I put"],a:2,t:"Reported Speech"},
+      {q:"\"Don't forget to lock the door,\" Mum told me. → Mum told me _______ the door.",o:["don't forget to lock","to not forget locking","didn't forget to lock","not to forget to lock"],a:3,t:"Reported Speech"},
+      {q:"I really enjoy _______ new recipes at weekends. It helps me relax.",o:["to try","try","trying","having tried"],a:2,t:"-ing and to"},
+      {q:"We decided _______ a different route because of the roadworks.",o:["taking","to take","take","having taken"],a:1,t:"-ing and to"},
+      {q:"She promised _______ earlier today, but she's still not here.",o:["coming","come","having come","to come"],a:3,t:"-ing and to"},
+      {q:"He avoided _______ the question by changing the subject.",o:["to answer","answering","answer","having answered"],a:1,t:"-ing and to"},
+      {q:"_______ at the moment? I can hear music from your room.",o:["Do you study","You are studying","Are you studying","Study you"],a:2,t:"Questions and Auxiliaries"},
+      {q:"I wonder _______ the results of the exam yet.",o:["does she know","if she knows","she knows","knows she"],a:1,t:"Questions and Auxiliaries"},
+      {q:"\"Someone broke the window last night.\" \"Really? Who _______ it?\"",o:["broke","did break","was broken","has broken"],a:0,t:"Questions and Auxiliaries"},
+      {q:"I need some help. Can you give me _______ about choosing a university?",o:["an advice","some advices","a piece of advice","pieces of advices"],a:2,t:"Articles and Nouns"},
+      {q:"We went for a lovely walk along _______ Thames yesterday.",o:["a","the","an","some"],a:1,t:"Articles and Nouns"},
+      {q:"There are _______ people waiting at the bus stop.",o:["a few","a little","much","any"],a:0,t:"Articles and Nouns"},
+      {q:"\"Is this your coat?\" \"No, it's _______.\"",o:["her","hers","she's","her's"],a:1,t:"Pronouns and Determiners"},
+      {q:"They built the treehouse in the garden _______.",o:["by themselves","by themself","by theirselves","with themselves"],a:0,t:"Pronouns and Determiners"},
+      {q:"_______ knows the answer to this question. It's far too difficult.",o:["Anybody","Somebody","None","Nobody"],a:3,t:"Pronouns and Determiners"},
+      {q:"The woman _______ lives next door is a doctor.",o:["which","who","whose","where"],a:1,t:"Relative Clauses"},
+      {q:"I lost the book _______ you lent me last week.",o:["who","whose","which","where"],a:2,t:"Relative Clauses"},
+      {q:"I have a colleague _______ sister works for the BBC.",o:["who","which","whose","whom"],a:2,t:"Relative Clauses"},
+      {q:"I was very _______ by the news. I didn't expect it at all.",o:["surprising","surprised","surprise","surprisingly"],a:1,t:"Adjectives and Adverbs"},
+      {q:"He drives very _______. You always feel safe in his car.",o:["careful","carefull","carefuly","carefully"],a:3,t:"Adjectives and Adverbs"},
+      {q:"This is the _______ cake I have ever tasted.",o:["delicious","more delicious","most delicious","deliciouser"],a:2,t:"Adjectives and Adverbs"},
+      {q:"My birthday is _______ 14th March.",o:["at","on","in","by"],a:1,t:"Prepositions"},
+      {q:"We arrived _______ the airport just in time for our flight.",o:["to","in","on","at"],a:3,t:"Prepositions"},
+      {q:"She is very good _______ solving puzzles.",o:["at","in","for","with"],a:0,t:"Prepositions"},
+      {q:"I'm looking forward _______ you next week.",o:["seeing","to seeing","to see","see"],a:1,t:"Prepositions"},
+      {q:"It's a bit cold in here. Could you _______ the heating, please?",o:["turn down","turn off","turn away","turn up"],a:3,t:"Phrasal Verbs"},
+      {q:"The plane _______ at 8:30, so we need to be at the airport early.",o:["takes out","takes up","takes off","takes away"],a:2,t:"Phrasal Verbs"},
+      {q:"I can't _______ this noise anymore. It's too loud!",o:["put down to","put up with","put off","put away"],a:1,t:"Phrasal Verbs"},
+      {q:"The football match was _______ because of the heavy rain.",o:["called out","called up","called on","called off"],a:3,t:"Phrasal Verbs"}
+    ];
+
+    const LETTERS = ['A','B','C','D'];
+    let currentQ = 0;
+    let answers = new Array(OT_DATA.length).fill(null);
+
+    function renderQuestion() {
+      const q = OT_DATA[currentQ];
+      document.getElementById('ot-counter').textContent = `Question ${currentQ + 1} of ${OT_DATA.length}`;
+      document.getElementById('ot-progress').style.width = `${((currentQ + 1) / OT_DATA.length) * 100}%`;
+      document.getElementById('ot-topic-label').textContent = q.t;
+      document.getElementById('ot-question-text').textContent = q.q;
+      
+      const optsEl = document.getElementById('ot-options');
+      optsEl.innerHTML = '';
+      q.o.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'ot-option' + (answers[currentQ] === i ? ' selected' : '');
+        div.innerHTML = `<span class="ot-option-letter">${LETTERS[i]}</span><span>${opt}</span>`;
+        div.addEventListener('click', () => selectOption(i));
+        optsEl.appendChild(div);
+      });
+
+      document.getElementById('ot-prev').disabled = currentQ === 0;
+      const nextBtn = document.getElementById('ot-next');
+      if (currentQ === OT_DATA.length - 1) {
+        nextBtn.textContent = '✓ Finish';
+        nextBtn.className = 'ot-btn ot-btn-finish';
+      } else {
+        nextBtn.textContent = 'Next →';
+        nextBtn.className = 'ot-btn ot-btn-next';
+      }
+    }
+
+    function selectOption(idx) {
+      answers[currentQ] = idx;
+      document.querySelectorAll('.ot-option').forEach((el, i) => {
+        el.classList.toggle('selected', i === idx);
+      });
+    }
+
+    document.getElementById('ot-prev').addEventListener('click', () => {
+      if (currentQ > 0) { currentQ--; renderQuestion(); }
+    });
+
+    document.getElementById('ot-next').addEventListener('click', () => {
+      if (currentQ < OT_DATA.length - 1) { currentQ++; renderQuestion(); }
+      else showResults();
+    });
+
+    function showResults() {
+      document.getElementById('ot-quiz-area').style.display = 'none';
+      const resultsArea = document.getElementById('ot-results-area');
+      resultsArea.style.display = 'block';
+
+      let correct = 0;
+      const topicStats = {};
+      OT_DATA.forEach((q, i) => {
+        if (!topicStats[q.t]) topicStats[q.t] = { total: 0, correct: 0 };
+        topicStats[q.t].total++;
+        if (answers[i] === q.a) { correct++; topicStats[q.t].correct++; }
+      });
+
+      document.getElementById('ot-score-num').textContent = correct;
+      
+      let title, subtitle;
+      const pct = correct / OT_DATA.length;
+      if (pct >= 0.85) { title = "Outstanding! 🎉"; subtitle = "Your grammar is excellent. Keep up the great work!"; }
+      else if (pct >= 0.7) { title = "Great Job! 👏"; subtitle = "Solid foundation with a few areas to polish."; }
+      else if (pct >= 0.5) { title = "Good Effort! "; subtitle = "You're on the right track. Focus on weak areas."; }
+      else { title = "Keep Practising! 📖"; subtitle = "Don't worry — targeted practice will make a big difference."; }
+      document.getElementById('ot-results-title').textContent = title;
+      document.getElementById('ot-results-subtitle').textContent = subtitle;
+
+      const grid = document.getElementById('ot-topics-grid');
+      grid.innerHTML = '';
+      const weakTopics = [];
+      Object.entries(topicStats).forEach(([name, stat]) => {
+        const pctT = stat.correct / stat.total;
+        let cls = 'excellent', barColor = '#10b981';
+        if (pctT < 0.7) { cls = 'needs-work'; barColor = '#ef4444'; weakTopics.push(name); }
+        else if (pctT < 0.85) { cls = 'good'; barColor = '#f59e0b'; }
+        
+        const row = document.createElement('div');
+        row.className = 'ot-topic-row';
+        row.innerHTML = `
+          <div class="ot-topic-header">
+            <span class="ot-topic-name">${name}</span>
+            <span class="ot-topic-score ${cls}">${stat.correct}/${stat.total}</span>
+          </div>
+          <div class="ot-topic-bar"><div class="ot-topic-bar-fill" style="width:${pctT*100}%;background:${barColor}"></div></div>
+        `;
+        grid.appendChild(row);
+      });
+
+      const recEl = document.getElementById('ot-recommendation');
+      if (weakTopics.length > 0) {
+        recEl.style.display = 'block';
+        document.getElementById('ot-recommendation-text').textContent = 
+          `We recommend focusing on: ${weakTopics.join(', ')}. Review these topics and retake the test to track your progress!`;
+      } else {
+        recEl.style.display = 'none';
+      }
+
+      resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    window.otRestart = function() {
+      currentQ = 0;
+      answers = new Array(OT_DATA.length).fill(null);
+      document.getElementById('ot-results-area').style.display = 'none';
+      document.getElementById('ot-quiz-area').style.display = 'block';
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Запуск теста при загрузке страницы
+    renderQuestion();
+  </script>
+
+</body>
+</html>
