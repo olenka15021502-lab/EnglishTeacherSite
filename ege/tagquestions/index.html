@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tag Questions Practice</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F1E8;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.brand a {
+    display: inline-block;
+    background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brand a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+}
+
+/* =========================
+   SECOND BRAND
+========================= */
+
+.brand-secondary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-secondary a {
+    display: inline-block;
+    background: linear-gradient(90deg, #ec4899, #a855f7);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    border: 2px solid white;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brand-secondary a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background: white;
+    border-radius: 15px;
+    padding: 22px 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header h1 {
+    color: #4A6B45;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-box {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.progress-text {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.questions-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.question-card {
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 145px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.question-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+}
+
+.question-number {
+    font-size: 0.8rem;
+    font-weight: 700;
+    opacity: 0.6;
+    margin-bottom: 12px;
+}
+
+.sentence {
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.answer-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.answer-input {
+    width: 150px;
+    max-width: 65%;
+    padding: 9px 12px;
+    border: 2px solid rgba(0,0,0,0.18);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.85);
+    color: #333;
+    font-size: 1rem;
+    font-family: inherit;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.answer-input:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+}
+
+.question-mark {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* =========================
+   ANSWER STATES
+========================= */
+
+.question-card.correct {
+    box-shadow: 0 0 0 3px #22c55e, 0 6px 18px rgba(34,197,94,0.25);
+}
+
+.question-card.incorrect {
+    box-shadow: 0 0 0 3px #ef4444, 0 6px 18px rgba(239,68,68,0.2);
+}
+
+.answer-feedback {
+    text-align: center;
+    min-height: 22px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.correct .answer-feedback {
+    color: #15803d;
+}
+
+.incorrect .answer-feedback {
+    color: #b91c1c;
+}
+
+/* =========================
+   20 COLOURS
+========================= */
+
+.colour1 { background: #C6E8C1; }
+.colour2 { background: #F8C8DC; }
+.colour3 { background: #BFDFF2; }
+.colour4 { background: #F9E79F; }
+.colour5 { background: #FFD1B3; }
+.colour6 { background: #D8C4F1; }
+.colour7 { background: #B8E6D5; }
+.colour8 { background: #F7B7A3; }
+.colour9 { background: #FFE5B4; }
+.colour10 { background: #C7EAFB; }
+
+.colour11 { background: #F8A4B8; }
+.colour12 { background: #C9A8E8; }
+.colour13 { background: #A3D9A5; }
+.colour14 { background: #98D8E8; }
+.colour15 { background: #D4A5E5; }
+.colour16 { background: #FFE066; }
+.colour17 { background: #B3E5FC; }
+.colour18 { background: #FFC87A; }
+.colour19 { background: #88D8B0; }
+.colour20 { background: #82CAFA; }
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.action-button {
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+}
+
+.check-button {
+    background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+    box-shadow: 0 4px 12px rgba(20,184,166,0.35);
+}
+
+.show-button {
+    background: linear-gradient(90deg, #ec4899, #a855f7);
+    box-shadow: 0 4px 12px rgba(236,72,153,0.3);
+}
+
+.reset-button {
+    background: #777;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.result {
+    text-align: center;
+    background: white;
+    border-radius: 15px;
+    padding: 18px 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4A6B45;
+    display: none;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.site-footer strong {
+    color: #4A6B45;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 750px) {
+    .questions-container {
+        grid-template-columns: 1fr;
+    }
+
+    .question-card {
+        min-height: 135px;
+    }
+}
+
+@media(max-width: 400px) {
+
+    body {
+        padding: 12px;
+    }
+
+    .brand a,
+    .brand-secondary a {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    .header {
+        padding: 18px 15px;
+    }
+
+    .header p {
+        font-size: 0.95rem;
+    }
+
+    .question-card {
+        padding: 17px;
+    }
+
+    .sentence {
+        font-size: 1rem;
+    }
+
+    .answer-input {
+        width: 140px;
+        font-size: 0.95rem;
+    }
+
+    .site-footer {
+        font-size: 0.85rem;
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app-wrapper">
+
+    <div class="brand">
+        <a href="https://max.ru/se13305924_biz" target="_blank">
+            ✨ English with Olga ✨
+        </a>
+    </div>
+
+    <div class="brand-secondary">
+        <a href="/" target="_blank">
+            📚 Useful Materials for English Lessons
+        </a>
+    </div>
+
+    <div class="header">
+        <h1>Tag Questions Practice</h1>
+        <p>Complete the questions with the correct tag.</p>
+        <p>The question mark is already there. Just type the tag!</p>
+    </div>
+
+    <div class="progress-box">
+        <div class="progress-text">
+            Completed: <strong><span id="progress">0</span></strong> / 30
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="questions-container">
+
+        <div class="question-card colour1" data-answer="don't you">
+            <div>
+                <div class="question-number">1</div>
+                <div class="sentence">You like travelling,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour2" data-answer="isn't she">
+            <div>
+                <div class="question-number">2</div>
+                <div class="sentence">She's working from home today,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour3" data-answer="didn't they">
+            <div>
+                <div class="question-number">3</div>
+                <div class="sentence">They went to London last summer,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour4" data-answer="have you">
+            <div>
+                <div class="question-number">4</div>
+                <div class="sentence">You haven't seen this film yet,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour5" data-answer="won't he">
+            <div>
+                <div class="question-number">5</div>
+                <div class="sentence">He'll call you later,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour6" data-answer="shouldn't we">
+            <div>
+                <div class="question-number">6</div>
+                <div class="sentence">We should book the tickets in advance,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour7" data-answer="can't she">
+            <div>
+                <div class="question-number">7</div>
+                <div class="sentence">She can speak three languages,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour8" data-answer="would you">
+            <div>
+                <div class="question-number">8</div>
+                <div class="sentence">You wouldn't do that,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour9" data-answer="did they">
+            <div>
+                <div class="question-number">9</div>
+                <div class="sentence">Nobody told you about the meeting,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour10" data-answer="has it">
+            <div>
+                <div class="question-number">10</div>
+                <div class="sentence">Nothing has changed,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour11" data-answer="didn't they">
+            <div>
+                <div class="question-number">11</div>
+                <div class="sentence">Someone left their phone here,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour12" data-answer="does she">
+            <div>
+                <div class="question-number">12</div>
+                <div class="sentence">She hardly ever complains,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour13" data-answer="does he">
+            <div>
+                <div class="question-number">13</div>
+                <div class="sentence">He never checks his emails,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour14" data-answer="shall we">
+            <div>
+                <div class="question-number">14</div>
+                <div class="sentence">Let's go for a walk,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour15" data-answer="will you">
+            <div>
+                <div class="question-number">15</div>
+                <div class="sentence">Don't forget to lock the door,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour16" data-answer="will you">
+            <div>
+                <div class="question-number">16</div>
+                <div class="sentence">Pass me the salt,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour17" data-answer="isn't there">
+            <div>
+                <div class="question-number">17</div>
+                <div class="sentence">There's a problem with the printer,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour18" data-answer="were there">
+            <div>
+                <div class="question-number">18</div>
+                <div class="sentence">There weren't many people at the concert,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour19" data-answer="wasn't it">
+            <div>
+                <div class="question-number">19</div>
+                <div class="sentence">This book was written by a British author,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour20" data-answer="haven't they">
+            <div>
+                <div class="question-number">20</div>
+                <div class="sentence">The invitations have already been sent,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour1" data-answer="won't it">
+            <div>
+                <div class="question-number">21</div>
+                <div class="sentence">The project will be finished by Friday,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour2" data-answer="isn't it">
+            <div>
+                <div class="question-number">22</div>
+                <div class="sentence">Your car is being repaired,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour3" data-answer="didn't she">
+            <div>
+                <div class="question-number">23</div>
+                <div class="sentence">She used to live here,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour4" data-answer="hadn't you">
+            <div>
+                <div class="question-number">24</div>
+                <div class="sentence">You'd better take an umbrella,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour5" data-answer="wouldn't you">
+            <div>
+                <div class="question-number">25</div>
+                <div class="sentence">You'd rather stay at home tonight,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour6" data-answer="aren't I">
+            <div>
+                <div class="question-number">26</div>
+                <div class="sentence">I'm late,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour7" data-answer="do they">
+            <div>
+                <div class="question-number">27</div>
+                <div class="sentence">Few people know about this place,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour8" data-answer="didn't they">
+            <div>
+                <div class="question-number">28</div>
+                <div class="sentence">Everyone enjoyed the party,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour9" data-answer="does he">
+            <div>
+                <div class="question-number">29</div>
+                <div class="sentence">I don't think he knows the answer,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+        <div class="question-card colour10" data-answer="can it">
+            <div>
+                <div class="question-number">30</div>
+                <div class="sentence">Nothing can stop us now,</div>
+            </div>
+            <div>
+                <div class="answer-area">
+                    <input class="answer-input" type="text" autocomplete="off">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="answer-feedback"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <button class="action-button check-button" onclick="checkAnswers()">
+            ✓ Check Answers
+        </button>
+
+        <button class="action-button show-button" onclick="showAnswers()">
+            💡 Show Answers
+        </button>
+
+        <button class="action-button reset-button" onclick="resetPractice()">
+            ↻ Reset
+        </button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <footer class="site-footer">
+        <strong>Медведева Ольга Александровна</strong><br>
+        ИНН: 501106530902
+    </footer>
+
+</div>
+
+
+<script>
+
+/* =========================
+   NORMALISE ANSWER
+========================= */
+
+function normalise(text) {
+    return text
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ');
+}
+
+
+/* =========================
+   UPDATE PROGRESS
+========================= */
+
+function updateProgress() {
+
+    const cards = document.querySelectorAll('.question-card');
+    let completed = 0;
+
+    cards.forEach(card => {
+        const input = card.querySelector('.answer-input');
+
+        if (input.value.trim() !== '') {
+            completed++;
+        }
+    });
+
+    document.getElementById('progress').textContent = completed;
+
+    const percentage = (completed / cards.length) * 100;
+
+    document.getElementById('progressFill').style.width =
+        percentage + '%';
+}
+
+
+/* =========================
+   CHECK ANSWERS
+========================= */
+
+function checkAnswers() {
+
+    const cards = document.querySelectorAll('.question-card');
+
+    let correct = 0;
+
+    cards.forEach(card => {
+
+        const input = card.querySelector('.answer-input');
+        const feedback = card.querySelector('.answer-feedback');
+
+        const userAnswer = normalise(input.value);
+        const correctAnswer = normalise(card.dataset.answer);
+
+        card.classList.remove('correct', 'incorrect');
+
+        if (userAnswer === correctAnswer) {
+
+            card.classList.add('correct');
+            feedback.textContent = '✓ Correct!';
+            correct++;
+
+        } else {
+
+            card.classList.add('incorrect');
+
+            if (userAnswer === '') {
+                feedback.textContent = 'Type your answer.';
+            } else {
+                feedback.textContent = '✗ Try again.';
+            }
+        }
+    });
+
+    const result = document.getElementById('result');
+
+    result.style.display = 'block';
+
+    result.textContent =
+        `You got ${correct} out of ${cards.length} correct!`;
+
+    result.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
+
+
+/* =========================
+   SHOW ANSWERS
+========================= */
+
+function showAnswers() {
+
+    const cards = document.querySelectorAll('.question-card');
+
+    cards.forEach(card => {
+
+        const input = card.querySelector('.answer-input');
+        const feedback = card.querySelector('.answer-feedback');
+
+        input.value = card.dataset.answer;
+
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+
+        feedback.textContent =
+            '✓ ' + card.dataset.answer + ' ?';
+    });
+
+    updateProgress();
+
+    const result = document.getElementById('result');
+
+    result.style.display = 'block';
+    result.textContent = 'All correct answers are shown.';
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetPractice() {
+
+    const cards = document.querySelectorAll('.question-card');
+
+    cards.forEach(card => {
+
+        const input = card.querySelector('.answer-input');
+        const feedback = card.querySelector('.answer-feedback');
+
+        input.value = '';
+
+        card.classList.remove('correct', 'incorrect');
+
+        feedback.textContent = '';
+    });
+
+    document.getElementById('result').style.display = 'none';
+
+    updateProgress();
+}
+
+
+/* =========================
+   LIVE PROGRESS
+========================= */
+
+document.querySelectorAll('.answer-input').forEach(input => {
+
+    input.addEventListener('input', function() {
+
+        const card = this.closest('.question-card');
+
+        card.classList.remove('correct', 'incorrect');
+
+        card.querySelector('.answer-feedback').textContent = '';
+
+        updateProgress();
+    });
+
+});
+
+
+/* =========================
+   ENTER = NEXT QUESTION
+========================= */
+
+document.querySelectorAll('.answer-input').forEach((input, index, inputs) => {
+
+    input.addEventListener('keydown', function(event) {
+
+        if (event.key === 'Enter') {
+
+            event.preventDefault();
+
+            if (index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            } else {
+                checkAnswers();
+            }
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
