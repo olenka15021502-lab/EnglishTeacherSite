@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask the Questions | EGE Speaking Task 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#172033;
+  --muted:#667085;
+  --teal:#08b6a6;
+  --blue:#2196f3;
+  --pink:#ec4899;
+  --purple:#8b5cf6;
+  --bg:#f4f7ff;
+  --card:#ffffff;
+  --good:#159957;
+  --bad:#e5484d;
+}
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  padding:22px 18px 40px;
+  background:
+    radial-gradient(circle at 5% 5%,rgba(8,182,166,.18),transparent 27%),
+    radial-gradient(circle at 95% 8%,rgba(139,92,246,.18),transparent 28%),
+    radial-gradient(circle at 50% 100%,rgba(33,150,243,.12),transparent 35%),
+    var(--bg);
+}
+.app{max-width:1180px;margin:auto}
+.brand{text-align:center;margin-bottom:10px}
+.brand a,.brand-secondary a{
+  display:inline-block;color:#fff;text-decoration:none;font-weight:750;
+  padding:12px 30px;border-radius:30px;border:2px solid rgba(255,255,255,.9);
+  font-size:1rem;transition:.2s;box-shadow:0 7px 20px rgba(0,0,0,.12)
+}
+.brand a{background:linear-gradient(90deg,#14b8a6,#0ea5e9);box-shadow:0 7px 20px rgba(20,184,166,.3)}
+.brand-secondary{text-align:center;margin-bottom:22px}
+.brand-secondary a{background:linear-gradient(90deg,#ec4899,#a855f7);box-shadow:0 7px 20px rgba(168,85,247,.25)}
+.brand a:hover,.brand-secondary a:hover{transform:translateY(-2px);filter:saturate(1.08)}
+
+.hero{
+  position:relative;overflow:hidden;border-radius:28px;padding:28px 28px 24px;
+  background:linear-gradient(135deg,#ffffff 0%,#f5fbff 55%,#fff4fb 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 15px 45px rgba(44,62,105,.12);margin-bottom:22px;text-align:center
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.7}
+.hero:before{width:120px;height:120px;background:#a7f3d0;right:-35px;top:-45px}
+.hero:after{width:90px;height:90px;background:#ddd6fe;left:-25px;bottom:-30px}
+.hero>*{position:relative;z-index:1}
+.eyebrow{
+  display:inline-block;background:#e8fffb;color:#07877d;border-radius:999px;
+  padding:6px 12px;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px
+}
+h1{font-size:clamp(1.65rem,4vw,2.5rem);line-height:1.1;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1rem;line-height:1.5}
+.instructions{
+  margin:18px auto 0;max-width:780px;display:flex;justify-content:center;gap:9px;flex-wrap:wrap
+}
+.instruction{
+  background:#fff;border:1px solid #e6eaf2;border-radius:999px;padding:8px 13px;
+  font-size:.84rem;color:#475467;box-shadow:0 4px 12px rgba(0,0,0,.04)
+}
+
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 14px}
+.toolbar h2{font-size:1.15rem}
+.progress{font-size:.86rem;color:var(--muted);background:#fff;border:1px solid #e6eaf2;border-radius:999px;padding:7px 12px}
+
+.tasks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
+.task-card{
+  position:relative;min-height:164px;border:0;border-radius:22px;padding:18px;
+  cursor:pointer;text-align:center;color:#fff;overflow:hidden;
+  background:linear-gradient(145deg,#7c3aed 0%,#6d28d9 55%,#5b21b6 100%);
+  box-shadow:0 10px 24px rgba(91,33,182,.24);
+  transition:transform .22s,box-shadow .22s,filter .22s;
+  display:flex;flex-direction:column;justify-content:center;align-items:center
+}
+.task-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 17px 34px rgba(91,33,182,.32);
+  filter:brightness(1.08)
+}
+.task-card.done:after{
+  content:"✓";position:absolute;right:11px;top:9px;width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(255,255,255,.96);color:#6d28d9;
+  font-weight:900;box-shadow:0 3px 9px rgba(0,0,0,.16)
+}
+.num{
+  position:absolute;left:15px;top:14px;width:32px;height:32px;border-radius:10px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.24);
+  display:grid;place-items:center;font-weight:900;font-size:.86rem;color:#fff
+}
+.task-title{
+  display:block;font-weight:850;font-size:1.25rem;line-height:1.15;
+  color:#fff;max-width:100%;margin:18px 0 3px
+}
+.task-sub{
+  display:block;font-size:.84rem;line-height:1.2;opacity:.78;
+  font-weight:650;color:#f3e8ff;margin:0
+}
+.c1,.c2,.c3,.c4,.c5,.c6,.c7,.c8,.c9,.c10,
+.c11,.c12,.c13,.c14,.c15,.c16,.c17,.c18,.c19,.c20{
+  background:linear-gradient(145deg,#7c3aed 0%,#6d28d9 55%,#5b21b6 100%)
+}
+
+.overlay{
+  position:fixed;inset:0;background:rgba(18,28,48,.62);backdrop-filter:blur(7px);
+  z-index:50;display:none;padding:20px;overflow:auto
+}
+.overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{
+  width:min(1060px,100%);margin:20px auto 30px;background:#fff;border-radius:28px;
+  box-shadow:0 25px 70px rgba(0,0,0,.25);overflow:hidden
+}
+.modal-head{
+  padding:20px 22px 18px;background:linear-gradient(110deg,#ecfeff,#f5f3ff 55%,#fff1f8);
+  border-bottom:1px solid #e7eaf0;display:flex;align-items:center;gap:14px
+}
+.modal-number{
+  flex:0 0 auto;width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#08b6a6,#2196f3);
+  color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.1rem;box-shadow:0 7px 15px rgba(33,150,243,.22)
+}
+.modal-title{flex:1}.modal-title p{color:var(--muted);font-size:.88rem;margin-top:4px}
+.close{
+  border:0;background:#fff;width:40px;height:40px;border-radius:50%;font-size:1.35rem;
+  cursor:pointer;color:#475467;box-shadow:0 3px 12px rgba(0,0,0,.08);transition:.2s
+}
+.close:hover{transform:rotate(8deg);background:#f2f4f7}
+.ad{
+  margin:18px 22px 0;padding:16px 18px;border-radius:18px;background:#172033;color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)
+}
+.ad-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#7ee7db;font-weight:800;margin-bottom:5px}
+.ad-title{font-size:1.08rem;font-weight:800}.ad-cues{font-size:.88rem;color:#cbd5e1;margin-top:5px}
+
+.questions{padding:18px 22px 22px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.question{
+  border:1px solid #e4e8f0;border-radius:20px;padding:16px;background:#fbfcff;
+  transition:.2s
+}
+.question.correct{border-color:#8fe0b4;background:#f1fff6}
+.question.incorrect{border-color:#ffb1b4;background:#fff7f7}
+.qtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.qnum{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#7c3aed}
+.cue{font-size:.9rem;font-weight:800;color:#172033}
+.status{font-size:1rem;min-width:20px;text-align:right}
+.answer{
+  min-height:47px;background:#fff;border:1px dashed #cbd3df;border-radius:13px;padding:9px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px
+}
+.answer.empty:before{content:"Click the words below to build the question";color:#98a2b3;font-size:.78rem}
+.word{
+  border:1px solid #d8deea;background:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;
+  font:inherit;font-size:.83rem;color:#243044;box-shadow:0 2px 5px rgba(0,0,0,.04);transition:.15s
+}
+.word:hover{transform:translateY(-1px);border-color:#8bbcf4}
+.word.selected{background:#eef7ff;border-color:#75b5ef;color:#0d5e9e}
+.selected-word{
+  background:linear-gradient(135deg,#08b6a6,#2196f3);color:#fff;border:0;border-radius:9px;
+  padding:7px 9px;font-size:.83rem;cursor:pointer
+}
+.word-bank{display:flex;flex-wrap:wrap;gap:6px}
+.q-actions{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap}
+.small-btn,.main-btn{
+  border:0;border-radius:10px;padding:8px 11px;cursor:pointer;font-weight:750;font:inherit;font-size:.78rem
+}
+.small-btn{background:#edf1f7;color:#344054}.small-btn:hover{background:#e2e7ef}
+.small-btn.answer-btn{background:#f0e9ff;color:#6d3bc0}
+.bottom{
+  padding:0 22px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap
+}
+.feedback{font-weight:750;font-size:.9rem;min-height:22px;color:#475467}
+.main-btn{background:linear-gradient(90deg,#08b6a6,#2196f3);color:#fff;padding:11px 18px;box-shadow:0 6px 15px rgba(33,150,243,.2)}
+.main-btn:hover{filter:brightness(1.04);transform:translateY(-1px)}
+.reset-all{background:#fff;color:#667085;border:1px solid #d8dee8;box-shadow:none}
+
+.footer{
+  text-align:center;margin-top:28px;color:#667085;font-size:.84rem;line-height:1.5
+}
+.footer strong{color:#344054}
+
+@media(max-width:1050px){.tasks{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:820px){.tasks{grid-template-columns:repeat(3,1fr)}.questions{grid-template-columns:1fr}}
+@media(max-width:600px){
+  body{padding:15px 11px 30px}
+  .brand a,.brand-secondary a{font-size:.9rem;padding:10px 20px}
+  .hero{padding:23px 17px;border-radius:23px}
+  .tasks{grid-template-columns:repeat(2,1fr);gap:11px}
+  .task-card{min-height:140px;padding:14px;border-radius:18px}
+  .task-title{font-size:.9rem}
+  .modal{border-radius:22px}.overlay{padding:8px}
+  .modal-head{padding:15px}.ad{margin:14px 15px 0}.questions{padding:14px 15px 18px}
+  .bottom{padding:0 15px 18px}
+}
+@media(max-width:390px){.tasks{grid-template-columns:1fr 1fr}.task-card{min-height:125px}.task-sub{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="brand">
+    <a href="https://max.ru/se13305924_biz" target="_blank" rel="noopener">✨ English with Olga ✨</a>
+  </div>
+  <div class="brand-secondary">
+    <a href="/" target="_blank">📚 Useful Materials for English Lessons</a>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">EGE English • Speaking Task 2</div>
+    <h1>Ask the Questions</h1>
+    <p>Choose an advertisement and put the words in the correct order to make four natural information-seeking questions.</p>
+    <div class="instructions">
+      <span class="instruction">① Choose a task</span>
+      <span class="instruction">② Read the cue</span>
+      <span class="instruction">③ Click the words</span>
+      <span class="instruction">④ Check</span>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <h2>Choose a task</h2>
+    <div class="progress" id="progress">0 / 20 completed</div>
+  </div>
+  <main class="tasks" id="tasks"></main>
+
+  <footer class="footer">
+    <strong>Медведева Ольга Александровна</strong><br>
+    ИНН: 501106530902
+  </footer>
+</div>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div class="modal-number" id="modalNumber">1</div>
+      <div class="modal-title" id="modalTitle">
+        <!-- Title will be injected here with formatted HTML -->
+      </div>
+      <button class="close" id="closeBtn" aria-label="Close">×</button>
+    </div>
+    <div class="ad">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-title" id="adTitle"></div>
+      <div class="ad-cues" id="adCues"></div>
+    </div>
+    <div class="questions" id="questions"></div>
+    <div class="bottom">
+      <div class="feedback" id="feedback"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="main-btn reset-all" id="resetTask">Reset task</button>
+        <button class="main-btn" id="checkAll">Check all</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const tasks = [
+ {title:"City History Museum", ad:"City History Museum", cues:["location","guided tours","opening days","student discount"],
+  answers:["Where is the museum located?","Are guided tours available?","What days is the museum open?","Is there a discount for students?"]},
+ {title:"Happy Paws Veterinary Clinic", ad:"Happy Paws Veterinary Clinic", cues:["emergency appointments","grooming services","working hours","cost of a consultation"],
+  answers:["Can I make an emergency appointment?","Do you provide grooming services?","What are your opening hours?","How much does a consultation cost?"]},
+ {title:"Taste of Italy Cooking School", ad:"Taste of Italy Cooking School", cues:["duration of a class","ingredients","previous experience","evening classes"],
+  answers:["How long does each class last?","Are ingredients provided?","Is any previous experience required?","Do you have evening classes?"]},
+ {title:"Modern Art Gallery", ad:"Modern Art Gallery", cues:["temporary exhibitions","admission fee","visitors under 18","café"],
+  answers:["How often do you change your temporary exhibitions?","What is the admission fee?","Is entry free for visitors under 18?","Does the gallery have a café?"]},
+ {title:"Language Plus", ad:"Language Plus", cues:["courses for teenagers","online classes","class size","course fee"],
+  answers:["Do you have courses for teenagers?","Are online classes available?","How many students are there in each class?","What is the course fee?"]},
+ {title:"Cycling Tour", ad:"Cycling Tour", cues:["tour duration","bike hire","level of difficulty","weekend tours"],
+  answers:["How long does the cycling tour last?","Can I hire a bike from you?","What is the level of difficulty?","Do you organise tours at weekends?"]},
+ {title:"Science Centre", ad:"Science Centre", cues:["workshops","booking","family tickets","science shows"],
+  answers:["Can visitors take part in workshops?","Do I need to book a visit in advance?","Are family tickets available?","How often are the science shows held?"]},
+ {title:"Green Park Hotel", ad:"Green Park Hotel", cues:["location","family rooms","breakfast","bicycle hire"],
+  answers:["Where is the hotel located?","Do you have rooms for families?","Is breakfast included in the price?","Can I hire a bicycle at the hotel?"]},
+ {title:"Active Life Sports Club", ad:"Active Life Sports Club", cues:["teenagers","swimming pool","family membership","tennis courts"],
+  answers:["Can teenagers join the club?","Does the club have a swimming pool?","Is there a family membership?","Are tennis courts available for members?"]},
+ {title:"Adventure Summer Camp", ad:"Adventure Summer Camp", cues:["age limit","accommodation","meals","available places"],
+  answers:["What is the minimum age for joining the camp?","Where do the children stay?","Are meals included?","Are there any places available?"]},
+ {title:"The Book Nook", ad:"The Book Nook", cues:["books in English","online orders","delivery","children's books"],
+  answers:["Do you sell books in English?","Can I order books online?","Is delivery free?","Do you have books for children?"]},
+ {title:"Photography for Everyone", ad:"Photography for Everyone", cues:["beginners","outdoor sessions","equipment","number of classes"],
+  answers:["Is there a course for beginners?","Do you have outdoor photography sessions?","Do I need any special equipment?","How many classes does the course include?"]},
+ {title:"The Royal Theatre", ad:"The Royal Theatre", cues:["performances for young people","ticket price","student discount","online booking"],
+  answers:["Are there any performances for young people?","How much does a ticket cost?","Do you offer student discounts?","Can I buy tickets online?"]},
+ {title:"Countryside Riding Centre", ad:"Countryside Riding Centre", cues:["children","individual lessons","helmets","instructors' experience"],
+  answers:["Do you offer horse-riding lessons for children?","Can I have individual lessons?","Are protective helmets provided?","How experienced are your instructors?"]},
+ {title:"Travel by Train", ad:"Travel by Train", cues:["European destinations","flexible tickets","travel insurance","help with planning a route"],
+  answers:["Which European cities can I travel to by train?","Are flexible tickets available?","Can I buy travel insurance from you?","Can your travel experts help me plan my route?"]},
+ {title:"Music House", ad:"Music House", cues:["instruments","beginners","group lessons","instruments for students"],
+  answers:["Which musical instruments can I learn to play?","Do you have lessons for beginners?","Are group lessons available?","Can students use the instruments during their classes?"]},
+ {title:"Discover Wild Britain National Park", ad:"Discover Wild Britain National Park", cues:["guided walks","wildlife tours","public transport","advance booking"],
+  answers:["Do you organise guided walks?","Can I join a wildlife tour?","How can I get to the park by public transport?","Do I need to book any activities in advance?"]},
+ {title:"Bright Smile Dental Clinic", ad:"Bright Smile Dental Clinic", cues:["children","routine check-ups","online booking","appointment availability"],
+  answers:["Do you treat children?","Are routine dental check-ups available?","Can I book an appointment online?","Do you have any appointments available this week?"]},
+ {title:"Green Future Environmental Volunteer Project", ad:"Green Future Environmental Volunteer Project", cues:["types of activities","previous experience","working in teams","age requirements"],
+  answers:["What kind of activities do volunteers take part in?","Is any previous experience required?","Do volunteers work in teams?","Is there an age limit for volunteers?"]},
+ {title:"Taste the City Food Tour", ad:"Taste the City Food Tour", cues:["duration","food and drinks","languages","meeting point"],
+  answers:["How long does the tour last?","Are food and drinks included in the price?","What languages are the tours available in?","Where does the tour start?"]}
+];
+
+const colours=["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18","c19","c20"];
+const state = {};
+let current = null;
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+function words(sentence){
+  return sentence.match(/[A-Za-zÀ-ÿ0-9'-]+|[.,!?]/g) || [];
+}
+function shuffle(a){
+  const x=[...a];
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}
+  return x;
+}
+function normalise(a){
+  return a.join(" ").replace(/\s+([.,!?])/g,"$1").toLowerCase().trim();
+}
+
+function cardMain(title){
+  const parts={
+    "City History Museum":["City History","Museum"],
+    "Happy Paws Veterinary Clinic":["Happy Paws","Veterinary Clinic"],
+    "Taste of Italy Cooking School":["Taste of Italy","Cooking School"],
+    "Modern Art Gallery":["Modern Art","Gallery"],
+    "Language Plus":["Language Plus","Language School"],
+    "Cycling Tour":["Cycling Tour",""],
+    "Science Centre":["Science Centre",""],
+    "Green Park Hotel":["Green Park","Hotel"],
+    "Active Life Sports Club":["Active Life","Sports Club"],
+    "Adventure Summer Camp":["Adventure Summer Camp",""],
+    "The Book Nook":["The Book Nook","Bookshop"],
+    "Photography for Everyone":["Photography for Everyone","Photography Course"],
+    "The Royal Theatre":["The Royal","Theatre"],
+    "Countryside Riding Centre":["Countryside","Riding Centre"],
+    "Travel by Train":["Travel by Train","Rail Travel"],
+    "Music House":["Music House","Music School"],
+    "Discover Wild Britain National Park":["Discover Wild Britain","National Park"],
+    "Bright Smile Dental Clinic":["Bright Smile","Dental Clinic"],
+    "Green Future Environmental Volunteer Project":["Green Future","Volunteer Project"],
+    "Taste the City Food Tour":["Taste the City","Food Tour"]
+  };
+  return parts[title]?.[0] || title;
+}
+function cardType(title){
+  const parts={
+    "City History Museum":["City History","Museum"],
+    "Happy Paws Veterinary Clinic":["Happy Paws","Veterinary Clinic"],
+    "Taste of Italy Cooking School":["Taste of Italy","Cooking School"],
+    "Modern Art Gallery":["Modern Art","Gallery"],
+    "Language Plus":["Language Plus","Language School"],
+    "Cycling Tour":["Cycling Tour",""],
+    "Science Centre":["Science Centre",""],
+    "Green Park Hotel":["Green Park","Hotel"],
+    "Active Life Sports Club":["Active Life","Sports Club"],
+    "Adventure Summer Camp":["Adventure Summer Camp",""],
+    "The Book Nook":["The Book Nook","Bookshop"],
+    "Photography for Everyone":["Photography for Everyone","Photography Course"],
+    "The Royal Theatre":["The Royal","Theatre"],
+    "Countryside Riding Centre":["Countryside","Riding Centre"],
+    "Travel by Train":["Travel by Train","Rail Travel"],
+    "Music House":["Music House","Music School"],
+    "Discover Wild Britain National Park":["Discover Wild Britain","National Park"],
+    "Bright Smile Dental Clinic":["Bright Smile","Dental Clinic"],
+    "Green Future Environmental Volunteer Project":["Green Future","Volunteer Project"],
+    "Taste the City Food Tour":["Taste the City","Food Tour"]
+  };
+  return parts[title]?.[1] || "";
+}
+
+function formatTitleHTML(title, isDark = false) {
+  const main = cardMain(title);
+  const type = cardType(title);
+  
+  if (isDark) {
+    let html = `<span style="font-weight:800; font-size:1.08rem; display:block; line-height:1.2;">${escapeHtml(main)}</span>`;
+    if (type) {
+      html += `<span style="font-weight:600; font-size:0.85rem; opacity:0.75; display:block; margin-top:3px;">${escapeHtml(type)}</span>`;
+    }
+    return html;
+  } else {
+    let html = `<span style="font-weight:850; font-size:1.35rem; line-height:1.15; display:block;">${escapeHtml(main)}</span>`;
+    if (type) {
+      html += `<span style="font-weight:650; font-size:0.9rem; color:var(--muted); display:block; margin-top:4px;">${escapeHtml(type)}</span>`;
+    }
+    return html;
+  }
+}
+
+function renderCards(){
+  const el=document.getElementById("tasks");
+  el.innerHTML=tasks.map((t,i)=>`
+    <button class="task-card ${colours[i]} ${isDone(i)?"done":""}" onclick="openTask(${i})">
+      <span class="num">${i+1}</span>
+      <span>
+        <span class="task-title">${escapeHtml(cardMain(t.title))}</span>
+        <span class="task-sub">${escapeHtml(cardType(t.title))}</span>
+      </span>
+    </button>`).join("");
+  updateProgress();
+}
+function isDone(i){return state[i]?.every(q=>q.checked)}
+function updateProgress(){
+  const n=tasks.filter((_,i)=>isDone(i)).length;
+  document.getElementById("progress").textContent=`${n} / 20 completed`;
+}
+
+function openTask(i){
+  current=i;
+  const t=tasks[i];
+  document.getElementById("modalNumber").textContent=i+1;
+  document.getElementById("modalTitle").innerHTML = formatTitleHTML(t.title, false);
+  document.getElementById("adTitle").innerHTML = formatTitleHTML(t.title, true);
+  document.getElementById("adCues").textContent="Cues: "+t.cues.join(" • ");
+  if(!state[i]) state[i]=t.answers.map(()=>({selected:[],checked:false,correct:false,shown:false}));
+  renderQuestions();
+  document.getElementById("feedback").textContent="";
+  document.getElementById("overlay").classList.add("open");
+  document.getElementById("overlay").setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function closeTask(){
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("overlay").setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+  renderCards();
+}
+function renderQuestions(){
+  const t=tasks[current], qs=document.getElementById("questions");
+  qs.innerHTML=t.answers.map((answer,qi)=>{
+    const s=state[current][qi];
+    const bank=shuffle(words(answer));
+    return `<section class="question ${s.checked?(s.correct?"correct":"incorrect"):""}" id="q${qi}">
+      <div class="qtop">
+        <div><div class="qnum">Question ${qi+1}</div><div class="cue">${escapeHtml(t.cues[qi])}</div></div>
+        <div class="status">${s.checked?(s.correct?"✓":"✗"):""}</div>
+      </div>
+      <div class="answer ${s.selected.length?"":"empty"}" id="answer${qi}">
+        ${s.selected.map((w,wi)=>`<button class="selected-word" onclick="removeWord(${qi},${wi})">${escapeHtml(w)}</button>`).join("")}
+      </div>
+      <div class="word-bank">
+        ${bank.map((w,wi)=>`<button class="word" onclick="addWord(${qi},${JSON.stringify(w).replace(/"/g,"&quot;")},this)">${escapeHtml(w)}</button>`).join("")}
+      </div>
+      <div class="q-actions">
+        <button class="small-btn" onclick="clearQuestion(${qi})">Clear</button>
+        <button class="small-btn" onclick="checkQuestion(${qi})">Check</button>
+        <button class="small-btn answer-btn" onclick="showAnswer(${qi})">Show answer</button>
+      </div>
+    </section>`;
+  }).join("");
+}
+function addWord(qi,w,btn){
+  const s=state[current][qi];
+  if(s.selected.length>=words(tasks[current].answers[qi]).length)return;
+  s.selected.push(w); s.checked=false;
+  btn.classList.add("selected"); btn.disabled=true;
+  renderOne(qi);
+}
+function renderOne(qi){
+  const t=tasks[current], s=state[current][qi], q=document.getElementById("q"+qi);
+  if(!q)return;
+  q.className="question";
+  q.innerHTML=`
+    <div class="qtop">
+      <div><div class="qnum">Question ${qi+1}</div><div class="cue">${escapeHtml(t.cues[qi])}</div></div>
+      <div class="status"></div>
+    </div>
+    <div class="answer ${s.selected.length?"":"empty"}">
+      ${s.selected.map((w,wi)=>`<button class="selected-word" onclick="removeWord(${qi},${wi})">${escapeHtml(w)}</button>`).join("")}
+    </div>
+    <div class="word-bank">
+      ${shuffle(words(t.answers[qi])).map((w)=>`<button class="word ${s.selected.includes(w)?"selected":""}" ${s.selected.includes(w)?"disabled":""} onclick="addWord(${qi},${JSON.stringify(w).replace(/"/g,"&quot;")},this)">${escapeHtml(w)}</button>`).join("")}
+    </div>
+    <div class="q-actions">
+      <button class="small-btn" onclick="clearQuestion(${qi})">Clear</button>
+      <button class="small-btn" onclick="checkQuestion(${qi})">Check</button>
+      <button class="small-btn answer-btn" onclick="showAnswer(${qi})">Show answer</button>
+    </div>`;
+}
+function removeWord(qi,wi){
+  state[current][qi].selected.splice(wi,1);
+  state[current][qi].checked=false;
+  renderOne(qi);
+}
+function clearQuestion(qi){
+  state[current][qi]={selected:[],checked:false,correct:false,shown:false};
+  renderOne(qi);
+}
+function checkQuestion(qi){
+  const s=state[current][qi], correct=tasks[current].answers[qi];
+  s.checked=true;s.correct=normalise(s.selected)===normalise(words(correct));
+  const q=document.getElementById("q"+qi);
+  q.classList.add(s.correct?"correct":"incorrect");
+  q.querySelector(".status").textContent=s.correct?"✓":"✗";
+  if(s.correct){q.querySelector(".answer").classList.remove("empty")}
+  setFeedback();
+  updateProgress();
+}
+function showAnswer(qi){
+  const answer=tasks[current].answers[qi];
+  state[current][qi]={selected:words(answer),checked:true,correct:true,shown:true};
+  renderOne(qi);
+  const q=document.getElementById("q"+qi);
+  q.classList.add("correct");
+  q.querySelector(".status").textContent="✓";
+  setFeedback();
+  updateProgress();
+}
+function checkAll(){
+  let correct=0;
+  state[current].forEach((s,qi)=>{
+    s.checked=true;s.correct=normalise(s.selected)===normalise(words(tasks[current].answers[qi]));
+    if(s.correct)correct++;
+  });
+  renderQuestions();
+  setFeedback();
+  updateProgress();
+}
+function setFeedback(){
+  const ss=state[current], correct=ss.filter(s=>s.checked&&s.correct).length;
+  const checked=ss.filter(s=>s.checked).length;
+  const f=document.getElementById("feedback");
+  if(checked===4 && correct===4) f.textContent="Excellent! All four questions are correct.";
+  else if(checked>0) f.textContent=`${correct} of ${checked} checked questions are correct.`;
+  else f.textContent="";
+}
+
+document.getElementById("closeBtn").onclick=closeTask;
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeTask()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&current!==null)closeTask()});
+document.getElementById("checkAll").onclick=checkAll;
+document.getElementById("resetTask").onclick=()=>{
+  state[current]=tasks[current].answers.map(()=>({selected:[],checked:false,correct:false,shown:false}));
+  renderQuestions();document.getElementById("feedback").textContent="";updateProgress();
+};
+
+renderCards();
+</script>
+</body>
+</html>
