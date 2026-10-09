@@ -35,7 +35,6 @@
       padding: 0 24px;
     }
 
-    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -74,7 +73,6 @@
       font-weight: 600;
     }
 
-    /* Hero */
     .hero {
       position: relative;
       isolation: isolate;
@@ -230,9 +228,9 @@
         padding: 120px 0 60px;
       }
 
-      /* На телефонах картинка чуть больше блока — иконки становятся мельче */
+      /* На телефонах: увеличиваем и ширину, и высоту → иконки мельче, блок заполнен полностью */
       .doodle-pattern {
-        background-size: 140% auto;
+        background-size: 200% 200%;
         background-position: center center;
       }
 
@@ -269,9 +267,9 @@
         padding: 16px 20px;
       }
 
-      /* На совсем маленьких экранах делаем иконки ещё мельче */
+      /* На совсем маленьких экранах иконки ещё мельче */
       .doodle-pattern {
-        background-size: 180% auto;
+        background-size: 250% 250%;
       }
     }
   </style>
@@ -298,7 +296,7 @@
     <div class="container">
       
       <div class="hero-top">
-        <a href="/EGE" class="badge-btn"> Обо мне</a>
+        <a href="/EGE" class="badge-btn">👉 Обо мне</a>
 
         <div class="hero-badge">
           Полезные материалы<br>
