@@ -84,7 +84,6 @@
       text-align: center;
     }
 
-    /* Твоя картинка-фон doodles.png — растягивается на весь блок без повторений */
     .doodle-pattern {
       position: absolute;
       inset: 0;
@@ -103,6 +102,28 @@
     .hero > .container {
       position: relative;
       z-index: 1;
+    }
+
+    /* Красивая стеклянная плашка для заголовка */
+    .hero-badge {
+      display: inline-block;
+      margin: 24px auto 30px;
+      padding: 28px 48px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 28px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      color: white;
+      font-family: 'Caveat', cursive;
+      font-size: 56px;
+      line-height: 1.2;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      pointer-events: none; /* некликабельная */
+      user-select: none;
     }
 
     .badge-btn, .cta {
@@ -131,19 +152,6 @@
     .badge-btn:hover, .cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 10px 24px rgba(168, 85, 247, 0.6);
-    }
-
-    h1 {
-      margin: 24px 0 18px;
-      font-size: 48px;
-      line-height: 1.15;
-    }
-
-    .vocabulary-upgrade {
-      color: white;
-      font-family: 'Caveat', cursive;
-      font-size: 64px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
     /* Галерея */
@@ -227,12 +235,11 @@
         padding: 120px 0 60px;
       }
 
-      h1 {
-        font-size: 22px;
-      }
-
-      .vocabulary-upgrade {
-        font-size: 32px !important;
+      .hero-badge {
+        padding: 20px 28px;
+        font-size: 32px;
+        border-radius: 20px;
+        margin: 20px auto 24px;
       }
 
       .photo-grid {
@@ -245,7 +252,6 @@
         padding: 14px 30px;
       }
 
-      /* На мобильных фокус картинки чуть выше, чтобы было видно самое интересное */
       .doodle-pattern {
         background-position: center 30%;
       }
@@ -255,6 +261,11 @@
       .photo-grid {
         grid-template-columns: 1fr;
         max-width: 400px;
+      }
+
+      .hero-badge {
+        font-size: 26px;
+        padding: 16px 20px;
       }
     }
   </style>
@@ -276,17 +287,17 @@
 
   <div class="hero">
 
-    <!-- Блок с твоей картинкой-фоном -->
     <div class="doodle-pattern"></div>
 
     <div class="container">
       <a href="/EGE" class="badge-btn">👉 Обо мне</a>
 
-      <h1>
-        <span class="vocabulary-upgrade">Полезные материалы<br>
-       для уроков<br>
-       английского языка</span>
-      </h1>
+      <!-- Красивая стеклянная плашка с заголовком -->
+      <div class="hero-badge">
+        Полезные материалы<br>
+        для подготовки к ЕГЭ<br>
+        по английскому языку
+      </div>
 
       <div class="photo-grid">
         <a href="grammartest.html"><img src="0.png" alt=""></a>
