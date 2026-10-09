@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     body {
       margin: 0;
@@ -85,15 +84,20 @@
       text-align: center;
     }
 
-    /* Decorative contour pattern */
+    /* Твоя картинка-паттерн doodles.png */
     .doodle-pattern {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      opacity: 0.65;
+      opacity: 0.75; /* Чуть ярче, чтобы нежные иконки были видны на тёмном фоне */
       pointer-events: none;
+      
+      background-image: url('doodles.png');
+      background-position: center center;
+      background-size: 450px; /* Размер одной "ячейки" паттерна — меняй, если нужно крупнее/мельче */
+      background-repeat: repeat; /* Паттерн повторяется по всему блоку */
     }
 
     .hero > .container {
@@ -240,6 +244,11 @@
       .badge-btn, .cta {
         padding: 14px 30px;
       }
+
+      /* На телефонах паттерн чуть мельче, чтобы иконки не выглядели огромными */
+      .doodle-pattern {
+        background-size: 300px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -267,235 +276,11 @@
 
   <div class="hero">
 
-    <!-- Фоновый узор из контурных рисунков -->
-    <svg class="doodle-pattern"
-         xmlns="http://www.w3.org/2000/svg"
-         aria-hidden="true">
-
-      <defs>
-        <pattern id="learning-doodles"
-                 width="620"
-                 height="560"
-                 patternUnits="userSpaceOnUse">
-
-          <g fill="none"
-             stroke="#d7fff8"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-
-            <!-- 1. Открытая книга -->
-            <g transform="translate(32 38) rotate(-13)">
-              <path d="M0 4 Q15 -2 29 7 Q43 -2 58 4 V36 Q42 28 29 39 Q15 28 0 36 Z"/>
-              <path d="M29 7 V39 M7 13 Q17 10 23 15 M36 15 Q44 10 52 13 M7 22 Q17 19 23 24 M36 24 Q44 19 52 22"/>
-            </g>
-
-            <!-- 2. Карандаш -->
-            <g transform="translate(178 22) rotate(37)">
-              <path d="M0 7 L7 0 L43 36 L36 43 Z"/>
-              <path d="M0 7 L-3 17 L7 14 M36 43 L46 46 L43 36 M7 0 L43 36"/>
-            </g>
-
-            <!-- 3. Облачко речи -->
-            <g transform="translate(348 48) rotate(8)">
-              <path d="M0 0 H43 Q48 0 48 5 V25 Q48 30 43 30 H21 L9 39 V30 H5 Q0 30 0 25 Z"/>
-              <path d="M10 10 H37 M10 18 H29"/>
-            </g>
-
-            <!-- 4. Звёздочки -->
-            <g transform="translate(520 32) rotate(-12)">
-              <path d="M0 -13 L4 -4 L13 0 L4 4 L0 13 L-4 4 L-13 0 L-4 -4 Z"/>
-              <path d="M28 10 V22 M22 16 H34"/>
-            </g>
-
-            <!-- 5. Ноутбук -->
-            <g transform="translate(78 145) rotate(7)">
-              <rect x="0" y="0" width="47" height="31" rx="3"/>
-              <path d="M-7 37 H54 L47 31 H0 Z"/>
-              <circle cx="23" cy="15" r="3"/>
-            </g>
-
-            <!-- 6. Наушники -->
-            <g transform="translate(260 130) rotate(-16)">
-              <path d="M0 25 V18 A20 20 0 0 1 40 18 V25"/>
-              <rect x="-4" y="21" width="10" height="17" rx="4"/>
-              <rect x="34" y="21" width="10" height="17" rx="4"/>
-            </g>
-
-            <!-- 7. Мозг -->
-            <g transform="translate(438 135) rotate(11)">
-              <path d="M18 2 C8 -3 2 5 5 12 C-3 18 2 27 8 28 C5 36 15 39 20 32 V7 C20 4 19 3 18 2 Z"/>
-              <path d="M22 2 C32 -3 38 5 35 12 C43 18 38 27 32 28 C35 36 25 39 20 32 V7 C20 4 21 3 22 2 Z"/>
-              <path d="M9 10 Q17 9 15 17 M8 24 Q14 21 19 25 M30 10 Q23 9 25 17 M32 24 Q26 21 21 25"/>
-            </g>
-
-            <!-- 8. Тетрадь -->
-            <g transform="translate(550 185) rotate(17)">
-              <rect x="0" y="0" width="34" height="44" rx="3"/>
-              <path d="M8 10 H27 M8 18 H27 M8 26 H24 M8 34 H27"/>
-              <path d="M-4 7 H1 M-4 15 H1 M-4 23 H1 M-4 31 H1 M-4 39 H1"/>
-            </g>
-
-            <!-- 9. Лампочка -->
-            <g transform="translate(25 260) rotate(-9)">
-              <path d="M0 15 A17 17 0 1 1 34 15 Q34 24 26 29 L24 36 H10 L8 29 Q0 24 0 15 Z"/>
-              <path d="M11 36 H23 M12 41 H22 M14 45 H20 M17 -7 V-13 M-4 0 L-9 -5 M38 0 L43 -5"/>
-            </g>
-
-            <!-- 10. Планшет со стилусом -->
-            <g transform="translate(172 248) rotate(13)">
-              <rect x="0" y="0" width="34" height="45" rx="4"/>
-              <circle cx="17" cy="39" r="1.5"/>
-              <path d="M44 1 L29 28 M41 4 L46 -1"/>
-            </g>
-
-            <!-- 11. Вопросительный знак -->
-            <g transform="translate(355 250) rotate(-8)">
-              <path d="M0 8 C0 -5 22 -5 22 8 C22 16 11 17 11 25"/>
-              <circle cx="11" cy="34" r="1.5"/>
-            </g>
-
-            <!-- 12. Галактика -->
-            <g transform="translate(500 275) rotate(-22)">
-              <path d="M-25 0 C-28 -17 -5 -25 12 -17 C31 -8 28 13 10 20 C-8 27 -27 12 -18 0 C-11 -10 6 -8 9 2 C12 10 1 14 -5 8"/>
-              <circle cx="0" cy="0" r="2"/>
-              <path d="M-30 -20 L-34 -24 M30 -22 L34 -27 M32 20 L37 24"/>
-            </g>
-
-            <!-- 13. Лист бумаги -->
-            <g transform="translate(90 355) rotate(-12)">
-              <path d="M0 0 H26 L37 11 V44 H0 Z M26 0 V11 H37"/>
-              <path d="M7 19 H29 M7 25 H29 M7 31 H24 M7 37 H28"/>
-            </g>
-
-            <!-- 14. Буквы ABC -->
-            <g transform="translate(255 360) rotate(9)">
-              <text x="0" y="25" stroke="none" fill="#d7fff8" font-size="23" font-family="Arial, sans-serif">ABC</text>
-            </g>
-
-            <!-- 15. Планета с кольцами -->
-            <g transform="translate(435 365) rotate(-18)">
-              <circle cx="0" cy="0" r="16"/>
-              <ellipse cx="0" cy="0" rx="29" ry="8"/>
-              <path d="M-13 -7 Q0 -13 13 -7 M-15 3 Q0 10 15 3"/>
-            </g>
-
-            <!-- 16. Ластик -->
-            <g transform="translate(555 420) rotate(-25)">
-              <rect x="0" y="0" width="34" height="19" rx="4"/>
-              <path d="M17 1 V18"/>
-            </g>
-
-            <!-- 17. Сертификат -->
-            <g transform="translate(25 450) rotate(6)">
-              <rect x="0" y="0" width="43" height="31" rx="2"/>
-              <path d="M7 8 H36 M7 14 H29"/>
-              <circle cx="31" cy="24" r="5"/>
-              <path d="M28 28 L26 36 L31 33 L35 36 L34 28"/>
-            </g>
-
-            <!-- 18. Книга -->
-            <g transform="translate(155 440) rotate(14)">
-              <path d="M0 0 H35 Q40 0 40 5 V34 Q20 27 0 34 Z"/>
-              <path d="M0 0 V34 M8 8 H31 M8 15 H31 M8 22 H25"/>
-            </g>
-
-            <!-- 19. Микрофон -->
-            <g transform="translate(300 440) rotate(-10)">
-              <rect x="8" y="0" width="18" height="29" rx="9"/>
-              <path d="M3 19 V22 A14 14 0 0 0 31 22 V19 M17 36 V43 M9 43 H25"/>
-            </g>
-
-            <!-- 20. Кубок -->
-            <g transform="translate(455 445) rotate(8)">
-              <path d="M-12 -15 H12 V-4 Q12 8 0 8 Q-12 8 -12 -4 Z"/>
-              <path d="M-12 -10 H-20 V-3 Q-20 6 -8 5 M12 -10 H20 V-3 Q20 6 8 5 M0 8 V18 M-9 22 H9 M-5 18 H5"/>
-            </g>
-
-            <!-- 21. Закрытая книга -->
-            <g transform="translate(520 115) rotate(20)">
-              <path d="M0 7 Q20 0 40 7 V35 Q20 28 0 35 Z"/>
-              <path d="M5 12 Q20 7 35 12 M5 18 Q20 13 35 18 M0 7 L-4 2 Q17 -5 44 3 L40 7"/>
-            </g>
-
-            <!-- 22. Ручка -->
-            <g transform="translate(215 180) rotate(-32)">
-              <path d="M4 0 L12 0 L12 39 L8 47 L4 39 Z"/>
-              <path d="M4 8 H12 M4 35 H12 M6 4 H10"/>
-            </g>
-
-            <!-- 23. Пазл -->
-            <g transform="translate(385 190) rotate(12)">
-              <path d="M0 8 H10 A7 7 0 1 1 24 8 H34 V22 A7 7 0 1 0 34 36 H0 V25 A7 7 0 1 0 0 11 Z"/>
-            </g>
-
-            <!-- 24. Календарь -->
-            <g transform="translate(115 205) rotate(-7)">
-              <rect x="0" y="4" width="39" height="38" rx="3"/>
-              <path d="M0 15 H39 M10 0 V8 M29 0 V8 M9 22 H12 M19 22 H22 M29 22 H32 M9 31 H12 M19 31 H22"/>
-            </g>
-
-            <!-- 25. Часы -->
-            <g transform="translate(45 390) rotate(12)">
-              <circle cx="0" cy="0" r="20"/>
-              <path d="M0 -12 V0 L10 7 M0 -16 V-14 M16 0 H14 M0 16 V14 M-16 0 H-14"/>
-            </g>
-
-            <!-- 26. Медаль -->
-            <g transform="translate(380 465) rotate(-8)">
-              <path d="M-12 -17 L-6 0 L0 -5 L6 0 L12 -17"/>
-              <circle cx="0" cy="10" r="14"/>
-              <path d="M0 1 L3 7 L10 8 L5 13 L6 19 L0 16 L-6 19 L-5 13 L-10 8 L-3 7 Z"/>
-            </g>
-
-            <!-- 27. Облачко мысли -->
-            <g transform="translate(475 75) rotate(10)">
-              <path d="M4 25 C-5 25 -6 14 2 11 C0 2 12 -3 18 4 C26 -3 37 3 36 12 C46 17 40 27 32 27 H12"/>
-              <circle cx="8" cy="37" r="2.5"/>
-              <circle cx="1" cy="44" r="1.5"/>
-            </g>
-
-            <!-- 28. Звезда -->
-            <g transform="translate(220 75) rotate(-15)">
-              <path d="M0 -17 L5 -5 L18 -5 L8 3 L12 16 L0 8 L-12 16 L-8 3 L-18 -5 L-5 -5 Z"/>
-            </g>
-
-            <!-- 29. Галочка и список -->
-            <g transform="translate(335 335) rotate(8)">
-              <rect x="0" y="0" width="37" height="43" rx="3"/>
-              <path d="M6 10 L10 14 L16 6 M20 11 H30 M6 23 L10 27 L16 19 M20 24 H30 M6 36 L10 40 L16 32 M20 37 H30"/>
-            </g>
-
-            <!-- 30. Смартфон -->
-            <g transform="translate(570 300) rotate(13)">
-              <rect x="0" y="0" width="23" height="42" rx="4"/>
-              <path d="M8 5 H15 M9 36 H14"/>
-            </g>
-
-            <!-- Небольшие декоративные детали -->
-            <g stroke-width="1.7">
-              <path d="M130 80 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z"/>
-              <path d="M300 95 l0 10 M295 100 h10"/>
-              <circle cx="290" cy="175" r="2"/>
-              <circle cx="390" cy="295" r="2.5"/>
-              <path d="M455 315 q5 -7 10 0 t10 0 t10 0"/>
-              <path d="M185 385 l0 12 M179 391 h12"/>
-              <circle cx="350" cy="420" r="2"/>
-              <path d="M500 350 l0 8 M496 354 h8"/>
-              <path d="M70 220 l0 8 M66 224 h8"/>
-              <circle cx="235" cy="300" r="2"/>
-              <path d="M400 65 l0 10 M395 70 h10"/>
-            </g>
-
-          </g>
-        </pattern>
-      </defs>
-
-      <rect width="100%" height="100%" fill="url(#learning-doodles)"/>
-    </svg>
+    <!-- Блок с твоей картинкой-паттерном -->
+    <div class="doodle-pattern"></div>
 
     <div class="container">
-      <a href="/EGE" class="badge-btn">👉 Обо мне</a>
+      <a href="/EGE" class="badge-btn"> Обо мне</a>
 
       <h1>
         <span class="vocabulary-upgrade">Полезные материалы<br>
