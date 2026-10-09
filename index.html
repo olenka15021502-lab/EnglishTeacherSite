@@ -182,7 +182,7 @@
       padding: 40px 20px;
       border-radius: 30px;
       text-decoration: none;
-      color: #1f2937; /* Единый темный цвет текста для всех плашек */
+      color: #1f2937; /* Тёмный текст по умолчанию */
       font-family: 'Caveat', cursive;
       font-size: 40px;
       font-weight: 700;
@@ -198,17 +198,18 @@
       box-shadow: 0 15px 35px rgba(0,0,0,0.25);
     }
 
-    /* Цвета плашек */
+    /* НОВЫЕ ГРАДИЕНТЫ ДЛЯ ПЛАШЕК */
     .card-yellow {
-      background: #FDE047; /* Яркий лимонный */
+      background: linear-gradient(135deg, #FDE047, #F59E0B); /* Лимонный к золотому */
     }
 
     .card-lime {
-      background: #A3E635; /* Сочный салатовый */
+      background: linear-gradient(135deg, #84CC16, #06B6D4); /* Салатовый к бирюзовому */
     }
 
     .card-orange {
-      background: #FF7A00; /* Ярко-оранжевый */
+      background: linear-gradient(135deg, #EC4899, #A855F7); /* Яркий розово-фиолетовый (самый заметный) */
+      color: #ffffff; /* Белый текст для контраста на тёмном градиенте */
     }
 
     /* Footer */
@@ -344,16 +345,16 @@
         </div>
       </div>
 
-      <!-- Три яркие кликабельные плашки -->
+      <!-- Три яркие кликабельные плашки с градиентами и правильными ссылками -->
       <div class="cards-grid">
-        <a href="#" class="card card-yellow">
+        <a href="interactive/" class="card card-yellow">
           Бесплатные<br>интерактивные материалы
         </a>
-        <a href="#" class="card card-lime">
+        <a href="pdf/" class="card card-lime">
           Материалы<br>в формате PDF
         </a>
-        <a href="#" class="card card-orange">
-          Интерактивные тренажёры<br>для подготовки<br> к ОГЭ и ЕГЭ
+        <a href="trainers/" class="card card-orange">
+          Интерактивные тренажёры<br>для подготовки<br>к ОГЭ и ЕГЭ
         </a>
       </div>
 
