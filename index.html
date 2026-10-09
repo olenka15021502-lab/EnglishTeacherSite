@@ -182,34 +182,34 @@
       padding: 40px 20px;
       border-radius: 30px;
       text-decoration: none;
-      color: #1f2937; /* Тёмный текст по умолчанию */
+      color: #ffffff; /* ВЕЗДЕ БЕЛЫЙ ЦВЕТ ТЕКСТА */
       font-family: 'Caveat', cursive;
       font-size: 40px;
       font-weight: 700;
       line-height: 1.15;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       min-height: 220px;
       border: 4px solid #ffffff; /* Белая обводка */
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3); /* Усиленная тень для читаемости белого текста на любом фоне */
     }
 
     .card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     }
 
-    /* НОВЫЕ ГРАДИЕНТЫ ДЛЯ ПЛАШЕК */
+    /* НОВЫЕ КОНТРАСТНЫЕ ГРАДИЕНТЫ */
     .card-yellow {
-      background: linear-gradient(135deg, #FDE047, #F59E0B); /* Лимонный к золотому */
+      background: linear-gradient(135deg, #059669, #06B6D4); /* Изумрудный -> Бирюзовый */
     }
 
     .card-lime {
-      background: linear-gradient(135deg, #84CC16, #06B6D4); /* Салатовый к бирюзовому */
+      background: linear-gradient(135deg, #FBBF24, #F59E0B); /* Жёлтый -> Золотисто-оранжевый */
     }
 
     .card-orange {
-      background: linear-gradient(135deg, #EC4899, #A855F7); /* Яркий розово-фиолетовый (самый заметный) */
-      color: #ffffff; /* Белый текст для контраста на тёмном градиенте */
+      background: linear-gradient(135deg, #EF4444, #BE123C); /* Алый -> Малиновый (максимально отличается от розовой кнопки) */
     }
 
     /* Footer */
@@ -341,11 +341,11 @@
           Полезные материалы для подготовки<br>
           к ОГЭ и ЕГЭ<br>
           по английскому языку
-          <span class="badge-arrow">👇</span>
+          <span class="badge-arrow"></span>
         </div>
       </div>
 
-      <!-- Три яркие кликабельные плашки с градиентами и правильными ссылками -->
+      <!-- Три яркие кликабельные плашки с новыми градиентами -->
       <div class="cards-grid">
         <a href="interactive/" class="card card-yellow">
           Бесплатные<br>интерактивные материалы
