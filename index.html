@@ -84,20 +84,20 @@
       text-align: center;
     }
 
-    /* Твоя картинка-паттерн doodles.png */
+    /* Твоя картинка-фон doodles.png — растягивается на весь блок без повторений */
     .doodle-pattern {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      opacity: 0.75; /* Чуть ярче, чтобы нежные иконки были видны на тёмном фоне */
+      opacity: 0.7;
       pointer-events: none;
       
       background-image: url('doodles.png');
       background-position: center center;
-      background-size: 450px; /* Размер одной "ячейки" паттерна — меняй, если нужно крупнее/мельче */
-      background-repeat: repeat; /* Паттерн повторяется по всему блоку */
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
     .hero > .container {
@@ -245,9 +245,9 @@
         padding: 14px 30px;
       }
 
-      /* На телефонах паттерн чуть мельче, чтобы иконки не выглядели огромными */
+      /* На мобильных фокус картинки чуть выше, чтобы было видно самое интересное */
       .doodle-pattern {
-        background-size: 300px;
+        background-position: center 30%;
       }
     }
 
@@ -276,11 +276,11 @@
 
   <div class="hero">
 
-    <!-- Блок с твоей картинкой-паттерном -->
+    <!-- Блок с твоей картинкой-фоном -->
     <div class="doodle-pattern"></div>
 
     <div class="container">
-      <a href="/EGE" class="badge-btn"> Обо мне</a>
+      <a href="/EGE" class="badge-btn">👉 Обо мне</a>
 
       <h1>
         <span class="vocabulary-upgrade">Полезные материалы<br>
