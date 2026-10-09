@@ -90,7 +90,6 @@
       z-index: 0;
       opacity: 0.7;
       pointer-events: none;
-      
       background-image: url('doodles.png');
       background-position: center center;
       background-size: cover;
@@ -118,9 +117,7 @@
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.35);
       border-radius: 28px;
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
       color: white;
       font-family: 'Caveat', cursive;
       font-size: 56px;
@@ -218,17 +215,10 @@
       user-select: none;
     }
 
-    /* Мобильная версия */
     @media (max-width: 768px) {
-      header {
-        padding: 10px 0;
-      }
+      header { padding: 10px 0; }
+      .hero { padding: 120px 0 60px; }
 
-      .hero {
-        padding: 120px 0 60px;
-      }
-
-      /* На телефонах: паттерн повторяется, иконки нормального размера */
       .doodle-pattern {
         background-size: 350px;
         background-position: center center;
@@ -268,7 +258,6 @@
         padding: 16px 20px;
       }
 
-      /* На совсем маленьких экранах паттерн чуть мельче */
       .doodle-pattern {
         background-size: 280px;
       }
@@ -291,331 +280,9 @@
   </header>
 
   <div class="hero">
-
     <div class="doodle-pattern"></div>
 
     <div class="container">
-      
-      <div class="hero-top">
-        <a href="/EGE" class="badge-btn">👉 Обо мне</a>
-
-        <div class="hero-badge">
-          Полезные материалы<br>
-          для подготовки к ЕГЭ<br>
-          по английскому языку
-        </div>
-      </div>
-
-      <div class="photo-grid">
-        <a href="grammartest.html"><img src="0.png" alt=""></a>
-        <a href="EGE/interview/"><img src="1.png" alt=""></a>
-        <a href="shop/feelings/"><img src="2.png" alt=""></a>
-        <a href="shop/Russia_geography/"><img src="3.png" alt=""></a>
-        <a href="shop/scientists/"><img src="4.png" alt=""></a>
-        <a href="#"><img src="5.png" alt=""></a>
-        <a href="#"><img src="6.png" alt=""></a>
-        <a href="#"><img src="7.png" alt=""></a>
-        <a href="#"><img src="8.png" alt=""></a>
-        <a href="#"><img src="9.png" alt=""></a>
-      </div>
-
-      <a class="cta" href="/EGE">👉 Записаться на урок</a>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <strong>Медведева Ольга Александровна</strong><br>
-    ИНН: 501106530902
-
-    <div class="footer-links">
-      <a href="/oferta.html">Публичная оферта</a>
-      <span class="footer-divider">|</span>
-      <a href="/privacy.html">Политика конфиденциальности</a>
-    </div>
-  </footer>
-
-</body>
-</html>, rgba(134,239,230,0.35), transparent 40%),
-        radial-gradient(circle at 80% 10%, rgba(20,184,166,0.25), transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(188,244,239,0.25), transparent 50%),
-        linear-gradient(180deg, #f0fdfa, #e0f7f5);
-      color: #0f3a3a;
-    }
-
-    html, body {
-      overflow-x: hidden;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(13, 115, 119, 0.9);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      z-index: 1000;
-      padding: 12px 0;
-    }
-
-    .header-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      text-align: center;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: white;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 18px;
-    }
-
-    .social-icons a {
-      color: white;
-      font-size: 1.1rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .hero {
-      position: relative;
-      isolation: isolate;
-      padding: 140px 0 80px;
-      background: linear-gradient(135deg, #0f766e, #14b8a6);
-      color: white;
-      text-align: center;
-    }
-
-    .doodle-pattern {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      opacity: 0.7;
-      pointer-events: none;
-      
-      background-image: url('doodles.png');
-      background-position: center center;
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    .hero > .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-top {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 28px 48px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      border-radius: 28px;
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      color: white;
-      font-family: 'Caveat', cursive;
-      font-size: 56px;
-      line-height: 1.2;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .badge-btn, .cta {
-      display: inline-block;
-      padding: 16px 34px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #ec4899, #a855f7);
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      border: 2px solid white;
-      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6), 0 8px 20px rgba(168, 85, 247, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-      font-size: 16px;
-    }
-
-    .badge-btn:hover, .cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 10px 24px rgba(168, 85, 247, 0.6);
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      margin: 0 auto 50px;
-      max-width: 950px;
-    }
-
-    .photo-grid a {
-      display: block;
-      text-decoration: none;
-    }
-
-    .photo-grid img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 20px;
-      border: 6px solid #ffffff;
-      box-shadow: 0 10px 30px rgba(15, 74, 74, 0.3);
-      background-color: #ffffff;
-      transition: all 0.3s ease;
-    }
-
-    .photo-grid a:hover img {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 15px 40px rgba(15, 74, 74, 0.45);
-    }
-
-    .footer {
-      padding: 20px 0 25px;
-      text-align: center;
-      font-size: 15px;
-      color: #0f766e;
-      background: white;
-      border-top: 1px solid rgba(15, 118, 110, 0.1);
-    }
-
-    .footer strong {
-      font-weight: 700;
-    }
-
-    .footer-links {
-      margin-top: 12px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: #0f766e;
-      text-decoration: underline;
-      text-decoration-color: rgba(15, 118, 110, 0.4);
-      text-underline-offset: 3px;
-      transition: all 0.2s ease;
-    }
-
-    .footer-links a:hover {
-      color: #14b8a6;
-      text-decoration-color: #14b8a6;
-    }
-
-    .footer-divider {
-      color: #0f766e;
-      opacity: 0.5;
-      user-select: none;
-    }
-
-    /* Мобильная версия */
-    @media (max-width: 768px) {
-      header {
-        padding: 10px 0;
-      }
-
-      .hero {
-        padding: 120px 0 60px;
-      }
-
-      /* На телефонах: увеличиваем и ширину, и высоту → иконки мельче, блок заполнен полностью */
-      .doodle-pattern {
-        background-size: 200% 200%;
-        background-position: center center;
-      }
-
-      .hero-badge {
-        padding: 20px 28px;
-        font-size: 32px;
-        border-radius: 20px;
-      }
-
-      .hero-top {
-        gap: 18px;
-        margin-bottom: 30px;
-      }
-
-      .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin: 0 auto 30px;
-      }
-
-      .badge-btn, .cta {
-        padding: 14px 30px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .photo-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-      }
-
-      .hero-badge {
-        font-size: 26px;
-        padding: 16px 20px;
-      }
-
-      /* На совсем маленьких экранах иконки ещё мельче */
-      .doodle-pattern {
-        background-size: 250% 250%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">✨&nbsp;English with Olga&nbsp;✨</div>
-        <div class="social-icons">
-          <a href="https://vk.ru/english_olga_medvedeva" target="_blank">ВК</a>
-          <a href="https://max.ru/se13305924_biz" target="_blank">Макс</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <div class="hero">
-
-    <div class="doodle-pattern"></div>
-
-    <div class="container">
-      
       <div class="hero-top">
         <a href="/EGE" class="badge-btn">👉 Обо мне</a>
 
