@@ -104,7 +104,6 @@
       z-index: 1;
     }
 
-    /* Flex-колонка для кнопок и плашки — всё друг под другом по центру */
     .hero-top {
       display: flex;
       flex-direction: column;
@@ -113,7 +112,6 @@
       margin-bottom: 40px;
     }
 
-    /* Красивая стеклянная плашка для заголовка */
     .hero-badge {
       display: inline-block;
       padding: 28px 48px;
@@ -153,7 +151,6 @@
       box-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 10px 24px rgba(168, 85, 247, 0.6);
     }
 
-    /* Галерея */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -183,7 +180,6 @@
       box-shadow: 0 15px 40px rgba(15, 74, 74, 0.45);
     }
 
-    /* ФУТЕР */
     .footer {
       padding: 20px 0 25px;
       text-align: center;
@@ -234,6 +230,12 @@
         padding: 120px 0 60px;
       }
 
+      /* На телефонах картинка чуть больше блока — иконки становятся мельче */
+      .doodle-pattern {
+        background-size: 140% auto;
+        background-position: center center;
+      }
+
       .hero-badge {
         padding: 20px 28px;
         font-size: 32px;
@@ -254,10 +256,6 @@
       .badge-btn, .cta {
         padding: 14px 30px;
       }
-
-      .doodle-pattern {
-        background-position: center 30%;
-      }
     }
 
     @media (max-width: 480px) {
@@ -269,6 +267,11 @@
       .hero-badge {
         font-size: 26px;
         padding: 16px 20px;
+      }
+
+      /* На совсем маленьких экранах делаем иконки ещё мельче */
+      .doodle-pattern {
+        background-size: 180% auto;
       }
     }
   </style>
@@ -294,9 +297,8 @@
 
     <div class="container">
       
-      <!-- Обёртка: всё друг под другом по центру -->
       <div class="hero-top">
-        <a href="/EGE" class="badge-btn">👉 Обо мне</a>
+        <a href="/EGE" class="badge-btn"> Обо мне</a>
 
         <div class="hero-badge">
           Полезные материалы<br>
