@@ -104,10 +104,18 @@
       z-index: 1;
     }
 
+    /* Flex-колонка для кнопок и плашки — всё друг под другом по центру */
+    .hero-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
     /* Красивая стеклянная плашка для заголовка */
     .hero-badge {
       display: inline-block;
-      margin: 24px auto 30px;
       padding: 28px 48px;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(14px);
@@ -122,7 +130,7 @@
       font-size: 56px;
       line-height: 1.2;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      pointer-events: none; /* некликабельная */
+      pointer-events: none;
       user-select: none;
     }
 
@@ -140,15 +148,6 @@
       font-size: 16px;
     }
 
-    .badge-btn {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .cta {
-      margin-top: 20px;
-    }
-
     .badge-btn:hover, .cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 10px 24px rgba(168, 85, 247, 0.6);
@@ -159,7 +158,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 25px;
-      margin: 50px auto;
+      margin: 0 auto 50px;
       max-width: 950px;
     }
 
@@ -239,13 +238,17 @@
         padding: 20px 28px;
         font-size: 32px;
         border-radius: 20px;
-        margin: 20px auto 24px;
+      }
+
+      .hero-top {
+        gap: 18px;
+        margin-bottom: 30px;
       }
 
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
-        margin: 30px auto;
+        margin: 0 auto 30px;
       }
 
       .badge-btn, .cta {
@@ -290,13 +293,16 @@
     <div class="doodle-pattern"></div>
 
     <div class="container">
-      <a href="/EGE" class="badge-btn">👉 Обо мне</a>
+      
+      <!-- Обёртка: всё друг под другом по центру -->
+      <div class="hero-top">
+        <a href="/EGE" class="badge-btn">👉 Обо мне</a>
 
-      <!-- Красивая стеклянная плашка с заголовком -->
-      <div class="hero-badge">
-        Полезные материалы<br>
-        для подготовки к ЕГЭ<br>
-        по английскому языку
+        <div class="hero-badge">
+          Полезные материалы<br>
+          для подготовки к ЕГЭ<br>
+          по английскому языку
+        </div>
       </div>
 
       <div class="photo-grid">
