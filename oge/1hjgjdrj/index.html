@@ -247,7 +247,7 @@ function finish(){
      addMark(input,ok);
      if(!ok){
        const hint=document.createElement('span');hint.className='correct-hint';
-       hint.textContent=correct;input.parentElement.appendChild(hint);
+       hint.textContent=correct;const seed=input.parentElement.querySelector('.seed-attached');if(seed)input.parentElement.insertBefore(hint,seed);else input.parentElement.appendChild(hint);
      }
    }
  }
