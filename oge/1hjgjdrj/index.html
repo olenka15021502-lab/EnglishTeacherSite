@@ -239,7 +239,8 @@ function finish(){
        if(norm(input.value)===norm(correct)){
          label.classList.add('answer-correct');
          const unanswered=['1','2','3','4','13','14','15','16','17','18','19'].includes(k) && !actual;
-         const mark=document.createElement('span');mark.className='check-mark '+(unanswered?'no':'ok');mark.textContent=unanswered?'✕':'✓';mark.setAttribute('aria-label',unanswered?'Ответ не выбран':'Правильный ответ');label.appendChild(mark);
+         const showMark = unanswered || ok || !['1','2','3','4','13','14','15','16','17','18','19'].includes(k);
+         if(showMark){const mark=document.createElement('span');mark.className='check-mark '+(unanswered?'no':'ok');mark.textContent=unanswered?'✕':'✓';mark.setAttribute('aria-label',unanswered?'Ответ не выбран':'Правильный ответ');label.appendChild(mark);}
        }else if(input.checked){
          label.classList.add('answer-wrong');
          const mark=document.createElement('span');mark.className='check-mark no';mark.textContent='✕';mark.setAttribute('aria-label','Неверный ответ');label.appendChild(mark);
