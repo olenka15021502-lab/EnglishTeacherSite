@@ -211,11 +211,11 @@ body {
 const KEY={1:'1',2:'3',3:'1',4:'3', '5A':'6','5B':'3','5C':'2','5D':'1','5E':'4',6:'THIRTEEN',7:'CYCLING',8:'HAMBURGERS',9:'FRANCE',10:'COACH',11:'GOLDFISH','12A':'7','12B':'3','12C':'6','12D':'1','12E':'2','12F':'5',13:'1',14:'1',15:'3',16:'2',17:'3',18:'2',19:'1',20:'MONTHS',21:'WOULDLIVE',22:'MORECONVENIENT',23:'FIRST',24:'WEREPASSING',25:'DIDNOTMANAGE',26:'THEM',27:'ARE',28:'WEREBUILT',29:'FASHIONABLE',30:'ORIGINAL',31:'WONDERFUL',32:'AMAZING',33:'PERFORMANCE',34:'CAREFUL'};
 const norm=v=>String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
 const fields=[...document.querySelectorAll('[data-q]')];
-function read(){let d={};for(const el of fields){if(el.type==='radio'){if(el.checked)d[el.name.slice(1)]=el.value}else d[el.dataset.q]=el.value}d.writing=document.getElementById('writing').value;return d}
-function restore(){try{const d=JSON.parse(localStorage.getItem('olga_oge_01')||'{}');for(const el of fields){let k=el.type==='radio'?el.name.slice(1):el.dataset.q;if(el.type==='radio')el.checked=d[k]===el.value;else el.value=d[k]||''}document.getElementById('writing').value=d.writing||''}catch(e){}words()}
+function read(){let d={};for(const el of fields)d[el.dataset.q]=el.value;document.querySelectorAll('input[type="radio"]:checked').forEach(el=>{d[el.name.slice(1)]=el.value});d.writing=document.getElementById('writing').value;return d}
+function restore(){try{const d=JSON.parse(localStorage.getItem('olga_oge_01')||'{}');for(const el of fields)el.value=d[el.dataset.q]||'';document.querySelectorAll('input[type="radio"]').forEach(el=>{el.checked=d[el.name.slice(1)]===el.value});document.getElementById('writing').value=d.writing||''}catch(e){}words()}
 function save(){if(document.body.classList.contains('checking-complete')){clearChecking();document.getElementById('results').classList.remove('show')}try{localStorage.setItem('olga_oge_01',JSON.stringify(read()))}catch(e){}}
 function words(){const t=document.getElementById('writing').value.trim();const n=t?t.split(/\s+/u).filter(Boolean).length:0;document.getElementById('wordcount').textContent=n+' '+(n===1?'word':'words');}
-fields.forEach(el=>{el.addEventListener('input',()=>{if(el.matches('.answer')){const hasCyr=/[А-Яа-яЁё]/.test(el.value);el.value=norm(el.value);let hint=el.parentElement.querySelector('.keyboard-hint');if(hasCyr){if(!hint){hint=document.createElement('span');hint.className='keyboard-hint';el.insertAdjacentElement('afterend',hint)}hint.textContent='Переключите клавиатуру на английский язык.'}else if(hint)hint.remove()}save()});el.addEventListener('change',save)});document.getElementById('writing').addEventListener('input',()=>{words();save()});restore();
+fields.forEach(el=>{el.addEventListener('input',()=>{if(el.matches('.answer')){const hasCyr=/[А-Яа-яЁё]/.test(el.value);el.value=norm(el.value);let hint=el.parentElement.querySelector('.keyboard-hint');if(hasCyr){if(!hint){hint=document.createElement('span');hint.className='keyboard-hint';el.insertAdjacentElement('afterend',hint)}hint.textContent='Переключите клавиатуру на английский язык.'}else if(hint)hint.remove()}save()});el.addEventListener('change',save)});document.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener('change',save));document.getElementById('writing').addEventListener('input',()=>{words();save()});restore();
 function download(filename,blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
 function clearChecking(){
  document.querySelectorAll('.answer-correct,.answer-wrong,.check-mark,.correct-hint').forEach(el=>{
@@ -249,7 +249,7 @@ function finish(){
        }
      });
      if(['1','2','3','4','13','14','15','16','17','18','19'].includes(k) && !actual){
-       const heading=document.querySelector('#q'+k+' h3');
+       const heading=Number(k)<=4 ? document.querySelector('#q'+k+' h3') : radio.closest('.subtask')?.querySelector('p');
        if(heading){
          const mark=document.createElement('span');mark.className='check-mark no unanswered-mark';
          mark.textContent='✕';mark.setAttribute('aria-label','Ответ не выбран');heading.appendChild(mark);
