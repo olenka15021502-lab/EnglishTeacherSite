@@ -70,6 +70,7 @@ function examHTML(task){
   }else if(block.startsWith('...')) result+=`<p class="incoming">${escapeHTML(block)}</p>`;
   else if(block.startsWith('- '))result+=`<ul class="requirements">${block.split('\n').map(l=>`<li>${escapeHTML(l.slice(2)).replace(/ask 3 questions/i,m=>'<strong>'+m+'</strong>')}</li>`).join('')}</ul>`;
   else if(block.startsWith('Write 100'))result+=`<p><strong>${escapeHTML(block)}</strong></p>`;
+  else if(/^You have received an email message from /i.test(block)||/^Write an email to /i.test(block))result+=`<p><strong>${escapeHTML(block)}</strong></p>`;
   else result+=`<p>${escapeHTML(block)}</p>`;
  }
  return result;
