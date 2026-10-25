@@ -59,7 +59,14 @@ html body{background:#EEDCF3!important;background-image:none!important;color:#35
 .exam .letter-body p:last-child{margin-bottom:0}
 .exam .word-instruction{margin:0 0 3px}
 @media(max-width:720px){.hero-poster{padding:16px 12px;border-radius:27px}.hero-poster .poster-title{border-radius:17px}.hero-poster .poster-subtitle{letter-spacing:.07em}.exam .letter-card{padding:13px}}
-</style></head><body><main class="wrap"><header class="hero hero-poster"><div class="poster-title">Exam Practice</div><div class="poster-subtitle"><span>WRITING AN EMAIL</span></div><p>40 tasks with sample answers</p><p class="hero-subline">Read, practise and check.</p></header><div id="groups"></div></main>
+
+/* Final spacing adjustments: compact, evenly spaced exam instructions. */
+.exam .letter-meta{font-weight:700}
+.exam .email-instruction,.exam .word-instruction{margin:0 0 7px;line-height:1.55}
+.exam .requirements.email-instruction{margin:0 0 7px 19px;padding:0}
+.exam .requirements.email-instruction li{margin:0;line-height:1.55;padding-left:2px}
+.exam .email-instruction:last-child{margin-bottom:0}
+</style></head><body><main class="wrap"><header class="hero hero-poster"><div class="poster-title">Exam Practice</div><div class="poster-subtitle"><span>WRITING AN EMAIL</span></div><p>40 tasks with sample answers</p><p class="hero-subline">Read, practise and check</p></header><div id="groups"></div></main>
 <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-label="Email writing exercise"><article class="modal" id="modal"><div class="modal-top"><div class="modal-title" id="modal-title"></div><button id="close" class="close" aria-label="Close">×</button></div><div class="modal-content"><h2 class="section-label">Exam Task</h2><section class="exam" id="exam"></section><section class="sample-section"><h2 class="section-label">Sample Answer</h2><p class="hint" id="instruction"></p><div id="activity"></div><div class="feedback" id="feedback" aria-live="polite"></div></section></div></article></div>
 <script>
 'use strict';
@@ -90,14 +97,14 @@ function examHTML(task){
  for(const block of blocks){
   if(block.startsWith('From: ')){
    const m=block.match(/^From: (.*?) To: (.*?) Subject: (.*)$/);
-   if(m)result+=`<div class="letter-card"><div class="letter-meta"><div>From: ${escapeHTML(m[1])}</div><div>To: ${escapeHTML(m[2].replace(/_/g,' '))}</div><div>Subject: ${escapeHTML(m[3])}</div></div>`;
+   if(m)result+=`<div class="letter-card"><div class="letter-meta"><div><strong>From: ${escapeHTML(m[1])}</strong></div><div><strong>To: ${escapeHTML(m[2].replace(/_/g,' '))}</strong></div><div><strong>Subject: ${escapeHTML(m[3])}</strong></div></div>`;
   }else if(block.startsWith('...')||letter.length){
-   if(/^Write an email to /i.test(block)){finishLetter();result+=`<p><strong>${escapeHTML(block)}</strong></p>`;}
+   if(/^Write an email to /i.test(block)){finishLetter();result+=`<p class="email-instruction"><strong>${escapeHTML(block)}</strong></p>`;}
    else letter.push(block);
-  }else if(block.startsWith('- '))result+=`<ul class="requirements">${block.split('\n').map(l=>`<li>${escapeHTML(l.slice(2))}</li>`).join('')}</ul>`;
-  else if(block.startsWith('Write 100'))result+=block.split(/(?=Remember the rules of email writing\.)/).map(t=>`<p class="word-instruction"><strong>${escapeHTML(t.trim())}</strong></p>`).join('');
+  }else if(block.startsWith('- '))result+=`<ul class="requirements email-instruction">${block.split('\n').map(l=>`<li>${escapeHTML(l.slice(2))}</li>`).join('')}</ul>`;
+  else if(block.startsWith('Write 100'))result+=block.split(/(?=Remember the rules of email writing\.)/).map(t=>`<p class="word-instruction email-instruction"><strong>${escapeHTML(t.trim())}</strong></p>`).join('');
   else if(/^You have received an email message from /i.test(block)||/^Write an email to /i.test(block))result+=`<p><strong>${escapeHTML(block)}</strong></p>`;
-  else result+=`<p>${escapeHTML(block)}</p>`;
+  else result+=`<p class="email-instruction">${escapeHTML(block)}</p>`;
  }
  finishLetter();
  return result;
